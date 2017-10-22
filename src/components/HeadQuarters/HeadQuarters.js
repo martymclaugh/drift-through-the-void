@@ -8,19 +8,29 @@ import { setHackNumber, setTerminals } from './head-quarters-actions';
 
 import './head-quarters.css';
 
-type Props = {
-  numberOfHacks: integer,
-  terminals: {
-    id: integer,
-    value: string,
-  },
+type TerminalType = {
+  id: number,
+  value: string,
 }
 
 type State = {
-
+  hackingActive: boolean,
+  emptyTerminals: number,
 }
 
-class HeadQuarters extends Component {
+type Props = {
+  numberOfHacks: number,
+  terminalAmount: number,
+  terminals: Array<TerminalType>,
+  setTerminals: (Object) => void,
+  setHackNumber: ({ numberOfHacks: number }) => void,
+}
+
+
+class HeadQuarters extends Component<Props, State>{
+
+  state: State
+
   constructor(props: Props) {
     super(props)
 
@@ -36,11 +46,11 @@ class HeadQuarters extends Component {
     this.terminateHacking = this.terminateHacking.bind(this);
   }
 
-  state: state;
-
   componentDidMount() {
     this.populateTerminals();
   }
+
+  initiateHack: () => void;
   initiateHack() {
     this.setState({
       hackingActive: true,
@@ -58,19 +68,24 @@ class HeadQuarters extends Component {
       return terminal;
     });
 
+    this.props.setTerminals({ terminals });
+    this.props.setHackNumber({ numberOfHacks: this.props.numberOfHacks - 1 });
+
     this.setState({
       emptyTerminals: 0,
       hacking: false,
     });
 
-    this.props.setHackNumber({ numberOfHacks: this.props.numberOfHacks - 1 });
-    this.props.setTerminals({ terminals });
   }
+
+  handleHacking: () => void;
   handleHacking() {
     if (this.props.numberOfHacks > 0 && this.state.emptyTerminals > 0) {
       this.initiateHack();
     }
   }
+
+  handleDiscardTerminal: (TerminalType) => void;
   handleDiscardTerminal(terminal) {
     if (this.props.numberOfHacks > 0) {
       const terminals = this.props.terminals.update(this.props.terminals.indexOf(terminal), term => {
@@ -83,6 +98,8 @@ class HeadQuarters extends Component {
       });
     }
   }
+
+  populateTerminals: () => void;
   populateTerminals() {
     const terminals = []
     for (var i = 0; i < this.props.terminalAmount; i++) {
@@ -96,9 +113,12 @@ class HeadQuarters extends Component {
       emptyTerminals: this.props.terminalAmount,
     });
   }
+
+  terminateHacking: () => void;
   terminateHacking() {
     this.setState({ hackingActive: false });
   }
+
   render() {
     const renderTerminals = this.props.terminals.map((terminal, i) => (
       <Terminal
@@ -110,7 +130,6 @@ class HeadQuarters extends Component {
         {...terminal}
       />
     ));
-    console.log('PROPS', this.props);
 
     return (
       <div>
