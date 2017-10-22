@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Terminal from '../Terminal/Terminal';
 import randomStringArray from '../../helpers/random-string';
+import { hackingValues } from '../../helpers/hacking-values';
 import { setHackNumber, setTerminals } from './head-quarters-actions';
 
 import './head-quarters.css';
@@ -23,6 +24,7 @@ type Props = {
   terminalAmount: number,
   terminals: Array<TerminalType>,
   setTerminals: (Object) => void,
+  updateStorage: () => void,
   setHackNumber: ({ numberOfHacks: number }) => void,
 }
 
@@ -43,7 +45,6 @@ class HeadQuarters extends Component<Props, State>{
     this.handleHacking = this.handleHacking.bind(this);
     this.handleDiscardTerminal = this.handleDiscardTerminal.bind(this);
     this.populateTerminals = this.populateTerminals.bind(this);
-    this.terminateHacking = this.terminateHacking.bind(this);
   }
 
   componentDidMount() {
@@ -56,13 +57,11 @@ class HeadQuarters extends Component<Props, State>{
       hackingActive: true,
     });
 
-    const values = ['credits', 'soylent', 'alien-artifact', 'colonists', 'colonists-soylent', 'alien-and-death'];
-
     const terminals = this.props.terminals.map(terminal => {
       if (terminal.value) {
         return terminal;
       }
-      const value = values[Math.floor(Math.random() * values.length)];
+      const value = hackingValues[Math.floor(Math.random() * hackingValues.length)];
       terminal.value = value;
 
       return terminal;
@@ -70,18 +69,14 @@ class HeadQuarters extends Component<Props, State>{
 
     this.props.setTerminals({ terminals });
     this.props.setHackNumber({ numberOfHacks: this.props.numberOfHacks - 1 });
-
-    this.setState({
-      emptyTerminals: 0,
-      hacking: false,
-    });
-
   }
 
   handleHacking: () => void;
   handleHacking() {
     if (this.props.numberOfHacks > 0 && this.state.emptyTerminals > 0) {
       this.initiateHack();
+    } else {
+      this.props.updateStorage();
     }
   }
 
@@ -114,11 +109,6 @@ class HeadQuarters extends Component<Props, State>{
     });
   }
 
-  terminateHacking: () => void;
-  terminateHacking() {
-    this.setState({ hackingActive: false });
-  }
-
   render() {
     const renderTerminals = this.props.terminals.map((terminal, i) => (
       <Terminal
@@ -126,7 +116,7 @@ class HeadQuarters extends Component<Props, State>{
         numberOfHacks={this.props.numberOfHacks}
         hackingActive={this.state.hackingActive}
         onClick={() => this.handleDiscardTerminal(terminal)}
-        algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value]}
+        algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value.name]}
         {...terminal}
       />
     ));

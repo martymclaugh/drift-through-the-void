@@ -2,7 +2,7 @@ import { fromJS, List } from 'immutable';
 import { types } from './head-quarters-actions';
 
 const INITIAL_STATE = fromJS({
-  numberOfHacks: 3,
+  numberOfHacks: 1,
   terminals: List(),
 });
 

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import HeadQuarters from './components/HeadQuarters/HeadQuarters'
+import PlayerBoard from './components/PlayerBoard/PlayerBoard'
 
-const App = () => (<HeadQuarters terminalAmount={6} />)
+const App = () => (<PlayerBoard />)
 
 export default App;
