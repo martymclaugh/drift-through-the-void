@@ -1,18 +1,30 @@
 // @flow
 
 import React, { Component } from 'react';
-import Terminal from '../shared/Terminal';
+import { connect } from 'react-redux';
+import Terminal from '../Terminal/Terminal';
 import randomStringArray from '../../helpers/random-string';
+import { setHackNumber, setTerminals } from './head-quarters-actions';
 
 import './head-quarters.css';
 
-class HQ extends Component {
-  constructor(props) {
+type Props = {
+  numberOfHacks: integer,
+  terminals: {
+    id: integer,
+    value: string,
+  },
+}
+
+type State = {
+
+}
+
+class HeadQuarters extends Component {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
-      numberOfHacks: 3,
-      terminals: [],
       hackingActive: false,
       emptyTerminals: 0,
     }
@@ -23,6 +35,9 @@ class HQ extends Component {
     this.populateTerminals = this.populateTerminals.bind(this);
     this.terminateHacking = this.terminateHacking.bind(this);
   }
+
+  state: state;
+
   componentDidMount() {
     this.populateTerminals();
   }
@@ -31,9 +46,9 @@ class HQ extends Component {
       hackingActive: true,
     });
 
-    const values = ['Credits', 'Soylent', 'Alien Artifacts', 'Colonists', 'Colonists/Soylent', 'Alien Artifacts/Plague'];
+    const values = ['credits', 'soylent', 'alien-artifact', 'colonists', 'colonists-soylent', 'alien-and-death'];
 
-    const currentTerminals = this.state.terminals.map(terminal => {
+    const terminals = this.props.terminals.map(terminal => {
       if (terminal.value) {
         return terminal;
       }
@@ -42,26 +57,28 @@ class HQ extends Component {
 
       return terminal;
     });
-    this.setState({ emptyTerminals: 0 });
 
     this.setState({
-      terminals: currentTerminals,
-      numberOfHacks: this.state.numberOfHacks - 1,
+      emptyTerminals: 0,
       hacking: false,
-    })
+    });
+
+    this.props.setHackNumber({ numberOfHacks: this.props.numberOfHacks - 1 });
+    this.props.setTerminals({ terminals });
   }
   handleHacking() {
-    if (this.state.numberOfHacks > 0 && this.state.emptyTerminals > 0) {
+    if (this.props.numberOfHacks > 0 && this.state.emptyTerminals > 0) {
       this.initiateHack();
     }
   }
   handleDiscardTerminal(terminal) {
-    if (this.state.numberOfHacks > 0) {
-      const terminals = this.state.terminals;
-      terminals[terminals.indexOf(terminal)].value = null;
+    if (this.props.numberOfHacks > 0) {
+      const terminals = this.props.terminals.update(this.props.terminals.indexOf(terminal), term => {
+          return { id: term.id, value: null};
+      });
 
+      this.props.setTerminals({ terminals });
       this.setState({
-         terminals,
          emptyTerminals: this.state.emptyTerminals + 1,
       });
     }
@@ -70,13 +87,12 @@ class HQ extends Component {
     const terminals = []
     for (var i = 0; i < this.props.terminalAmount; i++) {
       terminals.push({
-        id: i,
+        id: i + 1,
         value: null,
       });
     }
-
+    this.props.setTerminals({ terminals });
     this.setState({
-      terminals,
       emptyTerminals: this.props.terminalAmount,
     });
   }
@@ -84,20 +100,22 @@ class HQ extends Component {
     this.setState({ hackingActive: false });
   }
   render() {
-    const renderTerminals = this.state.terminals.map((terminal, i) => (
+    const renderTerminals = this.props.terminals.map((terminal, i) => (
       <Terminal
-        numberOfHacks={this.state.numberOfHacks}
+        key={i}
+        numberOfHacks={this.props.numberOfHacks}
         hackingActive={this.state.hackingActive}
         onClick={() => this.handleDiscardTerminal(terminal)}
         algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value]}
         {...terminal}
       />
     ));
+    console.log('PROPS', this.props);
 
     return (
       <div>
         <div>Head Quarters</div>
-        <div>Number of Hacks: {this.state.numberOfHacks}</div>
+        <div>Number of Hacks: {this.props.numberOfHacks}</div>
         <button onClick={this.handleHacking}>Generate Resources</button>
         <div className="head-quarters__terminals">
           {renderTerminals}
@@ -107,4 +125,9 @@ class HQ extends Component {
   }
 }
 
-export default HQ;
+const mapStateToProps = state => ({
+  numberOfHacks: state.headQuarters.get('numberOfHacks'),
+  terminals: state.headQuarters.get('terminals'),
+});
+
+export default connect(mapStateToProps, { setHackNumber, setTerminals })(HeadQuarters);

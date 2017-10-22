@@ -6,22 +6,22 @@ import colonistsSoylent from '../assets/images/half-half-green.png';
 import alienDeath from '../assets/images/alien-and-death.png';
 
 const imagePaths = {
-  'Credits': {
+  'credits': {
     path: credits,
   },
-  'Soylent': {
+  'soylent': {
     path: soylent,
   },
-  'Alien Artifacts': {
+  'alien-artifact': {
     path: alienArtifact,
   },
-  'Colonists': {
+  'colonists': {
     path: colonists,
   },
-  'Colonists/Soylent': {
+  'colonists-soylent': {
     path: colonistsSoylent,
   },
-  'Alien Artifacts/Plague': {
+  'alien-and-death': {
     path: alienDeath,
   },
 }

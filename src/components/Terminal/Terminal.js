@@ -42,6 +42,7 @@ class Terminal extends Component {
     <img className="terminal__asset-image" src={imagePaths[this.state.value].path} alt=""/> :
     this.state.value;
     const isActive = !!this.state.value;
+    console.log('HERE', this.props);
 
     return (
       <div key={this.props.key} onClick={this.handleDiscardTerminal} className={`terminal ${isActive ? 'is-active' : ''}`}>
