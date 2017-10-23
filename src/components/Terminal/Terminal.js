@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import terminal from '../assets/images/terminal.png'
+import terminal from '../assets/images/terminal-images/terminal.png'
 import randomStringArray from '../../helpers/random-string';
 import imagePaths from './image-paths';
 

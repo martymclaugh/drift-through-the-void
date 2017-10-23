@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toJS } from 'immutable';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
+import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
 import { updateStorage } from './player-board-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
 
@@ -35,13 +37,7 @@ class PlayerBoard extends Component<Props, State>{
       credits: storage.get('credits'),
     }
 
-    const distributedResources = {
-      nanoTubes: storage.getIn(['resources', 'nanoTubes']),
-      unobtanium: storage.getIn(['resources', 'unobtanium']),
-      energyPlankton: storage.getIn(['resources', 'energyPlankton']),
-      giantSpiderSilk: storage.getIn(['resources', 'giantSpiderSilk']),
-      rifles: storage.getIn(['resources', 'rifles']),
-    };
+    const distributedResources = storage.get('distributedResources').toJS()
     const resourceKeys = Object.keys(distributedResources);
 
     Object.keys(storageItems).map(key => {
@@ -54,9 +50,7 @@ class PlayerBoard extends Component<Props, State>{
 
     const distributedItems = {
       ...storageItems,
-      resources: {
-        ...distributedResources,
-      }
+      distributedResources,
     }
     this.props.updateStorage({ distributedItems });
   }
@@ -65,8 +59,9 @@ class PlayerBoard extends Component<Props, State>{
     return (
       <div>
         PLAYER BOARD
+        <ResourceDisplay />
         <HeadQuarters
-          terminalAmount={50}
+          terminalAmount={7}
           updateStorage={this.updateStorage}
         />
       </div>
