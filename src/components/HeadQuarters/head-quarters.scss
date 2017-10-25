@@ -1,0 +1,8 @@
+.head-quarters {
+  &__terminals {
+    display: flex;
+    align-items: center;
+    min-height: 8rem;
+    max-width: 1280px;
+  }
+}
