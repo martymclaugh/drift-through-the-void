@@ -2,15 +2,18 @@
   position: relative;
   margin: 0 1rem;
   width: 6.25rem;
-  display: inline-block; }
-  .terminal.is-active:hover {
+  display: inline-block;
+
+  &.is-active:hover {
     width: 7.25rem;
     margin: 0 0.5rem;
     delay: 0.2s;
-    transition: 0.5s ease; }
-  .terminal.is-active {
-    cursor: pointer; }
-  .terminal .power-light {
+    transition: 0.5s ease;
+  }
+  &.is-active {
+    cursor: pointer;
+  }
+  .power-light {
     width: 0.1rem;
     height: 0.1rem;
     border-radius: 50%;
@@ -18,8 +21,9 @@
     position: absolute;
     bottom: 0.82rem;
     right: 0.5rem;
-    margin: 0; }
-  .terminal__content {
+    margin: 0;
+  }
+  &__content {
     color: #02E148;
     position: absolute;
     top: 0;
@@ -27,7 +31,10 @@
     height: 100%;
     text-align: center;
     font-size: 3rem;
-    font-family: "Nova Square"; }
-  .terminal__asset-image {
+    font-family: "Nova Square";
+  }
+  &__asset-image {
     height: 71%;
-    padding: 0.2rem; }
+    padding: 0.2rem;
+  }
+}
