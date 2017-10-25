@@ -1,15 +1,7 @@
 // @flow
-import React, { Component } from 'react';
-import HeadQuarters from './components/HeadQuarters/HeadQuarters'
+import React from 'react';
+import PlayerBoard from './components/PlayerBoard/PlayerBoard'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <HeadQuarters terminalAmount={6} />
-      </div>
-    );
-  }
-}
+const App = () => (<PlayerBoard />)
 
 export default App;
