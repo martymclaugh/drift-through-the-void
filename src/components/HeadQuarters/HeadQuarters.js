@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
 import { connect } from 'react-redux';
-import Terminal from '../Terminal/Terminal';
+import { setHackNumber, setTerminals } from './head-quarters-actions';
 import randomStringArray from '../../helpers/random-string';
 import { hackingValues } from '../../helpers/hacking-values';
-import { setHackNumber, setTerminals } from './head-quarters-actions';
+import Terminal from '../Terminal/Terminal';
+import ControlPanel from '../shared/ControlPanel/ControlPanel';
 
 import './head-quarters.css';
 
@@ -40,11 +41,13 @@ class HeadQuarters extends Component<Props, State>{
     this.state = {
       hackingActive: false,
       emptyTerminals: 0,
-      emptyTerminalIds: [],
+      //
+      emptyTerminalIds: [7],
     }
 
     this.initiateHack = this.initiateHack.bind(this);
     this.handleHacking = this.handleHacking.bind(this);
+    this.acceptResources = this.acceptResources.bind(this);
     this.handleDiscardTerminal = this.handleDiscardTerminal.bind(this);
     this.populateTerminals = this.populateTerminals.bind(this);
     this.terminateHacking = this.terminateHacking.bind(this);
@@ -71,6 +74,10 @@ class HeadQuarters extends Component<Props, State>{
     });
     this.props.setTerminals({ terminals });
     this.props.setHackNumber({ numberOfHacks: this.props.numberOfHacks - 1 });
+    const ms = (Math.max(...this.state.emptyTerminalIds) * 5 + 13) * 50;
+    setTimeout(() => {
+      this.setState({ hackingActive: false });
+    }, ms)
   }
   handleHacking: () => void;
   handleHacking() {
@@ -114,12 +121,30 @@ class HeadQuarters extends Component<Props, State>{
       this.props.updateCargo();
     }
   }
+  acceptResources() {
+    if (this.state.emptyTerminals === 0) {
+      setTimeout(() => {
+        this.setState({ emptyTerminalIds: [] });
+        this.props.updateCargo();
+      }, 500)
+    }
+  }
   render() {
     const {
       terminals,
       numberOfHacks,
       terminalAmount,
     } = this.props;
+    const hackButtonActive = !this.state.hackingActive &&
+                            this.props.numberOfHacks > 0 &&
+                            this.state.emptyTerminals > 0;
+
+    const acceptButtonActive = !this.state.hackingActive &&
+                              this.props.numberOfHacks < 3 &&
+                              this.props.numberOfHacks > 0 &&
+                              this.state.emptyTerminals === 0;
+                              // TODO add additional check for 'leadership'
+                              // once powerups are available
 
     const renderTerminals = terminals.map((terminal, i) => (
       <Terminal
@@ -138,7 +163,12 @@ class HeadQuarters extends Component<Props, State>{
       <div>
         <div>Head Quarters</div>
         <div>Number of Hacks: {numberOfHacks}</div>
-        <button onClick={this.handleHacking}>Generate Resources</button>
+        <ControlPanel
+          handleHack={this.handleHacking}
+          handleAccept={this.acceptResources}
+          hackButtonActive={hackButtonActive}
+          acceptButtonActive={acceptButtonActive}
+        />
         <div className="head-quarters__terminals">
           {renderTerminals}
         </div>
