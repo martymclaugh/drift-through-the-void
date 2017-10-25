@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import terminal from '../assets/images/terminal-images/terminal.png'
+import terminal from '../../assets/images/terminal-images/terminal.png'
 import randomStringArray from '../../helpers/random-string';
 import imagePaths from './image-paths';
 
@@ -35,17 +35,24 @@ class Terminal extends Component<Props, State> {
     this.state.value === null &&
     nextProps.algorithm &&
     this.generateHackIllusion(nextProps.algorithm);
+
+    if (nextProps.isLastTerminal && nextProps.algorithm) {
+      // we only want to trigger terminate hacking once the
+      // terminal has fully gone through the 'hack illusion'
+      setTimeout(() => {
+        this.props.terminateHacking();
+      }, 50 * (nextProps.algorithm.length + 1) + 300);
+    }
   }
 
   generateHackIllusion: (Array<string> | string) => void;
   generateHackIllusion(arr) {
 
     arr.map((sym, i) => {
-
       setTimeout(() => {
         this.setState({ value: sym });
-      }, 50 * i + 1);
-    })
+      }, 50 * (i + 1));
+    });
   }
 
   handleDiscardTerminal: () => void;
@@ -54,7 +61,7 @@ class Terminal extends Component<Props, State> {
       this.setState({ value: null });
       this.props.onClick();
     } else {
-      alert("you're stuck with these")
+      alert("you're stuck with these");
     }
   }
   render() {
