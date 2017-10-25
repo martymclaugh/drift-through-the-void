@@ -1,6 +1,6 @@
 export const types = {
-  UPDATE_STORAGE: 'UPDATE_STORAGE',
+  UPDATE_CARGO: 'UPDATE_CARGO',
 }
 
-export const updateStorage = payload =>
-  ({ type: types.UPDATE_STORAGE, payload })
+export const updateCargo = payload =>
+  ({ type: types.UPDATE_CARGO, payload })

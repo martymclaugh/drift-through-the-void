@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS, List, toJS } from 'immutable';
 import { types } from './player-board-actions';
 
 const INITIAL_STATE = fromJS({
@@ -17,7 +17,7 @@ const INITIAL_STATE = fromJS({
 
 const playerBoardReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case types.UPDATE_STORAGE:
+    case types.UPDATE_CARGO:
       return state.merge(action.payload);
     default:
       return state;
