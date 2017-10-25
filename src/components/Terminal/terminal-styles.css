@@ -1,11 +1,11 @@
 .terminal {
   position: relative;
-  margin: 0 1rem;
-  width: 6.25rem;
+  margin: 0 0.5rem;
+  width: 5.25rem;
   display: inline-block; }
   .terminal.is-active:hover {
-    width: 7.25rem;
-    margin: 0 0.5rem;
+    width: 6.25rem;
+    margin: 0 0.25rem;
     delay: 0.2s;
     transition: 0.5s ease; }
   .terminal.is-active {
