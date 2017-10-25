@@ -126,7 +126,7 @@ class HeadQuarters extends Component<Props, State>{
         key={i}
         numberOfHacks={numberOfHacks}
         hackingActive={this.state.hackingActive}
-        onClick={() => this.handleDiscardTerminal(terminal)}
+        handleDiscardTerminal={() => this.handleDiscardTerminal(terminal)}
         isLastTerminal={Math.max(...this.state.emptyTerminalIds) === terminal.get('id')}
         terminateHacking={this.terminateHacking}
         algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value.name]}

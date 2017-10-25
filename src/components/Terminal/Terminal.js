@@ -59,7 +59,7 @@ class Terminal extends Component<Props, State> {
   handleDiscardTerminal() {
     if (this.props.numberOfHacks > 0) {
       this.setState({ value: null });
-      this.props.onClick();
+      this.props.handleDiscardTerminal();
     } else {
       alert("you're stuck with these");
     }
