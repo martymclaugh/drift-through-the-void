@@ -36,7 +36,7 @@ class Terminal extends Component<Props, State> {
     nextProps.algorithm &&
     this.generateHackIllusion(nextProps.algorithm);
 
-    if (nextProps.isLastTerminal && nextProps.algorithm) {
+    if (nextProps.isLastTerminal && nextProps.algorithm && !this.props.hackingActive) {
       // we only want to trigger terminate hacking once the
       // terminal has fully gone through the 'hack illusion'
       // adding 300 ms so it's not immediately after.
