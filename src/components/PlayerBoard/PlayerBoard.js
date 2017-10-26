@@ -31,21 +31,20 @@ class PlayerBoard extends Component<Props, State>{
     const { terminals, cargo } = this.props;
     const death = reduceObjectValues(terminals, 'death');
     const resources = reduceObjectValues(terminals, 'resources')
-    const cargoItems = {
+    let cargoItems = {
       colonists: cargo.get('colonists'),
       soylent: cargo.get('soylent'),
       credits: cargo.get('credits'),
     }
-
-    const distributedResources = cargo.get('distributedResources').toJS()
+    let distributedResources = cargo.get('distributedResources').toJS();
     const resourceKeys = Object.keys(distributedResources);
 
     Object.keys(cargoItems).map(key => {
-      cargoItems[key] = cargoItems[key] + reduceObjectValues(terminals, key)
+      cargoItems[key] = cargoItems[key] + reduceObjectValues(terminals, key);
     })
-    const length = resourceKeys.length;
     for (var i = 0; i < resources; i ++) {
-      distributedResources[resourceKeys[i % length]] = distributedResources[resourceKeys[i % length]] + 1;
+      const key = resourceKeys[i % resourceKeys.length];
+      distributedResources[key] = distributedResources[key] + 1;
     }
 
     const distributedItems = {

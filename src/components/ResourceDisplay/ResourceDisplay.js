@@ -16,18 +16,12 @@ class ResourceDisplay extends Component {
 
   renderCargoContainers() {
     const distributedResources = this.props.distributedResources.toJS();
-    let containers = [];
-
-    for (var key in distributedResources){
-      if (distributedResources.hasOwnProperty(key)){
-        containers.push(
-          <CargoContainer
-            amount={distributedResources[key]}
-            name={key}
-          />
-        )
-      }
-    }
+    const containers = Object.keys(distributedResources).map(key => (
+      <CargoContainer
+        amount={distributedResources[key]}
+        name={key}
+      />
+    ));
 
     return containers.reverse();
   }

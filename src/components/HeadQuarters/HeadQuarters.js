@@ -57,6 +57,7 @@ class HeadQuarters extends Component<Props, State>{
   initiateHack: () => void;
   initiateHack() {
     const ms = (Math.max(...this.state.emptyTerminalIds) * 5 + 13) * 50;
+    // time it will take last terminal to finish hacking
 
     this.setState({
       hackingActive: true,
@@ -88,30 +89,33 @@ class HeadQuarters extends Component<Props, State>{
   handleDiscardTerminal: (TerminalType) => void;
   handleDiscardTerminal(terminal) {
     if (this.props.numberOfHacks > 0) {
-      const terminals = this.props.terminals.update(this.props.terminals.indexOf(terminal), term => {
-          this.setState({
-            emptyTerminalIds: this.state.emptyTerminalIds.concat(term.get('id')),
+      const id = terminal.get('id');
+      const terminals = this.props.terminals.update(id - 1, term => {
+          return fromJS({
+            id,
+            value: null,
           });
-          return fromJS({ id: term.get('id'), value: null});
       });
 
+      this.setState({
+        emptyTerminalIds: [...this.state.emptyTerminalIds, id],
+      });
       this.props.setTerminals({ terminals });
     }
   }
   populateTerminals: () => void;
   populateTerminals() {
-    const terminals = [];
-    const emptyTerminalIds = [];
+    let terminals = [];
 
     for (var i = 0; i < this.props.terminalAmount; i++) {
-      emptyTerminalIds.push(i);
       terminals.push({
         id: i + 1,
         value: null,
       });
     }
+
     this.props.setTerminals({ terminals });
-    this.setState({ emptyTerminalIds });
+    this.setState({ emptyTerminalIds: terminals.map(t => (t.id - 1)) });
   }
   terminateHacking: () => void;
   terminateHacking() {
@@ -139,6 +143,7 @@ class HeadQuarters extends Component<Props, State>{
       emptyTerminalIds,
       hackingActive,
     } = this.state;
+
     const hackButtonActive = !hackingActive &&
                             numberOfHacks > 0 &&
                             emptyTerminalIds.length > 0;

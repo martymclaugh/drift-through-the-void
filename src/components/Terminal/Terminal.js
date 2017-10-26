@@ -32,17 +32,22 @@ class Terminal extends Component<Props, State> {
   state: State;
 
   componentWillReceiveProps(nextProps: Props) {
-    this.state.value === null &&
-    nextProps.algorithm &&
-    this.generateHackIllusion(nextProps.algorithm);
+    const {
+      algorithm,
+      isLastTerminal,
+    } = nextProps;
 
-    if (nextProps.isLastTerminal && nextProps.algorithm && !this.props.hackingActive) {
+    this.state.value === null &&
+      algorithm &&
+      this.generateHackIllusion(algorithm);
+
+    if (isLastTerminal && algorithm && !this.props.hackingActive) {
       // we only want to trigger terminate hacking once the
       // terminal has fully gone through the 'hack illusion'
       // adding 300 ms so it's not immediately after.
       setTimeout(() => {
         this.props.terminateHacking();
-      }, 50 * (nextProps.algorithm.length + 1) + 300);
+      }, 50 * (algorithm.length + 1) + 300);
     }
   }
 
@@ -61,8 +66,6 @@ class Terminal extends Component<Props, State> {
     if (this.props.numberOfHacks > 0) {
       this.setState({ value: null });
       this.props.handleDiscardTerminal();
-    } else {
-      alert("you're stuck with these");
     }
   }
   render() {
