@@ -66,13 +66,25 @@ class Terminal extends Component<Props, State> {
     }
   }
   render() {
-    const display = imagePaths[this.state.value] ?
-    <img className="terminal__asset-image" src={imagePaths[this.state.value].path} alt=""/> :
-    this.state.value;
-    const isActive = !!this.state.value;
+    const { value } = this.state;
+    const {
+      hackingActive,
+      numberOfHacks,
+    } = this.props;
+
+    const display = imagePaths[value] ?
+    <img className="terminal__asset-image" src={imagePaths[value].path} alt=""/> :
+    value;
+    const isActive = !!value;
 
     return (
-      <div onClick={this.handleDiscardTerminal} className={`terminal ${isActive ? 'is-active' : ''}`}>
+      <div
+        onClick={value && !hackingActive && numberOfHacks > 0 ? this.handleDiscardTerminal : null}
+        // check if value has already been removed
+        // and if hacking isn't active
+        // and if more hacking is allowed
+        className={`terminal ${isActive ? 'is-active' : ''}`}
+      >
         <img style={{width: 'inherit'}} src={terminal} alt="" className="terminal__asset"/>
         <div className="terminal__content">{display}</div>
         <div className={`${isActive ? 'power-light' : ''}`} />
