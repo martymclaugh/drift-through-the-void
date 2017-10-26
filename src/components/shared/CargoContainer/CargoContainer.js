@@ -26,6 +26,7 @@ const renderIcons = (props) => {
 }
 export default (props) => {
   const totalValue = resourceMap[props.name].firstVal * props.amount;
+
   return (
     <div>{totalValue}{renderIcons(props)}</div>
   )

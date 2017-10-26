@@ -18,7 +18,6 @@ type TerminalType = {
 
 type State = {
   hackingActive: boolean,
-  emptyTerminals: number,
 }
 
 type Props = {
@@ -40,9 +39,7 @@ class HeadQuarters extends Component<Props, State>{
 
     this.state = {
       hackingActive: false,
-      emptyTerminals: 0,
-      //
-      emptyTerminalIds: [7],
+      emptyTerminalIds: [],
     }
 
     this.initiateHack = this.initiateHack.bind(this);
@@ -59,6 +56,9 @@ class HeadQuarters extends Component<Props, State>{
 
   initiateHack: () => void;
   initiateHack() {
+    const ms = (Math.max(...this.state.emptyTerminalIds) * 5 + 13) * 50;
+    // time it will take last terminal to finish hacking
+
     this.setState({
       hackingActive: true,
     });
@@ -72,48 +72,52 @@ class HeadQuarters extends Component<Props, State>{
 
       return terminal;
     });
+
     this.props.setTerminals({ terminals });
     this.props.setHackNumber({ numberOfHacks: this.props.numberOfHacks - 1 });
-    const ms = (Math.max(...this.state.emptyTerminalIds) * 5 + 13) * 50;
+
     setTimeout(() => {
       this.setState({ hackingActive: false });
     }, ms)
   }
   handleHacking: () => void;
   handleHacking() {
-    if (this.props.numberOfHacks > 0 && this.state.emptyTerminals > 0) {
+    if (this.props.numberOfHacks > 0 && this.state.emptyTerminalIds.length > 0) {
       this.initiateHack();
-      this.setState({ emptyTerminals: 0 });
     }
   }
   handleDiscardTerminal: (TerminalType) => void;
   handleDiscardTerminal(terminal) {
     if (this.props.numberOfHacks > 0) {
-      const terminals = this.props.terminals.update(this.props.terminals.indexOf(terminal), term => {
-          this.setState({
-            emptyTerminals: this.state.emptyTerminals + 1,
-            emptyTerminalIds: this.state.emptyTerminalIds.concat(term.get('id')),
+      const id = terminal.get('id');
+      const terminals = this.props.terminals.update(id - 1, term => {
+          return fromJS({
+            id,
+            value: null,
           });
-          return fromJS({ id: term.get('id'), value: null});
       });
 
+      this.setState({
+        emptyTerminalIds: [...this.state.emptyTerminalIds, id],
+      });
       this.props.setTerminals({ terminals });
     }
   }
   populateTerminals: () => void;
   populateTerminals() {
-    const terminals = []
+    let terminals = [];
+
     for (var i = 0; i < this.props.terminalAmount; i++) {
       terminals.push({
         id: i + 1,
         value: null,
       });
     }
+
     this.props.setTerminals({ terminals });
-    this.setState({
-      emptyTerminals: this.props.terminalAmount,
-    });
+    this.setState({ emptyTerminalIds: terminals.map(t => (t.id - 1)) });
   }
+  terminateHacking: () => void;
   terminateHacking() {
     this.setState({ emptyTerminalIds: [] });
     if (this.props.numberOfHacks === 0) {
@@ -121,10 +125,10 @@ class HeadQuarters extends Component<Props, State>{
       this.props.updateCargo();
     }
   }
+  acceptResources: () => void;
   acceptResources() {
-    if (this.state.emptyTerminals === 0) {
+    if (this.state.emptyTerminalIds.length === 0) {
       setTimeout(() => {
-        this.setState({ emptyTerminalIds: [] });
         this.props.updateCargo();
       }, 500)
     }
@@ -135,14 +139,19 @@ class HeadQuarters extends Component<Props, State>{
       numberOfHacks,
       terminalAmount,
     } = this.props;
-    const hackButtonActive = !this.state.hackingActive &&
-                            this.props.numberOfHacks > 0 &&
-                            this.state.emptyTerminals > 0;
+    const {
+      emptyTerminalIds,
+      hackingActive,
+    } = this.state;
 
-    const acceptButtonActive = !this.state.hackingActive &&
-                              this.props.numberOfHacks < 3 &&
-                              this.props.numberOfHacks > 0 &&
-                              this.state.emptyTerminals === 0;
+    const hackButtonActive = !hackingActive &&
+                            numberOfHacks > 0 &&
+                            emptyTerminalIds.length > 0;
+
+    const acceptButtonActive = !hackingActive &&
+                              numberOfHacks < 3 &&
+                              numberOfHacks > 0 &&
+                              emptyTerminalIds.length === 0;
                               // TODO add additional check for 'leadership'
                               // once powerups are available
 
@@ -150,9 +159,9 @@ class HeadQuarters extends Component<Props, State>{
       <Terminal
         key={i}
         numberOfHacks={numberOfHacks}
-        hackingActive={this.state.hackingActive}
+        hackingActive={hackingActive}
         handleDiscardTerminal={() => this.handleDiscardTerminal(terminal)}
-        isLastTerminal={Math.max(...this.state.emptyTerminalIds) === terminal.get('id')}
+        isLastTerminal={Math.max(...emptyTerminalIds) === terminal.get('id')}
         terminateHacking={this.terminateHacking}
         algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value.name]}
         {...terminal}
