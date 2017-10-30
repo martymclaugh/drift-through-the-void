@@ -1,9 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
-import { fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { setHackNumber, setTerminals } from './head-quarters-actions';
+import { sendTerminals, sendHackNumber } from '../../redux/game/game-actions';
 import randomStringArray from '../../helpers/random-string';
 import { hackingValues } from '../../helpers/hacking-values';
 import Terminal from '../Terminal/Terminal';
@@ -63,7 +63,7 @@ class HeadQuarters extends Component<Props, State>{
       hackingActive: true,
     });
 
-    const terminals = this.props.terminals.map(terminal => {
+    const terminals = this.props.terminals.map((terminal, id) => {
       if (terminal.value) {
         return terminal;
       }
@@ -73,8 +73,14 @@ class HeadQuarters extends Component<Props, State>{
       return terminal;
     });
 
-    this.props.setTerminals({ terminals });
-    this.props.setHackNumber({ numberOfHacks: this.props.numberOfHacks - 1 });
+    const numberOfHacks = {
+      numberOfHacks: this.props.numberOfHacks - 1,
+    }
+
+    this.props.setTerminals(terminals);
+    this.props.sendTerminals(terminals);
+    this.props.setHackNumber(numberOfHacks);
+    this.props.sendHackNumber(numberOfHacks);
 
     setTimeout(() => {
       this.setState({ hackingActive: false });
@@ -89,18 +95,19 @@ class HeadQuarters extends Component<Props, State>{
   handleDiscardTerminal: (TerminalType) => void;
   handleDiscardTerminal(terminal) {
     if (this.props.numberOfHacks > 0) {
-      const id = terminal.get('id');
+      const id = terminal.id;
       const terminals = this.props.terminals.update(id - 1, term => {
-          return fromJS({
+          return {
             id,
             value: null,
-          });
+          };
       });
 
       this.setState({
         emptyTerminalIds: [...this.state.emptyTerminalIds, id],
       });
-      this.props.setTerminals({ terminals });
+      this.props.setTerminals(terminals);
+      this.props.sendTerminals(terminals);
     }
   }
   populateTerminals: () => void;
@@ -113,8 +120,7 @@ class HeadQuarters extends Component<Props, State>{
         value: null,
       });
     }
-
-    this.props.setTerminals({ terminals });
+    this.props.setTerminals(terminals);
     this.setState({ emptyTerminalIds: terminals.map(t => (t.id - 1)) });
   }
   terminateHacking: () => void;
@@ -154,18 +160,19 @@ class HeadQuarters extends Component<Props, State>{
                               emptyTerminalIds.length === 0;
                               // TODO add additional check for 'leadership'
                               // once powerups are available
-
     const renderTerminals = terminals.map((terminal, i) => (
+      <div>
       <Terminal
         key={i}
         numberOfHacks={numberOfHacks}
         hackingActive={hackingActive}
         handleDiscardTerminal={() => this.handleDiscardTerminal(terminal)}
-        isLastTerminal={Math.max(...emptyTerminalIds) === terminal.get('id')}
+        isLastTerminal={Math.max(...emptyTerminalIds) === terminal.id}
         terminateHacking={this.terminateHacking}
         algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value.name]}
         {...terminal}
       />
+    </div>
     ));
 
     return (
@@ -191,4 +198,9 @@ const mapStateToProps = state => ({
   terminals: state.headQuarters.get('terminals'),
 });
 
-export default connect(mapStateToProps, { setHackNumber, setTerminals })(HeadQuarters);
+export default connect(mapStateToProps, {
+  setHackNumber,
+  setTerminals,
+  sendTerminals,
+  sendHackNumber,
+})(HeadQuarters);
