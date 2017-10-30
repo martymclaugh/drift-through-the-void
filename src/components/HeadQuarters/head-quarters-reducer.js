@@ -12,7 +12,9 @@ const headQuartersReducer = (state = INITIAL_STATE, action) => {
     case types.SET_HACK_NUMBER:
       return state.merge(action.payload);
     case types.SET_TERMINALS:
-      return state.merge(action.payload);
+      return state.merge({
+        terminals: List(action.payload)
+      });
     default:
       return state;
   }

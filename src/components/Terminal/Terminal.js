@@ -38,8 +38,15 @@ class Terminal extends Component<Props, State> {
     } = nextProps;
 
     this.state.value === null &&
-      algorithm &&
-      this.generateHackIllusion(algorithm);
+                         algorithm &&
+                         this.generateHackIllusion(algorithm);
+    if (!nextProps.value) {
+      // set value to null for player watching
+      this.setState({
+        value: null,
+      });
+
+    }
 
     if (isLastTerminal && algorithm && !this.props.hackingActive) {
       // we only want to trigger terminate hacking once the

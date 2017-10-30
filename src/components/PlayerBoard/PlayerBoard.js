@@ -6,6 +6,7 @@ import { toJS } from 'immutable';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
 import { updateCargo } from './player-board-actions';
+import { sendCargo } from '../../redux/game/game-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
 
 type State = {}
@@ -52,6 +53,7 @@ class PlayerBoard extends Component<Props, State>{
       distributedResources,
     }
     this.props.updateCargo(distributedItems);
+    this.props.sendCargo(distributedItems);
   }
   render() {
 
@@ -74,4 +76,4 @@ const mapStateToProps = state => ({
   cargo: state.playerBoard
 });
 
-export default connect(mapStateToProps, { updateCargo })(PlayerBoard);
+export default connect(mapStateToProps, { updateCargo, sendCargo })(PlayerBoard);
