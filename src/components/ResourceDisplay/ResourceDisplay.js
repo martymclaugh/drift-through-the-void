@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { toJS } from 'immutable';
 import { connect } from 'react-redux';
 import CargoContainer from '../shared/CargoContainer/CargoContainer';
+import SoylentContainer from '../SoylentContainer/SoylentContainer';
+import ColonistIcon from '../ColonistIcon/ColonistIcon';
 
 import './resource-display-styles.css';
 
@@ -27,10 +29,16 @@ class ResourceDisplay extends Component {
   }
 
   render() {
+    const { distributedResources } = this.props;
     return (
       <div className="resource-display">
         Cargo Hold
+        <ColonistIcon colonists={this.props.colonists} />
         {this.renderCargoContainers()}
+        colonists: {this.props.colonists}
+        soylent: {this.props.soylent}
+        credits: {this.props.credits}
+        <SoylentContainer soylent={this.props.soylent} />
       </div>
     )
   }
@@ -38,6 +46,9 @@ class ResourceDisplay extends Component {
 
 const mapStateToProps = state => ({
   distributedResources: state.playerBoard.get('distributedResources'),
+  colonists: state.playerBoard.get('colonists'),
+  soylent: state.playerBoard.get('soylent'),
+  credits: state.playerBoard.get('credits'),
 });
 
 export default connect(mapStateToProps, {  })(ResourceDisplay);

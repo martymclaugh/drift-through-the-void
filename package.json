@@ -24,7 +24,7 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "PORT=8080 npm-run-all -p watch-css start-js",
+    "start": "PORT=3080 npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "flow": "flow",
     "test": "react-scripts test --env=jsdom",
