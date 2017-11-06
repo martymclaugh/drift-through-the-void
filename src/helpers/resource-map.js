@@ -13,6 +13,9 @@ import spiderSilkBlack from '../assets/images/resource-images/spider-black.png';
 import riflesGreen from '../assets/images/resource-images/rifle-green.png';
 import riflesBlack from '../assets/images/resource-images/rifle-black.png';
 
+import soylentGreen from '../assets/images/resource-images/soylent-green-icon.png';
+import soylentBlack from '../assets/images/resource-images/soylent-black-icon.png';
+
 
 export const resourceMap = {
   nanoTubes: {
@@ -45,4 +48,10 @@ export const resourceMap = {
     greenImg: riflesGreen,
     blackImg: riflesBlack,
   },
+  soylent: {
+    firstVal: 1,
+    maxAmount: 15,
+    greenImg: soylentGreen,
+    blackImg: soylentBlack,
+  }
 }

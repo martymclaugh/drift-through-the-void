@@ -1,0 +1,13 @@
+.colonist-icon {
+  float: right;
+  margin: 1rem;
+
+  &__asset {
+    width: 4rem;
+  }
+  &__amount {
+    color: #FFFFFF;
+    font-size: 4rem;
+    display: inline-block;
+  }
+}
