@@ -26,6 +26,10 @@ export const socketMiddleware = (store) => {
           socket.emit('sendHackNumber', data);
         case types.SEND_CARGO:
           socket.emit('sendCargo', data);
+        case types.CREATE_USERNAME:
+          socket.emit('createUsername', data);
+        case types.SEND_LOBBY_MESSAGE:
+          socket.emit('sendLobbyMessage', data);
         default:
           console.log('strange action', action);
       }

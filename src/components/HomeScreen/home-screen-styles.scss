@@ -1,0 +1,63 @@
+``@import '../../assets/styles/settings.scss';
+
+.home-screen {
+  height: 40rem;
+  display: table;
+  width: 100%;
+
+  &__title {
+    text-transform: uppercase;
+    font-family: $font-family-nova;
+    color: $matrix-green;
+    font-size: 6rem;
+    font-weight: 900;
+    letter-spacing: 0.05rem;
+    padding: 1rem;
+  }
+  &__text {
+    font-family: $font-family-nova;
+    color: $aqua;
+    font-size: 4rem;
+    padding: 0.5rem;
+  }
+  &__content {
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+  }
+  &__error {
+    font-size: 2rem;
+    font-family: $font-family-nova;
+    color: red;
+    margin-top: 1rem;
+  }
+  &__username {
+
+    &-input {
+      background-color: transparent;
+      border: none;
+      color: $matrix-green;
+      font-size: 3rem;
+      margin: 3rem;
+      font-family: $font-family-nova;
+      font-weight: 900;
+    }
+    &-button {
+      display: block;
+      background-color: transparent;
+      border: 6px solid $matrix-green;
+      font-size: 2rem;
+      padding: 1rem;
+      text-transform: uppercase;
+      color: $matrix-green;
+      font-family: $font-family-nova;
+      margin: 0 auto;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
