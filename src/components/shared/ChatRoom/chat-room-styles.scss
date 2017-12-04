@@ -1,0 +1,38 @@
+@import '../../../assets/styles/settings.scss';
+
+.chat-room {
+  &__chat {
+    border-radius: 0.3rem;
+    background-color: #1F2B2B;
+    margin: 0.5rem;
+    padding: 0.8rem;
+    min-height: 8rem;
+    overflow-x: scroll;
+    @include grid-col(12, 0);
+  }
+  &__input {
+    margin: 0.5rem;
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    background-color: #1F2B2B;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25) inset;
+    border-radius: 0.3rem;
+    border: none;
+    min-width: 4rem;
+    color: $light-blue;
+    @include grid-col(12, 0);
+  }
+  &__user {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $light-yellow;
+  }
+  &__message {
+    font-size: 1.3rem;
+    color: $light-blue;
+    margin-left: 1rem;
+  }
+  &__user, &__message, &__input {
+    font-family: $font-family-oswald;
+  }
+}
