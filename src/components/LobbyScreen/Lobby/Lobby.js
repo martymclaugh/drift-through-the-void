@@ -63,20 +63,12 @@ class Lobby extends Component {
       isPrivate,
       showGameDetails,
     } = this.state
-
-    if (showGameForm) {
+    if (showGameForm || showGameDetails) {
       return (
         <GameForm
+          gameDetails={showGameDetails}
           handleHideMenus={() => this.handleHideMenus()}
-        />
-      );
-    }
-    if (showGameDetails) {
-      return (
-        <GameForm
-          gameDetails
           activeGame={this.state.activeGame}
-          handleHideMenus={() => this.handleHideMenus()}
         />
       );
     }
@@ -96,8 +88,8 @@ class Lobby extends Component {
                          this.onNewGameClick :
                          this.handleHideMenus;
     const buttonText = showGameForm || showGameDetails ?
-                      <span>&#215;</span> :
-                      <span>&#43;</span>;
+                      <span className="new-game__button-cancel">&#215;</span> :
+                      <span className="new-game__button-plus">&#43;</span>;
 
     return (
       <div className="lobby">
@@ -106,9 +98,7 @@ class Lobby extends Component {
           onClick={() => onButtonClick()}
           className="new-game__button"
         >
-          <span className="new-game__button-plus">
-            {buttonText}
-          </span>
+          {buttonText}
         </button>
         <div className="lobby__content">
           {this.renderContent()}
