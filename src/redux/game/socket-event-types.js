@@ -1,7 +1,13 @@
 import { setHackNumber, setTerminals } from '../../components/HeadQuarters/head-quarters-actions';
 import { updateCargo } from '../../components/PlayerBoard/player-board-actions';
 import { usernameTaken, usernameSuccess } from '../../components/HomeScreen/home-screen-actions';
-import { addLobbyMessage } from '../../components/LobbyScreen/lobby-screen-actions';
+import {
+  addLobbyMessage,
+  receiveServer,
+  addLobbyGame,
+  wrongPassword,
+  passwordSuccess,
+} from '../../components/LobbyScreen/lobby-screen-actions';
 
 export const socketEventTypes = {
   receiveTerminals: setTerminals,
@@ -10,4 +16,8 @@ export const socketEventTypes = {
   receiveUsernameTaken: usernameTaken,
   receiveUsernameSuccess: usernameSuccess,
   receiveLobbyMessage: addLobbyMessage,
+  receiveServer: receiveServer,
+  receiveLobbyGame: addLobbyGame,
+  wrongPassword,
+  passwordSuccess,
 }

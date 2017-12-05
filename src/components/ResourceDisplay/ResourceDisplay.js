@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { toJS } from 'immutable';
 import { connect } from 'react-redux';

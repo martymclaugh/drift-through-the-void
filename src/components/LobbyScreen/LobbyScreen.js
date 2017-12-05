@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -29,7 +31,7 @@ class LobbyScreen extends Component {
   handleSubmit: () => void;
   handleSubmit(event: any) {
       event.preventDefault();
-    if (this.state.message.length) {
+    if (this.state.message.length > 0) {
       const submittedMessage = {
         user: this.props.username,
         message: this.state.message,
@@ -45,6 +47,7 @@ class LobbyScreen extends Component {
         <div className="lobby-screen__welcome">WELCOME, {this.props.username}!</div>
         <Lobby
           title={"Games"}
+          onNewGameClick={this.toggleNewGameMenu}
         />
         <ChatRoom
           title={"Lobby Chat"}

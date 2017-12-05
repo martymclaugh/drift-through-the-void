@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import colonistGreen from '../../assets/images/resource-images/colonist-green.png';
 import colonistBlack from '../../assets/images/resource-images/colonist-black.png'

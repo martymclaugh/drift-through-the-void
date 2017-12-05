@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
@@ -33,12 +35,15 @@ class ChatRoom extends Component {
         const shouldUsernameRender = i === 0 ||
         (i !== 0 && messages.get(i - 1) && messages.get(i - 1).user !== message.user);
         const username = shouldUsernameRender && (
-          <div className="chat-room__user">{message.user}</div>
+          <div key={`${message.user} ${message.message}`} className="chat-room__user">{message.user}</div>
         )
         return (
-          <div>
+          <div
+            key={`${i} ${message.message}`}
+            className="chat-room__message"
+          >
             {username}
-            <div className="chat-room__message">{message.message}</div>
+            <div className="chat-room__message-content">{message.message}</div>
           </div>
         )
       })
