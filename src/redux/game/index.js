@@ -17,21 +17,37 @@ const socket = io.connect(`http://${config.host}:${config.port}`);
 export const socketMiddleware = (store) => {
   return next => action => {
     const data = action.payload
-    if (socket && action.type && data) {
+    if (socket && action.type) {
       switch (action.type) {
         case types.SEND_TERMINALS:
           socket.emit('sendTerminals', data);
           break;
         case types.SEND_HACK_NUMBER:
           socket.emit('sendHackNumber', data);
+          break;
         case types.SEND_CARGO:
           socket.emit('sendCargo', data);
+          break;
         case types.CREATE_USERNAME:
           socket.emit('createUsername', data);
+          break;
         case types.SEND_LOBBY_MESSAGE:
           socket.emit('sendLobbyMessage', data);
+          break;
+        case types.RECYCLE_SERVER:
+          socket.emit('recycleServer', data);
+          break;
+        case types.REQUEST_SERVER:
+          socket.emit('requestServer', data);
+          break;
+        case types.CREATE_GAME:
+          socket.emit('createGame', data);
+          break;
+        case types.CHECK_PASSWORD:
+          socket.emit('checkPassword', data);
+          break;
         default:
-          console.log('strange action', action);
+          return next(action);
       }
     }
 
