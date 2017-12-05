@@ -3,7 +3,7 @@
 
 // Grid Config
 @mixin grid-col($col-number, $gutter: 30) {
-  width: calc(#{100 * ($col-number / 12)}% - #{$gutter * 2}px);
+  width: calc(#{100 * ($col-number / 12)}% - #{$gutter * 1.5}px);
   float: left;
   margin-left: #{$gutter}px;
 }
@@ -41,6 +41,7 @@ $articlePurple: #7651FC;
 $light-gray: #f5f6f7;
 $medium-gray: #eaeaec;
 $dark-gray: #262626;
+$light-dark-gray: rgba(259, 255, 255, 0.15);
 
 
 $aqua-green: #3fabb0;
