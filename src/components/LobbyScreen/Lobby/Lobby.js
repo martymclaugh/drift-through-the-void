@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { requestServer, recycleServer } from '../../../redux/game/game-actions';
 import { clearError } from '../lobby-screen-actions';
-import Games from './Games/Games';
+import GamesList from './GamesList/GamesList';
 import GameForm from './GameForm/GameForm';
 
 import './lobby-styles.css';
@@ -71,11 +71,12 @@ class Lobby extends Component {
           gameDetails={showGameDetails}
           handleHideMenus={() => this.handleHideMenus()}
           activeGame={this.state.activeGame}
+          joinGame={this.props.joinGame}
         />
       );
     }
     return (
-      <Games
+      <GamesList
         handleGameClick={this.handleGameClick}
         games={this.props.games}
       />
