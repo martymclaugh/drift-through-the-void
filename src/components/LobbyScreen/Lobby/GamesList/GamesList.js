@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import './games-list-styles.css';
+
 export default (props) => {
   if (props.games.size > 0) {
     return props.games.map(game => (
@@ -10,7 +12,7 @@ export default (props) => {
         onClick={() => props.handleGameClick(game)}
         className="game"
       >
-        <span className="game__text">{game.server}</span>
+        <span className="game__text">{game.server.replace('-', ' ')}</span>
         <span className="game__user">{game.user}</span>
         {game.isPrivate && <span className="game__text">&#128274;</span>}
       </div>
