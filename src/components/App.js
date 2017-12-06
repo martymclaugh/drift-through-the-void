@@ -14,7 +14,7 @@ import '../assets/styles/base.css';
 const App = () => (
   <Router>
     <div>
-      <Route path="/play" component={PlayerBoard} />
+      <Route path="/game/:slug" component={PlayerBoard} />
       <Route path="/lobby" component={LobbyScreen} />
       <Route exact path="/" component={HomeScreen} />
     </div>
