@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { submitLobbyMessage, addLobbyMessage } from './lobby-screen-actions';
+import { joinLobbyRoom, leaveLobbyRoom } from '../../redux/game/game-actions';
 import ChatRoom from '../shared/ChatRoom/ChatRoom';
 import Lobby from './Lobby/Lobby';
 
@@ -19,10 +20,21 @@ class LobbyScreen extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.joinGame = this.joinGame.bind(this);
   }
   componentDidMount(){
+    if (this.props.username) {
+      this.props.joinLobbyRoom();
+    }
     // push them back to homescreen to create username
     !this.props.username && this.props.history.push('/');
+  }
+  componentWillUnmount() {
+    this.props.leaveLobbyRoom();
+  }
+  joinGame: () => void;
+  joinGame(server) {
+    this.props.history.push(`/game/${server}`);
   }
   handleKeyPress: () => void;
   handleKeyPress(event: any) {
@@ -47,6 +59,7 @@ class LobbyScreen extends Component {
         <div className="lobby-screen__welcome">WELCOME, {this.props.username}!</div>
         <Lobby
           title={"Games"}
+          joinGame={this.joinGame}
           onNewGameClick={this.toggleNewGameMenu}
         />
         <ChatRoom
@@ -67,4 +80,9 @@ const mapStateToProps = state => ({
   messages: state.lobby.get('messages'),
 });
 
-export default withRouter(connect(mapStateToProps, { submitLobbyMessage, addLobbyMessage })(LobbyScreen));
+export default withRouter(connect(mapStateToProps, {
+  submitLobbyMessage,
+  addLobbyMessage,
+  joinLobbyRoom,
+  leaveLobbyRoom,
+})(LobbyScreen));
