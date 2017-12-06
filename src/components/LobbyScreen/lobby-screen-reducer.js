@@ -6,7 +6,7 @@ const INITIAL_STATE = fromJS({
   games: List(),
   server: Map(),
   error: '',
-  passwordSuccess: false,
+  passwordVerified: false,
 });
 
 
@@ -34,7 +34,7 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
     case types.WRONG_PASSWORD:
       return state.merge({ error: action.payload.error });
     case types.PASSWORD_SUCCESS:
-      return state.merge({ passwordSuccess: true });
+      return state.merge({ passwordVerified: true });
     case types.CLEAR_ERROR:
       return state.merge({ error: '' });
     default:
