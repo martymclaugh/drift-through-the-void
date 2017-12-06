@@ -8,6 +8,8 @@ export const types = {
   RECYCLE_SERVER: 'RECYCLE_SERVER',
   CREATE_GAME: 'CREATE_GAME',
   CHECK_PASSWORD: 'CHECK_PASSWORD',
+  JOIN_LOBBY_ROOM: 'JOIN_LOBBY_ROOM',
+  LEAVE_LOBBY_ROOM: 'LEAVE_LOBBY_ROOM',
 }
 
 export const sendHackNumber = payload =>
@@ -24,3 +26,7 @@ export const createGame = payload =>
   ({ type: types.CREATE_GAME, payload });
 export const checkPassword = payload =>
   ({ type: types.CHECK_PASSWORD, payload });
+export const joinLobbyRoom = () =>
+  ({ type: types.JOIN_LOBBY_ROOM });
+export const leaveLobbyRoom = () =>
+  ({ type: types.LEAVE_LOBBY_ROOM });

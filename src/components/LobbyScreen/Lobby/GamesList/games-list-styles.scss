@@ -1,0 +1,25 @@
+@import '../../../../assets/styles/settings.scss';
+
+.no-games {
+  padding: 0.8rem;
+  font-family: $font-family-nova;
+  color: $light-blue;
+}
+.game {
+  padding: 0.8rem;
+  border-bottom: 1px solid rgba(259, 255, 255, 0.05);;
+  font-family: $font-family-nova;
+  color: $light-blue;
+  cursor: pointer;
+
+  &__text, &__user {
+    margin-left: 1rem;
+  }
+  &__user {
+    color: $light-yellow;
+  }
+  &:hover {
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25) inset;
+    background: rgba(259, 255, 255, 0.05);
+  }
+}

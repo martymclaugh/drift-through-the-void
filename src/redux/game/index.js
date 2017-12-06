@@ -46,6 +46,12 @@ export const socketMiddleware = (store) => {
         case types.CHECK_PASSWORD:
           socket.emit('checkPassword', data);
           break;
+        case types.JOIN_LOBBY_ROOM:
+          socket.emit('joinLobbyRoom');
+          break;
+        case types.LEAVE_LOBBY_ROOM:
+          socket.emit('leaveLobbyRoom');
+          break;
         default:
           return next(action);
       }

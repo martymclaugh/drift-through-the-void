@@ -25,6 +25,15 @@ class GameForm extends Component {
     this.handleCheckPassword = this.handleCheckPassword.bind(this);
     this.handleCreateGame = this.handleCreateGame.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    const {
+      gameDetails,
+      activeGame
+    } = nextProps;
+    if (gameDetails && activeGame.isPrivate && nextProps.passwordVerified) {
+      this.props.joinGame(activeGame.server);
+    }
+  }
   handleKeyPress: () => void;
   handleKeyPress(event: any) {
     if(event.target instanceof HTMLInputElement) {
@@ -50,21 +59,25 @@ class GameForm extends Component {
       server: game.server,
       isPrivate: !!game.password,
     });
-    this.props.handleHideMenus();
+    this.props.joinGame(game.server);
   }
   handleCheckPassword: () => void;
   handleCheckPassword() {
     const {
       user,
       server,
+      isPrivate,
     } = this.props.activeGame
     const game = {
       user,
       server,
       password: this.state.password,
     };
-    this.props.checkPassword({ game });
-    console.log('checking password', game);
+    if (isPrivate) {
+      this.props.checkPassword({ game });
+    } else {
+      this.props.joinGame(server);
+    }
   }
   render() {
     const {
@@ -104,7 +117,7 @@ class GameForm extends Component {
         {title}
         <div className="new-game__user">Host: {host}</div>
         <div className="new-game__name">
-          Server: <span className="new-game__server">{serverName}</span>
+          Server: <span className="new-game__server">{serverName && serverName.replace('-', ' ')}</span>
         </div>
         {togglePrivate}
         {password}
@@ -126,6 +139,7 @@ const mapStateToProps = state => ({
   server: state.lobby.getIn(['server', 'name']),
   username: state.homeScreen.get('username'),
   error: state.lobby.get('error'),
+  passwordVerified: state.lobby.get('passwordVerified'),
 });
 export default connect(mapStateToProps, {
   requestServer,
