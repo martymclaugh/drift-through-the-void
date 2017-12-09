@@ -1,4 +1,4 @@
-import { fromJS, List, toJS } from 'immutable';
+import { fromJS } from 'immutable';
 import { types } from './player-board-actions';
 
 const INITIAL_STATE = fromJS({

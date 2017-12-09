@@ -8,31 +8,11 @@ import randomStringArray from '../../helpers/random-string';
 import { hackingValues } from '../../helpers/hacking-values';
 import Terminal from '../Terminal/Terminal';
 import ControlPanel from '../shared/ControlPanel/ControlPanel';
+import { Props, State } from '../../flow/components/head-quarters-types';
 
 import './head-quarters.css';
 
-type TerminalType = {
-  id: number,
-  value: string,
-}
-
-type State = {
-  hackingActive: boolean,
-}
-
-type Props = {
-  numberOfHacks: number,
-  terminalAmount: number,
-  terminals: Array<TerminalType>,
-  setTerminals: (Object) => void,
-  updateCargo: () => void,
-  setHackNumber: ({ numberOfHacks: number }) => void,
-}
-
-
 class HeadQuarters extends Component<Props, State>{
-
-  state: State
 
   constructor(props: Props) {
     super(props)
@@ -92,7 +72,7 @@ class HeadQuarters extends Component<Props, State>{
       this.initiateHack();
     }
   }
-  handleDiscardTerminal: (TerminalType) => void;
+  handleDiscardTerminal: (terminal: Object) => void;
   handleDiscardTerminal(terminal) {
     if (this.props.numberOfHacks > 0) {
       const id = terminal.id;
@@ -143,7 +123,6 @@ class HeadQuarters extends Component<Props, State>{
     const {
       terminals,
       numberOfHacks,
-      terminalAmount,
     } = this.props;
     const {
       emptyTerminalIds,
@@ -163,13 +142,12 @@ class HeadQuarters extends Component<Props, State>{
     const renderTerminals = terminals.map((terminal, i) => (
       <div>
       <Terminal
-        key={i}
         numberOfHacks={numberOfHacks}
         hackingActive={hackingActive}
         handleDiscardTerminal={() => this.handleDiscardTerminal(terminal)}
         isLastTerminal={Math.max(...emptyTerminalIds) === terminal.id}
         terminateHacking={this.terminateHacking}
-        algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value.name]}
+        algorithm={terminal.value ? [...randomStringArray(12 + (i * 5)), terminal.value && terminal.value.name] : ''}
         {...terminal}
       />
     </div>

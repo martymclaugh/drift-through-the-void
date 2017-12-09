@@ -8,10 +8,10 @@ import {
   createGame,
   checkPassword,
 } from '../../../../redux/game/game-actions';
-import { addLobbyGame } from '../../lobby-screen-actions';
 import CheckBox from '../../../shared/CheckBox/CheckBox';
+import { Props, State } from '../../../../flow/components/game-form-types';
 
-class GameForm extends Component {
+class GameForm extends Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -34,8 +34,8 @@ class GameForm extends Component {
       this.props.joinGame(activeGame.server);
     }
   }
-  handleKeyPress: () => void;
-  handleKeyPress(event: any) {
+  handleKeyPress: (e: any) => void;
+  handleKeyPress(event) {
     if(event.target instanceof HTMLInputElement) {
       const targetValue = event.target.value;
 
@@ -54,11 +54,6 @@ class GameForm extends Component {
       password: this.state.password,
     };
     this.props.createGame({ game });
-    this.props.addLobbyGame({
-      user: game.user,
-      server: game.server,
-      isPrivate: !!game.password,
-    });
     this.props.joinGame(game.server);
   }
   handleCheckPassword: () => void;
@@ -92,7 +87,7 @@ class GameForm extends Component {
       <div className="new-game__password">
         <span className="new-game__password-text">Password: </span>
         <input
-          onChange={(e) => this.handleKeyPress(e)}
+          onChange={(event) => this.handleKeyPress(event)}
           type="password"
           className="new-game__password-input"
         />
@@ -145,6 +140,5 @@ export default connect(mapStateToProps, {
   requestServer,
   recycleServer,
   createGame,
-  addLobbyGame,
   checkPassword,
 })(GameForm);

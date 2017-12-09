@@ -1,10 +1,11 @@
 // @flow
 
 import React from 'react';
+import { Props } from '../../../../flow/components/game-list-types';
 
 import './games-list-styles.css';
 
-export default (props) => {
+export default (props: Props) => {
   if (props.games.size > 0) {
     return props.games.map(game => (
       <div
@@ -14,7 +15,7 @@ export default (props) => {
       >
         <span className="game__text">{game.server.replace('-', ' ')}</span>
         <span className="game__user">{game.user}</span>
-        {game.isPrivate && <span className="game__text">&#128274;</span>}
+        {game.isPrivate && <span role="img" aria-labelledby="private" className="game__text">&#128274;</span>}
       </div>
     ));
   }

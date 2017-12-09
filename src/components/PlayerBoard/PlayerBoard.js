@@ -2,21 +2,14 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toJS } from 'immutable';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
 import { updateCargo } from './player-board-actions';
 import { sendCargo } from '../../redux/game/game-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
-
-type State = {}
-
-type Props = {}
-
+import { Props, State } from '../../flow/components/player-board-types';
 
 class PlayerBoard extends Component<Props, State>{
-
-  state: State
 
   constructor(props: Props) {
     super(props)
@@ -30,7 +23,7 @@ class PlayerBoard extends Component<Props, State>{
   updateCargo: () => void;
   updateCargo() {
     const { terminals, cargo } = this.props;
-    const death = reduceObjectValues(terminals, 'death');
+    // const death = reduceObjectValues(terminals, 'death');
     const resources = reduceObjectValues(terminals, 'resources')
     let cargoItems = {
       colonists: cargo.get('colonists'),
@@ -42,6 +35,8 @@ class PlayerBoard extends Component<Props, State>{
 
     Object.keys(cargoItems).map(key => {
       cargoItems[key] = cargoItems[key] + reduceObjectValues(terminals, key);
+
+      return cargoItems;
     })
     for (var i = 0; i < resources; i ++) {
       const key = resourceKeys[i % resourceKeys.length];

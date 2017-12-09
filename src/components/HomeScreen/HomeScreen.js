@@ -3,12 +3,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import containsBadWord from '../../helpers/username-checker';
 import { createUsername } from './home-screen-actions';
+import { Props, State } from '../../flow/components/home-screen-types';
 
 import './home-screen-styles.css';
 
-class Lobby extends Component {
+class HomeScreen extends Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -18,7 +18,7 @@ class Lobby extends Component {
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleCreateUsername = this.handleCreateUsername.bind(this);
-    this.focusInput = this.focusInput.bind(this);
+    this.focusInput = this.focusInput.bind(this)
   }
   componentDidMount() {
     this.focusInput();
@@ -27,19 +27,20 @@ class Lobby extends Component {
   componentWillReceiveProps(nextProps) {
     nextProps.usernameInServer && this.props.history.push('/lobby');
   }
-  handleKeyPress: () => void;
-  handleKeyPress(event: any) {
+  handleKeyPress: (event: any) => void;
+  handleKeyPress(event) {
     if(event.target instanceof HTMLInputElement) {
       const targetValue = event.target.value;
 
       this.setState({ username: targetValue });
     }
   }
+  usernameInput: any;
   focusInput: () => void;
   focusInput() {
     this.usernameInput.focus();
   }
-  handleCreateUsername: () => void;
+  handleCreateUsername: (event: any) => void;
   handleCreateUsername(event) {
     event.preventDefault();
     this.state.username && this.props.createUsername({ username: this.state.username });
@@ -72,4 +73,4 @@ const mapStateToProps = state => ({
   error: state.homeScreen.get('error'),
   usernameInServer: state.homeScreen.get('inServer'),
 })
-export default withRouter(connect(mapStateToProps, { createUsername })(Lobby));
+export default withRouter(connect(mapStateToProps, { createUsername })(HomeScreen));

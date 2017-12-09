@@ -2,10 +2,12 @@
 
 import React, { Component } from 'react';
 import { resourceMap } from '../../helpers/resource-map';
+import { Props, State } from '../../flow/components/soylent-container-types';
 
 import './soylent-container-styles.css';
-class SoylentContainer extends Component {
-  constructor(props) {
+
+class SoylentContainer extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -18,9 +20,10 @@ class SoylentContainer extends Component {
   componentDidMount() {
     this.powerUpSoylent(this.props.soylent);
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     this.powerUpSoylent(nextProps.soylent);
   }
+  renderSoylentIcons: () => void;
   renderSoylentIcons(){
     const { soylent } = resourceMap;
     let icons = [];
@@ -34,7 +37,8 @@ class SoylentContainer extends Component {
     }
     return icons;
   }
-  powerUpSoylent(num) {
+  powerUpSoylent: (num: number) => void;
+  powerUpSoylent(num: number) {
     for (let i = 1; i < num + 1; i ++) {
       setTimeout(() => {
         return this.setState({ amount: i });

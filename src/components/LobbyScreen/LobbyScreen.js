@@ -7,10 +7,11 @@ import { submitLobbyMessage, addLobbyMessage } from './lobby-screen-actions';
 import { joinLobbyRoom, leaveLobbyRoom } from '../../redux/game/game-actions';
 import ChatRoom from '../shared/ChatRoom/ChatRoom';
 import Lobby from './Lobby/Lobby';
+import { Props, State } from '../../flow/components/lobby-screen-types';
 
 import './lobby-screen-styles.css';
 
-class LobbyScreen extends Component {
+class LobbyScreen extends Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -36,12 +37,12 @@ class LobbyScreen extends Component {
   joinGame(server) {
     this.props.history.push(`/game/${server}`);
   }
-  handleKeyPress: () => void;
-  handleKeyPress(event: any) {
+  handleKeyPress: (event: any) => void;
+  handleKeyPress(event) {
     this.setState({ message: event.target.value });
   }
-  handleSubmit: () => void;
-  handleSubmit(event: any) {
+  handleSubmit: (event: any) => void;
+  handleSubmit(event) {
       event.preventDefault();
     if (this.state.message.length > 0) {
       const submittedMessage = {
@@ -60,7 +61,6 @@ class LobbyScreen extends Component {
         <Lobby
           title={"Games"}
           joinGame={this.joinGame}
-          onNewGameClick={this.toggleNewGameMenu}
         />
         <ChatRoom
           title={"Lobby Chat"}

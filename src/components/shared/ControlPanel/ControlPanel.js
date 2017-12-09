@@ -1,9 +1,11 @@
 // @flow
 
 import React from 'react';
+import { Props } from '../../../flow/components/control-panel-types';
 
 import './control-panel-styles.css';
-export default (props) => {
+
+export default (props: Props) => {
   const acceptButtonClasses = [
     `${props.acceptButtonActive ? ' is-active' : ''}`,
     `${!props.hackButtonActive ? ' full-height' : ''}`

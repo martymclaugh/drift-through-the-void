@@ -1,4 +1,4 @@
-export const types = {
+export const lobbyTypes = {
   SEND_HACK_NUMBER: 'SEND_HACK_NUMBER',
   SEND_TERMINALS: 'SEND_TERMINALS',
   SEND_CARGO: 'SEND_CARGO',
@@ -13,20 +13,20 @@ export const types = {
 }
 
 export const sendHackNumber = payload =>
-  ({ type: types.SEND_HACK_NUMBER, payload });
+  ({ type: lobbyTypes.SEND_HACK_NUMBER, payload });
 export const sendTerminals = payload =>
-  ({ type: types.SEND_TERMINALS, payload });
+  ({ type: lobbyTypes.SEND_TERMINALS, payload });
 export const sendCargo = payload =>
-  ({ type: types.SEND_CARGO, payload });
+  ({ type: lobbyTypes.SEND_CARGO, payload });
 export const requestServer = payload =>
-  ({ type: types.REQUEST_SERVER, payload });
+  ({ type: lobbyTypes.REQUEST_SERVER, payload });
 export const recycleServer = payload =>
-  ({ type: types.RECYCLE_SERVER, payload });
+  ({ type: lobbyTypes.RECYCLE_SERVER, payload });
 export const createGame = payload =>
-  ({ type: types.CREATE_GAME, payload });
+  ({ type: lobbyTypes.CREATE_GAME, payload });
 export const checkPassword = payload =>
-  ({ type: types.CHECK_PASSWORD, payload });
+  ({ type: lobbyTypes.CHECK_PASSWORD, payload });
 export const joinLobbyRoom = () =>
-  ({ type: types.JOIN_LOBBY_ROOM });
+  ({ type: lobbyTypes.JOIN_LOBBY_ROOM });
 export const leaveLobbyRoom = () =>
-  ({ type: types.LEAVE_LOBBY_ROOM });
+  ({ type: lobbyTypes.LEAVE_LOBBY_ROOM });
