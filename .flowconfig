@@ -1,9 +1,9 @@
 [ignore]
-
+.*/node_modules/.*
 [include]
 
 [libs]
-
+./libdefs.js
 [options]
 module.name_mapper='.*\(.scss\)' -> 'empty/object'
 module.name_mapper='redux' -> 'empty/object'
