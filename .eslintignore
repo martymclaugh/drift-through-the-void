@@ -1,0 +1,6 @@
+src/assets/**
+*-test.js
+*.scss
+*.css
+*.json
+dist/**
