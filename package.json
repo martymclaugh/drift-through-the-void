@@ -36,7 +36,7 @@
     "build": "npm run build-css && react-scripts build",
     "flow": "flow",
     "eslint": "eslint \"./src/**\"",
-    "test": "flow eslint",
+    "test": "npm run flow eslint",
     "eject": "react-scripts eject",
     "prepush": "npm t"
   }
