@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { resourceMap } from '../../../helpers/resource-map';
+import { Props } from '../../../flow/components/cargo-container-types';
 
 import './cargo-container-styles.css';
 
-const renderIcons = (props) => {
+const renderIcons = (props: Props) => {
   const resource = resourceMap[props.name];
   const maxAmount = resource.maxAmount;
   let icons = [];
@@ -26,7 +27,7 @@ const renderIcons = (props) => {
 
   return icons;
 }
-export default (props) => {
+export default (props: Props) => {
   const totalValue = resourceMap[props.name].firstVal * props.amount;
 
   return (

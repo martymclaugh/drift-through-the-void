@@ -2,13 +2,13 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
 import elementInView from '../../../helpers/check-element-visibility';
+import { Props, State } from '../../../flow/components/chat-room-types';
 
 import './chat-room-styles.css'
 
-class ChatRoom extends Component {
-  constructor(props) {
+class ChatRoom extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.renderMessages = this.renderMessages.bind(this);
@@ -24,10 +24,15 @@ class ChatRoom extends Component {
       this.scrollToBottom();
     }
   }
+  messagesEnd: any;
+  scrollToBottom: () => void;
   scrollToBottom() {
     const node = ReactDOM.findDOMNode(this.messagesEnd);
-    node.scrollIntoView({ behavior: "smooth" });
+
+    // $FlowFixMe
+    node && node.scrollIntoView({ behavior: "smooth" });
   }
+  renderMessages: () => void;
   renderMessages(){
     const { messages } = this.props;
     return (

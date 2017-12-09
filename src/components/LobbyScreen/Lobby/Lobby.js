@@ -6,10 +6,11 @@ import { requestServer, recycleServer } from '../../../redux/game/game-actions';
 import { clearError } from '../lobby-screen-actions';
 import GamesList from './GamesList/GamesList';
 import GameForm from './GameForm/GameForm';
+import { Props, State } from '../../../flow/components/lobby-types';
 
 import './lobby-styles.css';
 
-class Lobby extends Component {
+class Lobby extends Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -33,7 +34,6 @@ class Lobby extends Component {
     }
     this.setState({
       showGameForm: true,
-      ...this.state.showGameForm && { isPrivate: false },
     });
   }
   handleHideMenus: () => void;
@@ -62,7 +62,6 @@ class Lobby extends Component {
   renderContent() {
     const {
       showGameForm,
-      isPrivate,
       showGameDetails,
     } = this.state
     if (showGameForm || showGameDetails) {

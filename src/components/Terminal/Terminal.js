@@ -2,21 +2,10 @@
 
 import React, { Component } from 'react';
 import terminal from '../../assets/images/terminal-images/terminal.png'
-import randomStringArray from '../../helpers/random-string';
 import imagePaths from './image-paths';
+import { Props, State } from '../../flow/shared/terminal-type';
 
 import './terminal-styles.css';
-
-type Props = {
-  numberOfHacks: number,
-  hackingActive: boolean,
-  onClick: () => void,
-  algorithm: Array<string> | string,
-}
-
-type State = {
-  value: ?string,
-}
 
 class Terminal extends Component<Props, State> {
   constructor(props: Props) {
@@ -58,10 +47,10 @@ class Terminal extends Component<Props, State> {
     }
   }
 
-  generateHackIllusion: (Array<string> | string) => void;
-  generateHackIllusion(arr) {
+  generateHackIllusion: (arr: any) => void;
+  generateHackIllusion(arr: any) {
 
-    arr.map((sym, i) => {
+    arr.map((sym, i) => { // eslint-disable-line array-callback-return
       setTimeout(() => {
         this.setState({ value: sym });
       }, 50 * (i + 1));

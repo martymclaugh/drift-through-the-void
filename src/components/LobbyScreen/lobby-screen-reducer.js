@@ -1,5 +1,6 @@
 import { fromJS, List, Map } from 'immutable';
 import { types } from './lobby-screen-actions';
+import { lobbyTypes } from '../../redux/game/game-actions';
 
 const INITIAL_STATE = fromJS({
   messages: List(),
@@ -30,6 +31,11 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
       return state.merge({
         games: newGameState,
         error: '',
+      });
+    case lobbyTypes.JOIN_LOBBY_ROOM:
+      return state.merge({
+        games: List(),
+        messages: List(),
       });
     case types.WRONG_PASSWORD:
       return state.merge({ error: action.payload.error });

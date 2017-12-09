@@ -1,8 +1,5 @@
 import io from 'socket.io-client';
-import { toJS, Iterable, fromJS } from 'immutable';
-import { setHackNumber, setTerminals } from '../../components/HeadQuarters/head-quarters-actions';
-import { updateCargo } from '../../components/PlayerBoard/player-board-actions';
-import { types } from './game-actions';
+import { lobbyTypes } from './game-actions';
 import { socketEventTypes } from './socket-event-types';
 
 var config = {};
@@ -19,37 +16,37 @@ export const socketMiddleware = (store) => {
     const data = action.payload
     if (socket && action.type) {
       switch (action.type) {
-        case types.SEND_TERMINALS:
+        case lobbyTypes.SEND_TERMINALS:
           socket.emit('sendTerminals', data);
           break;
-        case types.SEND_HACK_NUMBER:
+        case lobbyTypes.SEND_HACK_NUMBER:
           socket.emit('sendHackNumber', data);
           break;
-        case types.SEND_CARGO:
+        case lobbyTypes.SEND_CARGO:
           socket.emit('sendCargo', data);
           break;
-        case types.CREATE_USERNAME:
+        case lobbyTypes.CREATE_USERNAME:
           socket.emit('createUsername', data);
           break;
-        case types.SEND_LOBBY_MESSAGE:
+        case lobbyTypes.SEND_LOBBY_MESSAGE:
           socket.emit('sendLobbyMessage', data);
           break;
-        case types.RECYCLE_SERVER:
+        case lobbyTypes.RECYCLE_SERVER:
           socket.emit('recycleServer', data);
           break;
-        case types.REQUEST_SERVER:
+        case lobbyTypes.REQUEST_SERVER:
           socket.emit('requestServer', data);
           break;
-        case types.CREATE_GAME:
+        case lobbyTypes.CREATE_GAME:
           socket.emit('createGame', data);
           break;
-        case types.CHECK_PASSWORD:
+        case lobbyTypes.CHECK_PASSWORD:
           socket.emit('checkPassword', data);
           break;
-        case types.JOIN_LOBBY_ROOM:
+        case lobbyTypes.JOIN_LOBBY_ROOM:
           socket.emit('joinLobbyRoom');
           break;
-        case types.LEAVE_LOBBY_ROOM:
+        case lobbyTypes.LEAVE_LOBBY_ROOM:
           socket.emit('leaveLobbyRoom');
           break;
         default:
@@ -62,7 +59,7 @@ export const socketMiddleware = (store) => {
 }
 
 export const startGame = (store) => {
-  Object.keys(socketEventTypes).map(action => {
+  Object.keys(socketEventTypes).map(action => { // eslint-disable-line array-callback-return
     socket.on(action, data => {
       data && store.dispatch(socketEventTypes[action](data));
     });

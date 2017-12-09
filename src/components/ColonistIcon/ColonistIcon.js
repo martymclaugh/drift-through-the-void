@@ -3,11 +3,12 @@
 import React, { Component } from 'react';
 import colonistGreen from '../../assets/images/resource-images/colonist-green.png';
 import colonistBlack from '../../assets/images/resource-images/colonist-black.png'
+import { Props, State } from '../../flow/components/colonist-icon-types';
 
 import './colonist-icon-styles.css';
 
-class ColonistIcon extends Component {
-  constructor(props) {
+class ColonistIcon extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -19,10 +20,11 @@ class ColonistIcon extends Component {
   componentDidMount() {
     this.powerUpColonists(this.props.colonists);
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     this.powerUpColonists(nextProps.colonists);
   }
-  powerUpColonists(num) {
+  powerUpColonists: (num: number) => void;
+  powerUpColonists(num: number) {
     for (let i = 1; i < num + 1; i ++) {
       setTimeout(() => {
         return this.setState({ amount: i });

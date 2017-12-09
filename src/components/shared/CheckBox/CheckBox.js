@@ -1,10 +1,11 @@
 // @flow
 
 import React from 'react';
+import { Props } from '../../../flow/components/check-box-types';
 
 import './check-box-styles.css'
 
-export default (props) => (
+export default (props: Props) => (
   <div>
     <span
       className={`checkbox ${props.isActive ? 'is-active' : ''}`}
