@@ -27,7 +27,7 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
         error: '',
       });
     case types.ADD_LOBBY_GAME:
-      const newGameState = state.get('games').concat(action.payload);
+      const newGameState = state.get('games').concat(action.payload)
       return state.merge({
         games: newGameState,
         error: '',
@@ -36,6 +36,7 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
       return state.merge({
         games: List(),
         messages: List(),
+        passwordVerified: false,
       });
     case types.WRONG_PASSWORD:
       return state.merge({ error: action.payload.error });
@@ -43,6 +44,10 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
       return state.merge({ passwordVerified: true });
     case types.CLEAR_ERROR:
       return state.merge({ error: '' });
+    case types.UPDATE_GAMES_LIST:
+      return state.merge({
+        games: action.payload,
+      });
     default:
       return state;
   }

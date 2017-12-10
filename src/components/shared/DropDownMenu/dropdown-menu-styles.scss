@@ -1,0 +1,44 @@
+@import '../../../assets/styles/settings.scss';
+.dropdown-menu {
+
+  .button {
+    &__transparent {
+      margin-top: 0;
+      display: inline-block;
+      position: relative;
+      border-radius: 0;
+    }
+    &:hover {
+      opacity: 1 !important;
+    }
+  }
+  &__content {
+    display: none;
+    position: absolute;
+    text-align: center;
+    border: 2px solid $light-yellow;
+
+    &.is-active {
+      display: inline-block;
+    }
+  }
+  &__item {
+    border-left: 2px solid $light-yellow;
+    display: inline-block;
+    background: transparent;
+    width: 3.875rem;
+    font-family: $font-family-nova;
+    text-decoration: none;
+    color: $light-yellow;
+    padding: 0.5rem 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+    &:first-child {
+      border: none;
+    }
+  }
+}

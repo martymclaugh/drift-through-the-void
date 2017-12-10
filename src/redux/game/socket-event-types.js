@@ -7,6 +7,7 @@ import {
   addLobbyGame,
   wrongPassword,
   passwordSuccess,
+  updateGamesList,
 } from '../../components/LobbyScreen/lobby-screen-actions';
 
 export const socketEventTypes = {
@@ -20,4 +21,5 @@ export const socketEventTypes = {
   receiveLobbyGame: addLobbyGame,
   wrongPassword,
   passwordSuccess,
+  updateGamesList,
 }
