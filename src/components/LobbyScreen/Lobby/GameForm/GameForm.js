@@ -9,7 +9,11 @@ import {
   checkPassword,
 } from '../../../../redux/game/game-actions';
 import CheckBox from '../../../shared/CheckBox/CheckBox';
+import DropDownMenu from '../../../shared/DropDownMenu/DropDownMenu';
+import Button from '../../../shared/Button/Button';
 import { Props, State } from '../../../../flow/components/game-form-types';
+
+import './game-form-styles.css';
 
 class GameForm extends Component<Props, State> {
   constructor(props) {
@@ -18,12 +22,14 @@ class GameForm extends Component<Props, State> {
     this.state = {
       password: '',
       isPrivate: false,
+      numberOfPlayers: 2,
     }
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.togglePrivate = this.togglePrivate.bind(this);
     this.handleCheckPassword = this.handleCheckPassword.bind(this);
     this.handleCreateGame = this.handleCreateGame.bind(this);
+    this.handleDropdownSelection = this.handleDropdownSelection.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     const {
@@ -51,22 +57,33 @@ class GameForm extends Component<Props, State> {
     const game = {
       user: this.props.username,
       server: this.props.server,
+      numberOfPlayers: this.state.numberOfPlayers,
       password: this.state.password,
     };
     this.props.createGame({ game });
     this.props.joinGame(game.server);
+  }
+  handleDropdownSelection: () => void;
+  handleDropdownSelection(value) {
+    this.setState({
+      numberOfPlayers: value,
+    });
   }
   handleCheckPassword: () => void;
   handleCheckPassword() {
     const {
       user,
       server,
+      playersJoined,
       isPrivate,
+      numberOfPlayers,
     } = this.props.activeGame
     const game = {
       user,
       server,
       password: this.state.password,
+      playersJoined,
+      numberOfPlayers,
     };
     if (isPrivate) {
       this.props.checkPassword({ game });
@@ -83,7 +100,8 @@ class GameForm extends Component<Props, State> {
       error,
     } = this.props;
     const { isPrivate } = this.state;
-    const password = (isPrivate || (gameDetails && activeGame.isPrivate)) && (
+    const availableSlots = !gameDetails || activeGame.playersJoined < activeGame.numberOfPlayers;
+    const password = (isPrivate || (gameDetails && activeGame.isPrivate && availableSlots)) && (
       <div className="new-game__password">
         <span className="new-game__password-text">Password: </span>
         <input
@@ -103,9 +121,23 @@ class GameForm extends Component<Props, State> {
     const title = gameDetails ?
                  <div className="new-game__title">Join Game</div> :
                  <div className="new-game__title">Create New Game</div>;
+    const dropdown = !gameDetails && (
+      <DropDownMenu
+        items={[
+          { name: 2, value: 2 },
+          { name: 3, value: 3 },
+          { name: 4, value: 4 },
+        ]}
+        handleDropdownSelection={this.handleDropdownSelection}
+      />
+    )
     const onFormSubmit = !gameDetails ? this.handleCreateGame : this.handleCheckPassword;
     const serverName = gameDetails ? activeGame.server : server;
     const host = gameDetails ? activeGame.user : username;
+    const playersJoined = gameDetails && <span className="new-game__user">{activeGame.playersJoined}</span>;
+    const button = availableSlots && (
+      <Button onClick={() => onFormSubmit()}>Enter The Void</Button>
+    )
 
     return (
       <div className="new-game__menu">
@@ -114,16 +146,14 @@ class GameForm extends Component<Props, State> {
         <div className="new-game__name">
           Server: <span className="new-game__server">{serverName && serverName.replace('-', ' ')}</span>
         </div>
+        <div className="new-game__user">
+          Players Ready: {playersJoined}
+        </div>
+        {dropdown}
         {togglePrivate}
         {password}
-        <div>
-          <button
-            onClick={() => onFormSubmit()}
-            className="new-game__create"
-          >
-            Enter The Void
-          </button>
-        </div>
+        {button}
+        {gameDetails && !availableSlots && <div className="new-game__error">Game is full.</div>}
         {error && <div className="new-game__error">{error}</div>}
       </div>
     )
