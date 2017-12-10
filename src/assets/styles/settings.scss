@@ -58,38 +58,3 @@ $dark-clay: #5e5c58;
 $darker-clay: #413f3d;
 $trans-white: rgba(255,255,255,0.9);
 $trans-black: rgba(0,0,0,0.8);
-
-// Media Queries
-$article-mobile-small: (
-  gutter: 15px,
-  media: 20.000rem // 320px
-);
-// Media Queries
-$article-mobile-medium: (
-  gutter: 15px,
-  media: 23.438rem // 375px
-);
-$article-mobile-large: (
-  gutter: 15px,
-  media: 26.563rem // 425px
-);
-$homepage-xsmall: (
-  gutter: 15px,
-  media: 32.000rem // 512px
-);
-$article-xsmall: (
-  gutter: 15px,
-  media: 32.000rem // 512px
-);
-$article-small: (
-  gutter: 30px,
-  media: 48.000rem // 768px
-);
-$article-medium: (
-  gutter: 30px,
-  media: 64.000rem // 1024px
-);
-$article-large: (
-  gutter: 30px,
-  media: 80.000rem // 1280px
-);
