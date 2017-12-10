@@ -14,6 +14,7 @@ class HomeScreen extends Component<Props, State> {
 
     this.state = {
       username: '',
+      error: '',
     };
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -31,8 +32,21 @@ class HomeScreen extends Component<Props, State> {
   handleKeyPress(event) {
     if(event.target instanceof HTMLInputElement) {
       const targetValue = event.target.value;
-
-      this.setState({ username: targetValue });
+      let newState;
+      if (targetValue.length > 15) {
+        newState = {
+          error: 'Username too long.',
+          username: targetValue,
+        }
+      } else if (this.state.error && targetValue.length < 15) {
+        newState = {
+          error: '',
+          username: targetValue,
+        }
+      } else {
+        newState = { username: targetValue };
+      }
+      this.setState(newState);
     }
   }
   usernameInput: any;
@@ -60,9 +74,15 @@ class HomeScreen extends Component<Props, State> {
               type="text"
               onSubmit={this.handleCreateUsername}
             />
-            <button className="home-screen__username-button" onClick={this.handleCreateUsername}>engage</button>
+            <button
+              className="home-screen__username-button"
+              onClick={this.handleCreateUsername}
+              disabled={this.state.error}
+            >
+              engage
+            </button>
           </form>
-          {this.props.error && <div className="home-screen__error">{this.props.error}</div>}
+          {(this.props.error || this.state.error) && <div className="home-screen__error">{this.props.error || this.state.error}</div>}
         </div>
       </div>
     );
