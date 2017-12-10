@@ -7,6 +7,7 @@
 }
 .game {
   padding: 0.8rem;
+  height: 2.8rem;
   border-bottom: 1px solid rgba(259, 255, 255, 0.05);;
   font-family: $font-family-nova;
   color: $light-blue;
@@ -14,9 +15,22 @@
 
   &__text, &__user {
     margin-left: 1rem;
+    float: left;
   }
   &__user {
     color: $light-yellow;
+    float: left
+  }
+  &__players {
+    width: 4rem;
+    margin-left: 1rem;
+    display: inline-block;
+    float: left;
+
+    &-image {
+      width: 1rem;
+      display: inline-block;
+    }
   }
   &:hover {
     box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.25) inset;
