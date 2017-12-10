@@ -6,6 +6,7 @@ export const types = {
   WRONG_PASSWORD: 'WRONG_PASSWORD',
   PASSWORD_SUCCESS: 'PASSWORD_SUCCESS',
   CLEAR_ERROR: 'CLEAR_ERROR',
+  UPDATE_GAMES_LIST: 'UPDATE_GAMES_LIST',
 };
 
 export const submitLobbyMessage = payload =>
@@ -22,3 +23,5 @@ export const passwordSuccess = payload =>
   ({ type: types.PASSWORD_SUCCESS, payload });
 export const clearError = () =>
   ({ type: types.CLEAR_ERROR });
+export const updateGamesList = (payload) =>
+  ({ type: types.UPDATE_GAMES_LIST, payload });
