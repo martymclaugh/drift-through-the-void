@@ -7,4 +7,5 @@ export type Props = {
 
 export type State = {
   username: string,
+  error: string,
 };
