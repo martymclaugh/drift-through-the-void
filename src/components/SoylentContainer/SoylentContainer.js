@@ -21,7 +21,9 @@ class SoylentContainer extends Component<Props, State> {
     this.powerUpSoylent(this.props.soylent);
   }
   componentWillReceiveProps(nextProps: Props) {
-    this.powerUpSoylent(nextProps.soylent);
+    if (nextProps.soylent > this.props.soylent) {
+      this.powerUpSoylent(nextProps.soylent);
+    }
   }
   renderSoylentIcons: () => void;
   renderSoylentIcons(){
