@@ -7,7 +7,7 @@ import { Props } from '../../flow/components/colonist-icon-types';
 
 import './colonist-icon-styles.css';
 
-export default (props) => (
+export default (props: Props) => (
   <div className="colonist-icon">
     <img
       src={props.colonists > 0 ? colonistGreen : colonistBlack}
