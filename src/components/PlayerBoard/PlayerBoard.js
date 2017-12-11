@@ -2,11 +2,12 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import HeadQuarters from '../HeadQuarters/HeadQuarters';
-import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
 import { updateCargo } from './player-board-actions';
 import { sendCargo } from '../../redux/game/game-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
+import HeadQuarters from '../HeadQuarters/HeadQuarters';
+import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
+import PlanetContainer from '../PlanetContainer/PlanetContainer';
 import { Props, State } from '../../flow/components/player-board-types';
 
 class PlayerBoard extends Component<Props, State>{
@@ -54,8 +55,8 @@ class PlayerBoard extends Component<Props, State>{
 
     return (
       <div>
-        PLAYER BOARD
         <ResourceDisplay />
+        <PlanetContainer />
         <HeadQuarters
           terminalAmount={7}
           updateCargo={this.updateCargo}
