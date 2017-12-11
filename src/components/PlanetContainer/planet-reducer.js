@@ -1,4 +1,4 @@
-import { fromJS, List, Map } from 'immutable';
+import { fromJS } from 'immutable';
 import { planetActionTypes } from './planet-actions';
 
 const INITIAL_STATE = fromJS({
