@@ -45,7 +45,7 @@ class DropDownMenu extends Component<Props, State> {
   }
   render() {
     return (
-      <div class="dropdown-menu">
+      <div className="dropdown-menu">
         <Button
           onClick={() => this.toggleMenu()}
           isActive={this.state.isActive}
