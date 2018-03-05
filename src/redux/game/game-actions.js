@@ -10,6 +10,8 @@ export const lobbyTypes = {
   CHECK_PASSWORD: 'CHECK_PASSWORD',
   JOIN_LOBBY_ROOM: 'JOIN_LOBBY_ROOM',
   LEAVE_LOBBY_ROOM: 'LEAVE_LOBBY_ROOM',
+  START_TYPING: 'START_TYPING',
+  STOP_TYPING: 'STOP_TYPING',
 }
 
 export const sendHackNumber = payload =>
@@ -30,3 +32,7 @@ export const joinLobbyRoom = () =>
   ({ type: lobbyTypes.JOIN_LOBBY_ROOM });
 export const leaveLobbyRoom = () =>
   ({ type: lobbyTypes.LEAVE_LOBBY_ROOM });
+export const startTyping = payload =>
+  ({ type: lobbyTypes.START_TYPING, payload });
+export const stopTyping = payload =>
+  ({ type: lobbyTypes.STOP_TYPING, payload });

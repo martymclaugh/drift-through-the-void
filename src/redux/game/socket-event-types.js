@@ -8,6 +8,7 @@ import {
   wrongPassword,
   passwordSuccess,
   updateGamesList,
+  updateUsersTyping,
 } from '../../components/LobbyScreen/lobby-screen-actions';
 
 export const socketEventTypes = {
@@ -22,4 +23,5 @@ export const socketEventTypes = {
   wrongPassword,
   passwordSuccess,
   updateGamesList,
+  receiveLobbyActivelyTyping: updateUsersTyping,
 }
