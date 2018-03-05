@@ -1,4 +1,4 @@
-import { fromJS, List, Map } from 'immutable';
+import { fromJS, List } from 'immutable';
 import { types } from './lobby-screen-actions';
 import { lobbyTypes } from '../../redux/game/game-actions';
 
