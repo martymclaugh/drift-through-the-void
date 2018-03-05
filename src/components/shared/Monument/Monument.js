@@ -25,8 +25,12 @@ export default (props) => {
           {renderPlaceholders(props.requiredColonists)}
         </div>
       </div>
-      {props.pointsIfFirst}
-      {props.pointsIfNotFirst}
+      <div>
+        {props.pointsIfFirst}
+      </div>
+      <div>
+        {props.pointsIfNotFirst}
+      </div>
     </div>
   )
 }
