@@ -49,6 +49,12 @@ export const socketMiddleware = (store) => {
         case lobbyTypes.LEAVE_LOBBY_ROOM:
           socket.emit('leaveLobbyRoom');
           break;
+        case lobbyTypes.START_TYPING:
+          socket.emit('sendUserTyping', data);
+          break;
+        case lobbyTypes.STOP_TYPING:
+          socket.emit('removeUserTyping', data);
+          break;
         default:
           return next(action);
       }

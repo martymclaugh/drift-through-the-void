@@ -4,7 +4,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { submitLobbyMessage, addLobbyMessage } from './lobby-screen-actions';
-import { joinLobbyRoom, leaveLobbyRoom } from '../../redux/game/game-actions';
+import {
+  joinLobbyRoom,
+  leaveLobbyRoom,
+  startTyping,
+  stopTyping,
+} from '../../redux/game/game-actions';
 import ChatRoom from '../shared/ChatRoom/ChatRoom';
 import Lobby from './Lobby/Lobby';
 import { Props, State } from '../../flow/components/lobby-screen-types';
@@ -39,7 +44,14 @@ class LobbyScreen extends Component<Props, State> {
   }
   handleKeyPress: (event: any) => void;
   handleKeyPress(event) {
-    this.setState({ message: event.target.value });
+    const { value } = event.target;
+
+    if (this.state.message.length === 0 && value.length === 1) {
+      this.props.startTyping({ username: this.props.username });
+    } else if (value.length === 0) {
+      this.props.stopTyping({ username: this.props.username });
+    }
+    this.setState({ message: value });
   }
   handleSubmit: (event: any) => void;
   handleSubmit(event) {
@@ -64,6 +76,8 @@ class LobbyScreen extends Component<Props, State> {
         />
         <ChatRoom
           title={"Lobby Chat"}
+          usersTyping={this.props.usersTyping}
+          currentUser={this.props.username}
           user={this.props.username}
           messages={this.props.messages}
           value={this.state.message}
@@ -78,6 +92,7 @@ class LobbyScreen extends Component<Props, State> {
 const mapStateToProps = state => ({
   username: state.homeScreen.get('username'),
   messages: state.lobby.get('messages'),
+  usersTyping: state.lobby.get('usersTyping'),
 });
 
 export default withRouter(connect(mapStateToProps, {
@@ -85,4 +100,6 @@ export default withRouter(connect(mapStateToProps, {
   addLobbyMessage,
   joinLobbyRoom,
   leaveLobbyRoom,
+  startTyping,
+  stopTyping,
 })(LobbyScreen));

@@ -1,13 +1,14 @@
-import { fromJS, List, Map } from 'immutable';
+import { fromJS, List } from 'immutable';
 import { types } from './lobby-screen-actions';
 import { lobbyTypes } from '../../redux/game/game-actions';
 
 const INITIAL_STATE = fromJS({
   messages: List(),
   games: List(),
-  server: Map(),
+  server: '',
   error: '',
   passwordVerified: false,
+  usersTyping: List(),
 });
 
 
@@ -48,6 +49,8 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
       return state.merge({
         games: action.payload,
       });
+    case types.UPDATE_USERS_TYPING:
+      return state.set('usersTyping', List(action.payload));
     default:
       return state;
   }

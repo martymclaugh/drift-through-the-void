@@ -13,6 +13,7 @@ class ChatRoom extends Component<Props, State> {
 
     this.renderMessages = this.renderMessages.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.renderUsersTyping = this.renderUsersTyping.bind(this);
   }
   componentDidMount() {
     if (elementInView('chat-room__end')) {
@@ -33,7 +34,7 @@ class ChatRoom extends Component<Props, State> {
     node && node.scrollIntoView({ behavior: "smooth" });
   }
   renderMessages: () => void;
-  renderMessages(){
+  renderMessages() {
     const { messages } = this.props;
     return (
       messages.map((message, i) => {
@@ -54,6 +55,30 @@ class ChatRoom extends Component<Props, State> {
       })
     );
   }
+  renderUsersTyping: () => void;
+  renderUsersTyping() {
+    const { usersTyping } = this.props;
+    const users = usersTyping.filter(user => user !== this.props.currentUser);
+    const { size } = users;
+
+    let text;
+    if (size > 0) {
+      if (size === 1) {
+        text = `${users.get(0)} is typing`;
+      } else if (size === 2) {
+        text = `${users.get(0)} and ${users.get(1)} are typing`;
+      } else if (size > 2) {
+        text = 'several people are typing';
+      }
+      return (
+        <div className="chat-room__users-typing">
+          {text}
+        </div>
+      )
+    }
+
+    return <div className="chat-room__spacer" />;
+  }
   render() {
     return (
       <div className="chat-room">
@@ -65,6 +90,7 @@ class ChatRoom extends Component<Props, State> {
             ref={(element) => { this.messagesEnd = element }}
           />
         </div>
+        {this.renderUsersTyping()}
         <form action="." onSubmit={this.props.submitMessage}>
           <input
             className="chat-room__input"
