@@ -8,6 +8,7 @@ import { reduceObjectValues } from '../../helpers/reduce-object-value';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
 import PlanetContainer from '../PlanetContainer/PlanetContainer';
+import MonumentsContainer from '../MonumentsContainer/MonumentsContainer';
 import { Props, State } from '../../flow/components/player-board-types';
 
 class PlayerBoard extends Component<Props, State>{
@@ -55,6 +56,7 @@ class PlayerBoard extends Component<Props, State>{
 
     return (
       <div>
+        <MonumentsContainer />
         <ResourceDisplay />
         <PlanetContainer />
         <HeadQuarters
