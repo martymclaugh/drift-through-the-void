@@ -7,6 +7,7 @@ export const types = {
   PASSWORD_SUCCESS: 'PASSWORD_SUCCESS',
   CLEAR_ERROR: 'CLEAR_ERROR',
   UPDATE_GAMES_LIST: 'UPDATE_GAMES_LIST',
+  UPDATE_USERS_TYPING: 'UPDATE_USERS_TYPING',
 };
 
 export const submitLobbyMessage = payload =>
@@ -25,3 +26,5 @@ export const clearError = () =>
   ({ type: types.CLEAR_ERROR });
 export const updateGamesList = (payload) =>
   ({ type: types.UPDATE_GAMES_LIST, payload });
+export const updateUsersTyping = (payload) =>
+  ({ type: types.UPDATE_USERS_TYPING, payload });
