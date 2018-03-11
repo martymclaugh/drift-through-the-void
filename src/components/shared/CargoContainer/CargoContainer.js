@@ -6,31 +6,34 @@ import { Props } from '../../../flow/components/cargo-container-types';
 
 import './cargo-container-styles.css';
 
-const renderIcons = (props: Props) => {
+const resourceBar = (props: Props) => {
   const resource = resourceMap[props.name];
   const maxAmount = resource.maxAmount;
-  let icons = [];
+  let resourcePoints = [];
+  const imgSource = resource.greenImg;
+  const pointBoxWidth = 100 / maxAmount;
 
-  for(var i = 1; i < maxAmount + 1; i++) {
-    const isActive = i < props.amount + 1;
-    const imgSource = isActive ? resource.greenImg : resource.blackImg;
+  for (let i = 1; i < maxAmount + 1; i++) {
+    const isActive = i === props.amount;
 
-    icons.push(
-      <div className="icon">
-        <div className="icon__value">{i * resource.firstVal}</div>
-        <div className="icon__asset">
-          <img className={`icon__asset-image ${isActive ? 'is-active' : ''}`} src={imgSource} alt=""/>
-        </div>
+    resourcePoints.push(
+      <div style={{ width: `${pointBoxWidth}%` }} className={`resource__points-box ${isActive ? 'is-active' : ''}`}>
+        <div className="resource__value">{i * resource.firstVal}</div>
       </div>
-    )
+    );
   }
 
-  return icons;
+  return (
+    <div className="resource">
+      <img className="resource__asset" src={imgSource} alt=""/>
+      <div className="resource__points">{resourcePoints}</div>
+    </div>
+  )
 }
 export default (props: Props) => {
   const totalValue = resourceMap[props.name].firstVal * props.amount;
 
   return (
-    <div>{totalValue}{renderIcons(props)}</div>
+    <div>{resourceBar(props)}<span>{totalValue}</span></div>
   )
 }
