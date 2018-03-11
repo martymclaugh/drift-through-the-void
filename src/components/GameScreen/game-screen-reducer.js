@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { types } from './player-board-actions';
+import { types } from './game-screen-actions';
 import { planetActionTypes } from '../PlanetContainer/planet-actions';
 
 const INITIAL_STATE = fromJS({
@@ -16,7 +16,7 @@ const INITIAL_STATE = fromJS({
 });
 
 
-const playerBoardReducer = (state = INITIAL_STATE, action) => {
+const gameScreenReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.UPDATE_CARGO:
       return state.merge(action.payload);
@@ -27,4 +27,4 @@ const playerBoardReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default playerBoardReducer;
+export default gameScreenReducer;

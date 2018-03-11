@@ -9,6 +9,7 @@ import {
   leaveLobbyRoom,
   startTyping,
   stopTyping,
+  joinGame,
 } from '../../redux/game/game-actions';
 import ChatRoom from '../shared/ChatRoom/ChatRoom';
 import Lobby from './Lobby/Lobby';
@@ -40,6 +41,10 @@ class LobbyScreen extends Component<Props, State> {
   }
   joinGame: () => void;
   joinGame(server) {
+    this.props.joinGame({
+      user: this.props.username,
+      server,
+    });
     this.props.history.push(`/game/${server}`);
   }
   handleKeyPress: (event: any) => void;
@@ -99,6 +104,7 @@ export default withRouter(connect(mapStateToProps, {
   submitLobbyMessage,
   addLobbyMessage,
   joinLobbyRoom,
+  joinGame,
   leaveLobbyRoom,
   startTyping,
   stopTyping,

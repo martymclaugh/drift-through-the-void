@@ -55,7 +55,7 @@ class PlanetContainer extends Component {
 
 const mapStateToProps = state => ({
   planets: state.planets,
-  colonists: state.playerBoard.get('colonists'),
+  colonists: state.gameScreen.get('colonists'),
 });
 
 export default connect(mapStateToProps, { colonizePlanet })(PlanetContainer);

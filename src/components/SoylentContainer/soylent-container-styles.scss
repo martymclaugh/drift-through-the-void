@@ -1,6 +1,7 @@
 .soylent-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 1rem;
 
   &__title {

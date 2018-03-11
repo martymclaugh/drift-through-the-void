@@ -55,6 +55,9 @@ export const socketMiddleware = (store) => {
         case lobbyTypes.STOP_TYPING:
           socket.emit('removeUserTyping', data);
           break;
+        case lobbyTypes.JOIN_GAME:
+          socket.emit('joinGame', data);
+          break;
         default:
           return next(action);
       }

@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import PlayerBoard from './PlayerBoard/PlayerBoard';
+import GameScreen from './GameScreen/GameScreen';
 import LobbyScreen from './LobbyScreen/LobbyScreen';
 import HomeScreen from './HomeScreen/HomeScreen';
 
@@ -14,7 +14,7 @@ import '../assets/styles/base.css';
 const App = () => (
   <Router>
     <div>
-      <Route path="/game/:slug" component={PlayerBoard} />
+      <Route path="/game/:slug" component={GameScreen} />
       <Route path="/lobby" component={LobbyScreen} />
       <Route exact path="/" component={HomeScreen} />
     </div>

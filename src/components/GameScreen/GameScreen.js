@@ -2,16 +2,16 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCargo } from './player-board-actions';
+import { updateCargo } from './game-screen-actions';
 import { sendCargo } from '../../redux/game/game-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
 import PlanetContainer from '../PlanetContainer/PlanetContainer';
 import MonumentsContainer from '../MonumentsContainer/MonumentsContainer';
-import { Props, State } from '../../flow/components/player-board-types';
+import { Props, State } from '../../flow/components/game-screen-types';
 
-class PlayerBoard extends Component<Props, State>{
+class GameScreen extends Component<Props, State>{
 
   constructor(props: Props) {
     super(props)
@@ -56,9 +56,9 @@ class PlayerBoard extends Component<Props, State>{
 
     return (
       <div>
-        <MonumentsContainer />
+        {/* <MonumentsContainer /> */}
         <ResourceDisplay />
-        <PlanetContainer />
+        {/* <PlanetContainer /> */}
         <HeadQuarters
           terminalAmount={7}
           updateCargo={this.updateCargo}
@@ -71,7 +71,7 @@ class PlayerBoard extends Component<Props, State>{
 const mapStateToProps = state => ({
   numberOfHacks: state.headQuarters.get('numberOfHacks'),
   terminals: state.headQuarters.get('terminals'),
-  cargo: state.playerBoard
+  cargo: state.gameScreen
 });
 
-export default connect(mapStateToProps, { updateCargo, sendCargo })(PlayerBoard);
+export default connect(mapStateToProps, { updateCargo, sendCargo })(GameScreen);
