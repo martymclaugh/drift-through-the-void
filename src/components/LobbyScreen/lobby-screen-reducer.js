@@ -1,10 +1,10 @@
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Map } from 'immutable';
 import { types } from './lobby-screen-actions';
 import { lobbyTypes } from '../../redux/game/game-actions';
 
 const INITIAL_STATE = fromJS({
   messages: List(),
-  games: List(),
+  games: Map(),
   server: '',
   error: '',
   passwordVerified: false,
@@ -28,14 +28,14 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
         error: '',
       });
     case types.ADD_LOBBY_GAME:
-      const newGameState = state.get('games').concat(action.payload)
+      const newGameState = state.get('games').set(Object.keys(action.payload)[0], action.payload)
       return state.merge({
         games: newGameState,
         error: '',
       });
     case lobbyTypes.JOIN_LOBBY_ROOM:
       return state.merge({
-        games: List(),
+        games: Map(),
         messages: List(),
         passwordVerified: false,
       });
