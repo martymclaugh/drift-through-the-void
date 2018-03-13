@@ -9,9 +9,9 @@ import './games-list-styles.css';
 
 const renderPlayers = (game) => {
   let players = [];
-  for (let i = 0; i < game.numberOfPlayers; i++) {
+  for (let i = 0; i < game.get('numberOfPlayers'); i++) {
     players.push(
-      <img key={i} className="game__players-image" src={i < game.playersJoined ? colonistGreen : colonistBlack} alt=""/>
+      <img key={i} className="game__players-image" src={i < game.get('playersJoined') ? colonistGreen : colonistBlack} alt=""/>
     )
   }
 
@@ -22,7 +22,7 @@ export default (props: Props) => {
   const { games } = props;
   if (games.size > 0) {
     return games.keySeq().toArray().map(server => {
-      const game = games.get(server)[server];
+      const game = games.get(server);
 
       return (
         <div
@@ -34,8 +34,8 @@ export default (props: Props) => {
             {renderPlayers(game)}
           </div>
           <span className="game__text">{server.replace('-', ' ')}</span>
-          <span className="game__user">{game.user}</span>
-          {game.isPrivate && <span role="img" aria-labelledby="private" className="game__text">&#128274;</span>}
+          <span className="game__user">{game.get('user')}</span>
+          {game.get('isPrivate') && <span role="img" aria-labelledby="private" className="game__text">&#128274;</span>}
         </div>
       )
     });

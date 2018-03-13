@@ -36,8 +36,9 @@ class GameForm extends Component<Props, State> {
       gameDetails,
       activeGame
     } = nextProps;
-    if (gameDetails && activeGame.isPrivate && nextProps.passwordVerified) {
-      this.props.joinGame(activeGame.server);
+
+    if (gameDetails && activeGame.get('isPrivate') && nextProps.passwordVerified) {
+      this.props.joinGame(activeGame.get('server'));
     }
   }
   handleKeyPress: (e: any) => void;
@@ -77,7 +78,8 @@ class GameForm extends Component<Props, State> {
       playersJoined,
       isPrivate,
       numberOfPlayers,
-    } = this.props.activeGame
+    } = this.props.activeGame.toJS();
+
     const game = {
       user,
       server,
@@ -100,8 +102,8 @@ class GameForm extends Component<Props, State> {
       error,
     } = this.props;
     const { isPrivate } = this.state;
-    const availableSlots = !gameDetails || activeGame.playersJoined < activeGame.numberOfPlayers;
-    const password = (isPrivate || (gameDetails && activeGame.isPrivate && availableSlots)) && (
+    const availableSlots = !gameDetails || activeGame.get('playersJoined') < activeGame.get('numberOfPlayers');
+    const password = (isPrivate || (gameDetails && activeGame.get('isPrivate') && availableSlots)) && (
       <div className="new-game__password">
         <span className="new-game__password-text">Password: </span>
         <input
@@ -132,9 +134,9 @@ class GameForm extends Component<Props, State> {
       />
     )
     const onFormSubmit = !gameDetails ? this.handleCreateGame : this.handleCheckPassword;
-    const serverName = gameDetails ? activeGame.server : server;
-    const host = gameDetails ? activeGame.user : username;
-    const playersJoined = gameDetails && <span className="new-game__user">{activeGame.playersJoined}</span>;
+    const serverName = gameDetails ? activeGame.get('server') : server;
+    const host = gameDetails ? activeGame.get('user') : username;
+    const playersJoined = gameDetails && <span className="new-game__user">{activeGame.get('playersJoined')}</span>;
     const button = availableSlots && (
       <Button onClick={() => onFormSubmit()}>Enter The Void</Button>
     )
