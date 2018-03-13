@@ -1,8 +1,10 @@
 .soylent-container {
+  clear: both;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin: 1rem;
+  padding: 2rem;
+  margin: 0 2rem;
+  background: rgba(0, 0, 0, 0.2);
 
   &__title {
     font-size: 2rem;

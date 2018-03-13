@@ -11,6 +11,8 @@ import PlanetContainer from '../PlanetContainer/PlanetContainer';
 import MonumentsContainer from '../MonumentsContainer/MonumentsContainer';
 import { Props, State } from '../../flow/components/game-screen-types';
 
+import './game-screen-styles.css';
+
 class GameScreen extends Component<Props, State>{
 
   constructor(props: Props) {
@@ -55,7 +57,7 @@ class GameScreen extends Component<Props, State>{
   render() {
 
     return (
-      <div>
+      <div className='game-screen'>
         {/* <MonumentsContainer /> */}
         <ResourceDisplay />
         {/* <PlanetContainer /> */}

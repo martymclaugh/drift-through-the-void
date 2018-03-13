@@ -14,10 +14,10 @@ const resourceBar = (props: Props) => {
   const pointBoxWidth = 100 / maxAmount;
 
   for (let i = 1; i < maxAmount + 1; i++) {
-    const isActive = i === props.amount;
+    const isActive = i < props.amount + 1;
 
     resourcePoints.push(
-      <div style={{ width: `${pointBoxWidth}%` }} className={`resource__points-box ${isActive ? 'is-active' : ''}`}>
+      <div className={`resource__points-box ${isActive ? 'is-active' : ''}`}>
         <div className="resource__value">{i * resource.firstVal}</div>
       </div>
     );
@@ -34,6 +34,6 @@ export default (props: Props) => {
   const totalValue = resourceMap[props.name].firstVal * props.amount;
 
   return (
-    <div>{resourceBar(props)}<span>{totalValue}</span></div>
+    <div>{resourceBar(props)}</div>
   )
 }

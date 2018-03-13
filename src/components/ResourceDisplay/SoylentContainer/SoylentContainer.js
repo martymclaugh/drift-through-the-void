@@ -1,8 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { resourceMap } from '../../helpers/resource-map';
-import { Props, State } from '../../flow/components/soylent-container-types';
+import { resourceMap } from '../../../helpers/resource-map';
+import { Props, State } from '../../../flow/components/soylent-container-types';
 
 import './soylent-container-styles.css';
 

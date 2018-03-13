@@ -2,9 +2,10 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CargoContainer from '../shared/CargoContainer/CargoContainer';
-import SoylentContainer from '../SoylentContainer/SoylentContainer';
-import ColonistIcon from '../ColonistIcon/ColonistIcon';
+import CargoContainer from './CargoContainer/CargoContainer';
+import SoylentContainer from './SoylentContainer/SoylentContainer';
+import ColonistIcon from './ColonistIcon/ColonistIcon';
+import CreditsIcon from './CreditsIcon/CreditsIcon';
 import { Props, State } from '../../flow/components/resource-display-types';
 import './resource-display-styles.css';
 
@@ -32,13 +33,14 @@ class ResourceDisplay extends Component<Props, State> {
   render() {
     return (
       <div className="resource-display">
-        Cargo Hold
-        {this.renderCargoContainers()}
-        colonists: {this.props.colonists}
-        soylent: {this.props.soylent}
-        credits: {this.props.credits}
+        <div className="resource-display__left">
+          {this.renderCargoContainers()}
+        </div>
+        <div className="resource-display__right">
+          <ColonistIcon colonists={this.props.colonists} />
+          <CreditsIcon credits={this.props.credits} />
+        </div>
         <SoylentContainer soylent={this.props.soylent} />
-        <ColonistIcon colonists={this.props.colonists} />
       </div>
     )
   }

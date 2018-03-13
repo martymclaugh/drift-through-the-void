@@ -140,7 +140,6 @@ class HeadQuarters extends Component<Props, State>{
                               // TODO add additional check for 'leadership'
                               // once powerups are available
     const renderTerminals = terminals.map((terminal, i) => (
-      <div>
       <Terminal
         numberOfHacks={numberOfHacks}
         hackingActive={hackingActive}
@@ -150,13 +149,10 @@ class HeadQuarters extends Component<Props, State>{
         algorithm={terminal.value ? [...randomStringArray(12 + (i * 5)), terminal.value && terminal.value.name] : ''}
         {...terminal}
       />
-    </div>
     ));
 
     return (
-      <div>
-        <div>Head Quarters</div>
-        <div>Number of Hacks: {numberOfHacks}</div>
+      <div className="head-quarters">
         <ControlPanel
           handleHack={this.handleHacking}
           handleAccept={this.acceptResources}

@@ -12,8 +12,8 @@
   .terminal.is-active {
     cursor: pointer; }
   .terminal .power-light {
-    width: 0.1rem;
-    height: 0.1rem;
+    width: 0.2rem;
+    height: 0.2rem;
     border-radius: 50%;
     background-color: #02E148;
     position: absolute;
@@ -30,5 +30,6 @@
     font-size: 2.7rem;
     font-family: "Nova Square"; }
   .terminal__asset-image {
-    height: 71%;
+    width: 86%;
+    margin: 0 auto;
     padding: 0.2rem; }
