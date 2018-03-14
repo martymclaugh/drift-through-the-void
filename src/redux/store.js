@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
 import middlewares from './middlewares';
-import { startGame } from './game';
+import { startGame } from './socket';
 // import rootSaga from './sagas';
 // import { routerMiddleware } from 'react-router-redux'
 // import createHistory from 'history/createBrowserHistory'

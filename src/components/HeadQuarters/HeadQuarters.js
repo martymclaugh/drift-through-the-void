@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setHackNumber, setTerminals } from './head-quarters-actions';
-import { sendTerminals, sendHackNumber } from '../../redux/game/game-actions';
+import { sendTerminals, sendHackNumber } from '../../redux/socket/game-actions';
 import randomStringArray from '../../helpers/random-string';
 import { hackingValues } from '../../helpers/hacking-values';
 import Terminal from '../Terminal/Terminal';

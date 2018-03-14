@@ -10,7 +10,7 @@ import {
   startTyping,
   stopTyping,
   joinGame,
-} from '../../redux/game/game-actions';
+} from '../../redux/socket/lobby-actions';
 import ChatRoom from '../shared/ChatRoom/ChatRoom';
 import Lobby from './Lobby/Lobby';
 import { Props, State } from '../../flow/components/lobby-screen-types';

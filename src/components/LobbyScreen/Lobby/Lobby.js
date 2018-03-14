@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { requestServer, recycleServer } from '../../../redux/game/game-actions';
+import { requestServer, recycleServer } from '../../../redux/socket/lobby-actions';
 import { clearError } from '../lobby-screen-actions';
 import GamesList from './GamesList/GamesList';
 import GameForm from './GameForm/GameForm';

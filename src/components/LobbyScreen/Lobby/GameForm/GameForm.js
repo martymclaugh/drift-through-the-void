@@ -7,7 +7,7 @@ import {
   recycleServer,
   createGame,
   checkPassword,
-} from '../../../../redux/game/game-actions';
+} from '../../../../redux/socket/lobby-actions';
 import CheckBox from '../../../shared/CheckBox/CheckBox';
 import DropDownMenu from '../../../shared/DropDownMenu/DropDownMenu';
 import Button from '../../../shared/Button/Button';

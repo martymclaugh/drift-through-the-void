@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
-import { lobbyTypes } from './game-actions';
+import { lobbyActionTypes } from './lobby-actions';
+import { gameActionTypes } from './game-actions';
 import { socketEventTypes } from './socket-event-types';
 
 var config = {};
@@ -16,47 +17,50 @@ export const socketMiddleware = (store) => {
     const data = action.payload
     if (socket && action.type) {
       switch (action.type) {
-        case lobbyTypes.SEND_TERMINALS:
-          socket.emit('sendTerminals', data);
-          break;
-        case lobbyTypes.SEND_HACK_NUMBER:
-          socket.emit('sendHackNumber', data);
-          break;
-        case lobbyTypes.SEND_CARGO:
-          socket.emit('sendCargo', data);
-          break;
-        case lobbyTypes.CREATE_USERNAME:
+        case lobbyActionTypes.CREATE_USERNAME:
           socket.emit('createUsername', data);
           break;
-        case lobbyTypes.SEND_LOBBY_MESSAGE:
+        case lobbyActionTypes.SEND_LOBBY_MESSAGE:
           socket.emit('sendLobbyMessage', data);
           break;
-        case lobbyTypes.RECYCLE_SERVER:
+        case lobbyActionTypes.RECYCLE_SERVER:
           socket.emit('recycleServer', data);
           break;
-        case lobbyTypes.REQUEST_SERVER:
+        case lobbyActionTypes.REQUEST_SERVER:
           socket.emit('requestServer', data);
           break;
-        case lobbyTypes.CREATE_GAME:
+        case lobbyActionTypes.CREATE_GAME:
           socket.emit('createGame', data);
           break;
-        case lobbyTypes.CHECK_PASSWORD:
+        case lobbyActionTypes.CHECK_PASSWORD:
           socket.emit('checkPassword', data);
           break;
-        case lobbyTypes.JOIN_LOBBY_ROOM:
+        case lobbyActionTypes.JOIN_LOBBY_ROOM:
           socket.emit('joinLobbyRoom');
           break;
-        case lobbyTypes.LEAVE_LOBBY_ROOM:
+        case lobbyActionTypes.LEAVE_LOBBY_ROOM:
           socket.emit('leaveLobbyRoom');
           break;
-        case lobbyTypes.START_TYPING:
+        case lobbyActionTypes.START_TYPING:
           socket.emit('sendUserTyping', data);
           break;
-        case lobbyTypes.STOP_TYPING:
+        case lobbyActionTypes.STOP_TYPING:
           socket.emit('removeUserTyping', data);
           break;
-        case lobbyTypes.JOIN_GAME:
+        case lobbyActionTypes.JOIN_GAME:
           socket.emit('joinGame', data);
+          break;
+        case gameActionTypes.SEND_TERMINALS:
+          socket.emit('sendTerminals', data);
+          break;
+        case gameActionTypes.SEND_HACK_NUMBER:
+          socket.emit('sendHackNumber', data);
+          break;
+        case gameActionTypes.SEND_CARGO:
+          socket.emit('sendCargo', data);
+          break;
+        case gameActionTypes.CONFIRM_SERVER:
+          socket.emit('confirmServer', data);
           break;
         default:
           return next(action);

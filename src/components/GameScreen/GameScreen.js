@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateCargo } from './game-screen-actions';
-import { sendCargo } from '../../redux/game/game-actions';
+import { sendCargo, confirmServer } from '../../redux/socket/game-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
@@ -24,6 +24,10 @@ class GameScreen extends Component<Props, State>{
     this.updateCargo = this.updateCargo.bind(this);
   }
 
+  componentWillMount() {
+    const server = this.props.match.params.slug;
+    this.props.confirmServer({ server });
+  }
   updateCargo: () => void;
   updateCargo() {
     const { terminals, cargo } = this.props;
@@ -51,6 +55,10 @@ class GameScreen extends Component<Props, State>{
       ...cargoItems,
       distributedResources,
     }
+    const payload = {
+      data: distributedItems,
+      // server:
+    }
     this.props.updateCargo(distributedItems);
     this.props.sendCargo(distributedItems);
   }
@@ -76,4 +84,8 @@ const mapStateToProps = state => ({
   cargo: state.gameScreen
 });
 
-export default connect(mapStateToProps, { updateCargo, sendCargo })(GameScreen);
+export default connect(mapStateToProps, {
+  confirmServer,
+  updateCargo,
+  sendCargo,
+})(GameScreen);
