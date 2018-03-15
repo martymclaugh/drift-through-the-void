@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateCargo } from './game-screen-actions';
-import { sendCargo, confirmServer } from '../../redux/socket/game-actions';
+import { sendCargo } from '../../redux/socket/game-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
@@ -26,10 +26,9 @@ class GameScreen extends Component<Props, State>{
 
   componentWillMount() {
     const server = this.props.match.params.slug;
-    this.props.confirmServer({ server });
-  }
-  componentWillReceiveProps(nextProps) {
-    // TODO handle redirecting to lobby if server unconfirmed
+    if (!this.props.games.get(server)) {
+      this.props.history.push(`/lobby`);
+    }
   }
   updateCargo: () => void;
   updateCargo() {
@@ -84,11 +83,11 @@ class GameScreen extends Component<Props, State>{
 const mapStateToProps = state => ({
   numberOfHacks: state.headQuarters.get('numberOfHacks'),
   terminals: state.headQuarters.get('terminals'),
-  cargo: state.gameScreen.get('resources')
+  cargo: state.gameScreen.get('resources'),
+  games: state.lobby.get('games'),
 });
 
 export default connect(mapStateToProps, {
-  confirmServer,
   updateCargo,
   sendCargo,
 })(GameScreen);
