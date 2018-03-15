@@ -59,9 +59,6 @@ export const socketMiddleware = (store) => {
         case gameActionTypes.SEND_CARGO:
           socket.emit('sendCargo', data);
           break;
-        case gameActionTypes.CONFIRM_SERVER:
-          socket.emit('confirmServer', data);
-          break;
         default:
           return next(action);
       }

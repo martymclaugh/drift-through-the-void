@@ -4,13 +4,12 @@ import { usernameTaken, usernameSuccess } from '../../components/HomeScreen/home
 import {
   addLobbyMessage,
   receiveServer,
-  addLobbyGame,
   wrongPassword,
   passwordSuccess,
   updateGamesList,
   updateUsersTyping,
 } from '../../components/LobbyScreen/lobby-screen-actions';
-import { receiveServerConfirmation } from '../../components/GameScreen/game-screen-actions';
+// import {  } from '../../components/GameScreen/game-screen-actions';
 
 export const socketEventTypes = {
   receiveTerminals: setTerminals,
@@ -20,10 +19,8 @@ export const socketEventTypes = {
   receiveUsernameSuccess: usernameSuccess,
   receiveLobbyMessage: addLobbyMessage,
   receiveServer: receiveServer,
-  receiveLobbyGame: addLobbyGame,
   wrongPassword,
   passwordSuccess,
   updateGamesList,
   receiveLobbyActivelyTyping: updateUsersTyping,
-  serverConfirmation: receiveServerConfirmation,
 }
