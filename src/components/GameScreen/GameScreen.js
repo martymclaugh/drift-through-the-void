@@ -28,17 +28,20 @@ class GameScreen extends Component<Props, State>{
     const server = this.props.match.params.slug;
     this.props.confirmServer({ server });
   }
+  componentWillReceiveProps(nextProps) {
+    // TODO handle redirecting to lobby if server unconfirmed
+  }
   updateCargo: () => void;
   updateCargo() {
     const { terminals, cargo } = this.props;
     // const death = reduceObjectValues(terminals, 'death');
     const resources = reduceObjectValues(terminals, 'resources')
     let cargoItems = {
-      colonists: cargo.get('colonists'),
-      soylent: cargo.get('soylent'),
-      credits: cargo.get('credits'),
+      colonists: cargo.getIn(['resources', 'colonists']),
+      soylent: cargo.getIn(['resources', 'soylent']),
+      credits: cargo.getIn(['resources', 'credits']),
     }
-    let distributedResources = cargo.get('distributedResources').toJS();
+    let distributedResources = cargo.getIn(['resources', 'distributedResources']).toJS();
     const resourceKeys = Object.keys(distributedResources);
 
     Object.keys(cargoItems).map(key => {
@@ -81,7 +84,7 @@ class GameScreen extends Component<Props, State>{
 const mapStateToProps = state => ({
   numberOfHacks: state.headQuarters.get('numberOfHacks'),
   terminals: state.headQuarters.get('terminals'),
-  cargo: state.gameScreen
+  cargo: state.gameScreen.get('resources')
 });
 
 export default connect(mapStateToProps, {
