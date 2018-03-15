@@ -10,6 +10,7 @@ import {
   updateGamesList,
   updateUsersTyping,
 } from '../../components/LobbyScreen/lobby-screen-actions';
+import { receiveServerConfirmation } from '../../components/GameScreen/game-screen-actions';
 
 export const socketEventTypes = {
   receiveTerminals: setTerminals,
@@ -24,4 +25,5 @@ export const socketEventTypes = {
   passwordSuccess,
   updateGamesList,
   receiveLobbyActivelyTyping: updateUsersTyping,
+  serverConfirmation: receiveServerConfirmation,
 }
