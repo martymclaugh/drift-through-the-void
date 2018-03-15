@@ -10,7 +10,6 @@ export type Props = {
   requestServer: () => void,
   recycleServer: () => void,
   createGame: ({ game: GameType }) => void,
-  addLobbyGame: (game: GameDetailsType) => void,
   checkPassword: ({ game: GameType }) => void,
   joinGame: (server: string) => void,
 };
