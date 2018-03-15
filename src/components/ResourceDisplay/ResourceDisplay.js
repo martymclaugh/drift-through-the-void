@@ -47,10 +47,10 @@ class ResourceDisplay extends Component<Props, State> {
 }
 
 const mapStateToProps = state => ({
-  distributedResources: state.gameScreen.get('distributedResources'),
-  colonists: state.gameScreen.get('colonists'),
-  soylent: state.gameScreen.get('soylent'),
-  credits: state.gameScreen.get('credits'),
+  distributedResources: state.gameScreen.getIn(['resources', 'distributedResources']),
+  colonists: state.gameScreen.getIn(['resources', 'colonists']),
+  soylent: state.gameScreen.getIn(['resources', 'soylent']),
+  credits: state.gameScreen.getIn(['resources', 'credits']),
 });
 
 export default connect(mapStateToProps, {  })(ResourceDisplay);
