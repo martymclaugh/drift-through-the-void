@@ -1,35 +1,44 @@
-import { fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { types } from './game-screen-actions';
 import { planetActionTypes } from '../PlanetContainer/planet-actions';
 
 const INITIAL_STATE = fromJS({
-  resources: {
-    colonists: 0,
-    soylent: 0,
-    credits: 0,
-    distributedResources: {
-      nanoTubes: 0,
-      unobtanium: 0,
-      energyPlankton: 0,
-      giantSpiderSilk: 0,
-      rifles: 0,
-    },
-  },
+  isPrivate: false,
+  numberOfPlayers: 2,
+  playersJoined: 0,
   server: '',
-  serverConfirmed: true,
+  users: Map(),
+  gameStarted: false,
+  activePlayer: '',
 });
-
 
 const gameScreenReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case types.PLAYER_JOINED:
+      const {
+        users,
+        server,
+        isPrivate,
+        numberOfPlayers,
+        playersJoined,
+      } = action.payload.game;
+
+      return state.merge({
+        users,
+        server,
+        isPrivate,
+        numberOfPlayers,
+        playersJoined,
+      });
     case types.UPDATE_CARGO:
-    // TODO fix below
-      return state.merge(action.payload);
+      return state.setIn(['users', `${state.get('activePlayer')}`], fromJS({ resources: action.payload }));
+    case types.START_GAME:
+      return state.merge({
+        gameStarted: true,
+        activePlayer: state.get('users').keySeq().first(),
+      });
     case planetActionTypes.COLONIZE_PLANET:
       return state.set('colonists', state.getIn(['resources', 'colonists']) - 1);
-    case types.RECEIVE_SERVER_CONFIRMATION:
-      console.log(action.payload);
-      return state.merge(action.payload);
     default:
       return state;
   }
