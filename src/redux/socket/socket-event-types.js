@@ -9,7 +9,7 @@ import {
   updateGamesList,
   updateUsersTyping,
 } from '../../components/LobbyScreen/lobby-screen-actions';
-// import {  } from '../../components/GameScreen/game-screen-actions';
+import { playerJoined } from '../../components/GameScreen/game-screen-actions';
 
 export const socketEventTypes = {
   receiveTerminals: setTerminals,
@@ -23,4 +23,5 @@ export const socketEventTypes = {
   passwordSuccess,
   updateGamesList,
   receiveLobbyActivelyTyping: updateUsersTyping,
+  playerJoined,
 }
