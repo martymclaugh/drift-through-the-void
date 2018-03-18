@@ -10,7 +10,7 @@ const INITIAL_STATE = fromJS({
   users: Map(),
   gameStarted: false,
   activePlayer: '',
-  phase: gamePhases.GENERATE_RESOURCES,
+  phase: gamePhases.POPULATE_PLANETS,
 });
 
 const gameScreenReducer = (state = INITIAL_STATE, action) => {
@@ -54,8 +54,8 @@ const gameScreenReducer = (state = INITIAL_STATE, action) => {
               colonists: player.getIn(['resources', 'colonists']) - 1,
             },
             planets: {
-              [action.payload]: {
-                requiredColonists: player.getIn(['planets', action.payload, 'requiredColonists']) - 1,
+              [action.payload.name]: {
+                requiredColonists: player.getIn(['planets', action.payload.name, 'requiredColonists']) - 1,
               },
             },
           },
