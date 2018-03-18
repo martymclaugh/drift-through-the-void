@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setHackNumber, setTerminals } from './head-quarters-actions';
-import { sendTerminals, sendHackNumber } from '../../redux/socket/game-actions';
+import { sendTerminals, sendHackNumber } from '../../redux/middlewares/socket/Game/game-actions';
 import randomStringArray from '../../helpers/random-string';
 import { hackingValues } from '../../helpers/hacking-values';
 import Terminal from '../Terminal/Terminal';
@@ -57,8 +57,8 @@ class HeadQuarters extends Component<Props, State>{
       numberOfHacks: this.props.numberOfHacks - 1,
     }
 
-    this.props.setTerminals(terminals);
-    this.props.sendTerminals(terminals);
+    this.props.setTerminals({ terminals });
+    this.props.sendTerminals({ terminals });
     this.props.setHackNumber(numberOfHacks);
     this.props.sendHackNumber(numberOfHacks);
 
@@ -86,8 +86,8 @@ class HeadQuarters extends Component<Props, State>{
       this.setState({
         emptyTerminalIds: [...this.state.emptyTerminalIds, id],
       });
-      this.props.setTerminals(terminals);
-      this.props.sendTerminals(terminals);
+      this.props.setTerminals({ terminals });
+      this.props.sendTerminals({ terminals });
     }
   }
   populateTerminals: () => void;
@@ -100,7 +100,7 @@ class HeadQuarters extends Component<Props, State>{
         value: null,
       });
     }
-    this.props.setTerminals(terminals);
+    this.props.setTerminals({ terminals });
     this.setState({ emptyTerminalIds: terminals.map(t => (t.id - 1)) });
   }
   terminateHacking: () => void;
