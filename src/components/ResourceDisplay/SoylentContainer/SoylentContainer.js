@@ -1,8 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { resourceMap } from '../../helpers/resource-map';
-import { Props, State } from '../../flow/components/soylent-container-types';
+import { resourceMap } from '../../../helpers/resource-map';
+import { Props, State } from '../../../flow/components/soylent-container-types';
 
 import './soylent-container-styles.css';
 
@@ -29,7 +29,7 @@ class SoylentContainer extends Component<Props, State> {
   renderSoylentIcons(){
     const { soylent } = resourceMap;
     let icons = [];
-    for (let i = 0; i < soylent.maxAmount; i++ ){
+    for (let i = 0; i < soylent.maxAmount; i++){
       const imgSrc = i < this.state.amount ? soylent.greenImg : soylent.blackImg;
       icons.push(
         <div className="soylent-container__asset">
@@ -50,7 +50,6 @@ class SoylentContainer extends Component<Props, State> {
   render() {
     return (
       <div className="soylent-container">
-        <div className="soylent-container__title">Soylent: </div>
         {this.renderSoylentIcons()}
       </div>
     )

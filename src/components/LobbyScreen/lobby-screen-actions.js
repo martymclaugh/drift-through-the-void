@@ -16,8 +16,6 @@ export const addLobbyMessage = payload =>
   ({ type: types.ADD_LOBBY_MESSAGE, payload });
 export const receiveServer = payload =>
   ({ type: types.RECEIVE_SERVER, payload });
-export const addLobbyGame = payload =>
-  ({ type: types.ADD_LOBBY_GAME, payload });
 export const wrongPassword = payload =>
   ({ type: types.WRONG_PASSWORD, payload });
 export const passwordSuccess = payload =>

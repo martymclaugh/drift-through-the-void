@@ -2,16 +2,14 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCargo } from './player-board-actions';
-import { sendCargo } from '../../redux/game/game-actions';
+import { updateCargo, startGame, changePhase } from '../GameScreen/game-screen-actions';
+import { sendCargo } from '../../redux/middlewares/socket/Game/game-actions';
 import { reduceObjectValues } from '../../helpers/reduce-object-value';
 import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
-import PlanetContainer from '../PlanetContainer/PlanetContainer';
-import MonumentsContainer from '../MonumentsContainer/MonumentsContainer';
-import { Props, State } from '../../flow/components/player-board-types';
+import { Props, State } from '../../flow/components/generate-resources-types';
 
-class PlayerBoard extends Component<Props, State>{
+class GenerateResources extends Component<Props, State>{
 
   constructor(props: Props) {
     super(props)
@@ -21,7 +19,6 @@ class PlayerBoard extends Component<Props, State>{
 
     this.updateCargo = this.updateCargo.bind(this);
   }
-
   updateCargo: () => void;
   updateCargo() {
     const { terminals, cargo } = this.props;
@@ -39,7 +36,7 @@ class PlayerBoard extends Component<Props, State>{
       cargoItems[key] = cargoItems[key] + reduceObjectValues(terminals, key);
 
       return cargoItems;
-    })
+    });
     for (var i = 0; i < resources; i ++) {
       const key = resourceKeys[i % resourceKeys.length];
       distributedResources[key] = distributedResources[key] + 1;
@@ -49,29 +46,45 @@ class PlayerBoard extends Component<Props, State>{
       ...cargoItems,
       distributedResources,
     }
+    const payload = {
+      data: distributedItems,
+    }
     this.props.updateCargo(distributedItems);
     this.props.sendCargo(distributedItems);
+    // change phases
+    setTimeout(() => {
+      this.props.changePhase();
+    }, 1500)
   }
   render() {
-
     return (
       <div>
-        <MonumentsContainer />
         <ResourceDisplay />
-        <PlanetContainer />
         <HeadQuarters
           terminalAmount={7}
           updateCargo={this.updateCargo}
         />
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
-  numberOfHacks: state.headQuarters.get('numberOfHacks'),
-  terminals: state.headQuarters.get('terminals'),
-  cargo: state.playerBoard
-});
+const mapStateToProps = state => {
+  const activePlayer = state.gameScreen.get('activePlayer');
 
-export default connect(mapStateToProps, { updateCargo, sendCargo })(PlayerBoard);
+  return {
+    numberOfHacks: state.headQuarters.get('numberOfHacks'),
+    terminals: state.headQuarters.get('terminals'),
+    numberOfPlayers: state.gameScreen.get('numberOfPlayers'),
+    playersJoined: state.gameScreen.get('playersJoined'),
+    gameStarted: state.gameScreen.get('gameStarted'),
+    users: state.gameScreen.get('users'),
+    cargo: state.gameScreen.getIn(['users', `${activePlayer}`, 'resources']),
+    games: state.lobby.get('games'),
+  };
+}
+
+export default connect(mapStateToProps, {
+  updateCargo,
+  sendCargo,
+})(GenerateResources);

@@ -13,7 +13,7 @@ const headQuartersReducer = (state = INITIAL_STATE, action) => {
       return state.merge(action.payload);
     case types.SET_TERMINALS:
       return state.merge({
-        terminals: List(action.payload)
+        terminals: List(action.payload.terminals)
       });
     default:
       return state;

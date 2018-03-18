@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setHackNumber, setTerminals } from './head-quarters-actions';
-import { sendTerminals, sendHackNumber } from '../../redux/game/game-actions';
+import { sendTerminals, sendHackNumber } from '../../redux/middlewares/socket/Game/game-actions';
 import randomStringArray from '../../helpers/random-string';
 import { hackingValues } from '../../helpers/hacking-values';
 import Terminal from '../Terminal/Terminal';
@@ -57,8 +57,8 @@ class HeadQuarters extends Component<Props, State>{
       numberOfHacks: this.props.numberOfHacks - 1,
     }
 
-    this.props.setTerminals(terminals);
-    this.props.sendTerminals(terminals);
+    this.props.setTerminals({ terminals });
+    this.props.sendTerminals({ terminals });
     this.props.setHackNumber(numberOfHacks);
     this.props.sendHackNumber(numberOfHacks);
 
@@ -86,8 +86,8 @@ class HeadQuarters extends Component<Props, State>{
       this.setState({
         emptyTerminalIds: [...this.state.emptyTerminalIds, id],
       });
-      this.props.setTerminals(terminals);
-      this.props.sendTerminals(terminals);
+      this.props.setTerminals({ terminals });
+      this.props.sendTerminals({ terminals });
     }
   }
   populateTerminals: () => void;
@@ -100,7 +100,7 @@ class HeadQuarters extends Component<Props, State>{
         value: null,
       });
     }
-    this.props.setTerminals(terminals);
+    this.props.setTerminals({ terminals });
     this.setState({ emptyTerminalIds: terminals.map(t => (t.id - 1)) });
   }
   terminateHacking: () => void;
@@ -140,7 +140,6 @@ class HeadQuarters extends Component<Props, State>{
                               // TODO add additional check for 'leadership'
                               // once powerups are available
     const renderTerminals = terminals.map((terminal, i) => (
-      <div>
       <Terminal
         numberOfHacks={numberOfHacks}
         hackingActive={hackingActive}
@@ -150,13 +149,10 @@ class HeadQuarters extends Component<Props, State>{
         algorithm={terminal.value ? [...randomStringArray(12 + (i * 5)), terminal.value && terminal.value.name] : ''}
         {...terminal}
       />
-    </div>
     ));
 
     return (
-      <div>
-        <div>Head Quarters</div>
-        <div>Number of Hacks: {numberOfHacks}</div>
+      <div className="head-quarters">
         <ControlPanel
           handleHack={this.handleHacking}
           handleAccept={this.acceptResources}

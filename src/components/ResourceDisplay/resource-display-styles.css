@@ -1,5 +1,43 @@
 .resource-display {
-  background-color: #393939;
-  border-radius: 2px;
-  padding: 2rem;
-  border: 2px solid #000000; }
+  width: calc(100% - 0px);
+  float: left;
+  margin-left: 0px; }
+  .resource-display__left {
+    width: calc(75% - 45px);
+    float: left;
+    margin-left: 30px; }
+  .resource-display__right {
+    width: calc(25% - 45px);
+    float: left;
+    margin-left: 30px; }
+  .resource-display__left, .resource-display__right {
+    margin-bottom: 2rem; }
+  .resource-display .colonist-icon {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px; }
+  .resource-display .credits-icon {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px; }
+  .resource-display .colonist-icon, .resource-display .credits-icon {
+    position: relative;
+    width: 100%;
+    padding: 2.7rem;
+    margin-top: 1.5rem;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.25) inset;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.3); }
+    .resource-display .colonist-icon__amount, .resource-display .credits-icon__amount {
+      width: 3rem;
+      height: 3rem;
+      border-bottom-right-radius: 4px;
+      border-top-left-radius: 4px;
+      text-align: center;
+      line-height: 3rem;
+      font-family: "Nova Square", sans-serif;
+      color: #2980b9;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.05);
+      border-left: 1px solid rgba(0, 0, 0, 0.3);
+      border-top: 1px solid rgba(0, 0, 0, 0.3); }

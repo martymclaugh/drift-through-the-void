@@ -35,7 +35,7 @@ class MonumentsContainer extends Component {
 
 const mapStateToProps = state => ({
   monuments: state.monuments,
-  colonists: state.playerBoard.get('colonists'),
+  colonists: state.gameScreen.get('colonists'),
 });
 
 export default connect(mapStateToProps, { colonizeMonument })(MonumentsContainer);

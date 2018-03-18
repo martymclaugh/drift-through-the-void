@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Props } from '../../../flow/components/control-panel-types';
+import Button from '../Button/Button';
 
 import './control-panel-styles.css';
 
@@ -18,21 +19,28 @@ export default (props: Props) => {
 
   return (
     <div className="control-panel">
-      <button
-        onClick={props.handleAccept}
-        className={`control-panel__accept${acceptButtonClasses}`}
-      >
-        Accept Resources
-      </button>
-      <button
-        onClick={props.handleHack}
-        className={`control-panel__hack${hackButtonClasses}`}
-      >
-        Generate Resources
-      </button>
-      <button className={`control-panel__placeholder${placeholderClass}`}>
-        Hold Please
-      </button>
+      <div className={`control-panel__accept${acceptButtonClasses}`}>
+        <Button
+          onClick={props.handleAccept}
+          className={`control-panel__accept${acceptButtonClasses}`}
+        >
+          Accept
+        </Button>
+      </div>
+      <div className={`control-panel__hack${hackButtonClasses}`}>
+        <Button
+          onClick={props.handleHack}
+        >
+          Hack
+        </Button>
+      </div>
+      <div className={`control-panel__placeholder${placeholderClass}`}>
+        <Button
+          onClick={() => {}}
+        >
+          Wait
+        </Button>
+      </div>
     </div>
   );
 }

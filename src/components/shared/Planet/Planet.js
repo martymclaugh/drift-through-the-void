@@ -15,8 +15,14 @@ const renderPlaceholders = (num) => {
 }
 
 export default (props) => {
+  const planetStyle = {
+    left: `${props.positioning.x}rem`,
+    top: `${props.positioning.y}rem`,
+  }
+
   return (
     <div
+      style={planetStyle}
       className={`planet ${ props.canColonize && props.requiredColonists > 0 ? 'is-active' : ''}`}
       onClick={props.onClick}
     >

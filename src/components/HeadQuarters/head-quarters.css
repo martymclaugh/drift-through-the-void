@@ -1,5 +1,11 @@
-.head-quarters__terminals {
-  display: inline-flex;
-  align-items: center;
-  min-height: 8rem;
-  max-width: 1280px; }
+.head-quarters {
+  width: calc(100% - 45px);
+  float: left;
+  margin-left: 30px;
+  display: flex;
+  justify-content: space-around;
+  clear: both; }
+  .head-quarters__terminals {
+    display: inline-flex;
+    align-items: center;
+    min-height: 8rem; }

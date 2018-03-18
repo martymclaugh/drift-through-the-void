@@ -2,9 +2,10 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CargoContainer from '../shared/CargoContainer/CargoContainer';
-import SoylentContainer from '../SoylentContainer/SoylentContainer';
-import ColonistIcon from '../ColonistIcon/ColonistIcon';
+import CargoContainer from './CargoContainer/CargoContainer';
+import SoylentContainer from './SoylentContainer/SoylentContainer';
+import ColonistIcon from './ColonistIcon/ColonistIcon';
+import CreditsIcon from './CreditsIcon/CreditsIcon';
 import { Props, State } from '../../flow/components/resource-display-types';
 import './resource-display-styles.css';
 
@@ -32,23 +33,29 @@ class ResourceDisplay extends Component<Props, State> {
   render() {
     return (
       <div className="resource-display">
-        Cargo Hold
-        <ColonistIcon colonists={this.props.colonists} />
-        {this.renderCargoContainers()}
-        colonists: {this.props.colonists}
-        soylent: {this.props.soylent}
-        credits: {this.props.credits}
+        <div className="resource-display__left">
+          {this.renderCargoContainers()}
+        </div>
+        <div className="resource-display__right">
+          <ColonistIcon colonists={this.props.colonists} />
+          <CreditsIcon credits={this.props.credits} />
+        </div>
         <SoylentContainer soylent={this.props.soylent} />
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  distributedResources: state.playerBoard.get('distributedResources'),
-  colonists: state.playerBoard.get('colonists'),
-  soylent: state.playerBoard.get('soylent'),
-  credits: state.playerBoard.get('credits'),
-});
+const mapStateToProps = state => {
+  const activePlayer = state.gameScreen.get('activePlayer');
+  const resources = state.gameScreen.getIn(['users', `${activePlayer}`, 'resources']);
+
+  return ({
+    distributedResources: resources.get('distributedResources'),
+    colonists: resources.get('colonists'),
+    soylent: resources.get('soylent'),
+    credits: resources.get('credits'),
+  });
+}
 
 export default connect(mapStateToProps, {  })(ResourceDisplay);
