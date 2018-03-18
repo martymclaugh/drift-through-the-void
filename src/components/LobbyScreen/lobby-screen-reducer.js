@@ -1,6 +1,6 @@
 import { fromJS, List, Map } from 'immutable';
 import { types } from './lobby-screen-actions';
-import { lobbyActionTypes } from '../../redux/socket/lobby-actions';
+import { lobbyActionTypes } from '../../redux/middlewares/socket/Lobby/lobby-actions';
 
 const INITIAL_STATE = fromJS({
   messages: List(),
