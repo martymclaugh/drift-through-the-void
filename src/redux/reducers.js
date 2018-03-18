@@ -4,7 +4,7 @@ import headQuartersReducer from '../components/HeadQuarters/head-quarters-reduce
 import gameScreenReducer from '../components/GameScreen/game-screen-reducer';
 import homeScreenReducer from '../components/HomeScreen/home-screen-reducer';
 import lobbyReducer from '../components/LobbyScreen/lobby-screen-reducer';
-import planetReducer from '../components/PlanetContainer/planet-reducer'
+// import planetReducer from '../components/PlanetContainer/planet-reducer'
 import monumentReducer from '../components/MonumentsContainer/monument-reducer'
 
 export default combineReducers({
@@ -12,6 +12,6 @@ export default combineReducers({
   gameScreen: gameScreenReducer,
   homeScreen: homeScreenReducer,
   lobby: lobbyReducer,
-  planets: planetReducer,
+  // planets: planetReducer,
   monuments: monumentReducer,
 });

@@ -1,20 +1,10 @@
-import io from 'socket.io-client';
+import { socket } from '../socket.config';
 import { lobbyActionTypes } from './lobby-actions';
-import { gameActionTypes } from './game-actions';
-import { socketEventTypes } from './socket-event-types';
 
-var config = {};
-// move to separate config file
-if (process.env.NODE_ENV === 'development') {
-  config.port = 3000;
-  config.host = 'localhost';
-}
-
-const socket = io.connect(`http://${config.host}:${config.port}`);
-
-export const socketMiddleware = (store) => {
+export const lobbyMiddleware = (store) => {
   return next => action => {
     const data = action.payload
+
     if (socket && action.type) {
       switch (action.type) {
         case lobbyActionTypes.CREATE_USERNAME:
@@ -50,15 +40,6 @@ export const socketMiddleware = (store) => {
         case lobbyActionTypes.JOIN_GAME:
           socket.emit('joinGame', data);
           break;
-        case gameActionTypes.SEND_TERMINALS:
-          socket.emit('sendTerminals', data);
-          break;
-        case gameActionTypes.SEND_HACK_NUMBER:
-          socket.emit('sendHackNumber', data);
-          break;
-        case gameActionTypes.SEND_CARGO:
-          socket.emit('sendCargo', data);
-          break;
         default:
           return next(action);
       }
@@ -66,12 +47,4 @@ export const socketMiddleware = (store) => {
 
     return next(action);
   };
-}
-
-export const startGame = (store) => {
-  Object.keys(socketEventTypes).map(action => { // eslint-disable-line array-callback-return
-    socket.on(action, data => {
-      data && store.dispatch(socketEventTypes[action](data));
-    });
-  });
 }

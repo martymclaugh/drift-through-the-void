@@ -1,9 +1,11 @@
 import { loggerMiddleware } from './logger-middleware';
-import { socketMiddleware } from '../socket';
+import { gameMiddleware } from './socket/Game/game-middleware';
+import { lobbyMiddleware } from './socket/Lobby/lobby-middleware';
 
 const middlewares = [
   loggerMiddleware,
-  socketMiddleware,
+  gameMiddleware,
+  lobbyMiddleware,
 ];
 
 export default middlewares;
