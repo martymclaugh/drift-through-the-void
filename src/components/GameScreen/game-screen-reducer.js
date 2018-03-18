@@ -1,6 +1,6 @@
 import { Map, fromJS } from 'immutable';
 import { types } from './game-screen-actions';
-import { planetActionTypes } from '../PlanetContainer/planet-actions';
+import { gamePhases } from '../../helpers/game-phases';
 
 const INITIAL_STATE = fromJS({
   isPrivate: false,
@@ -10,9 +10,12 @@ const INITIAL_STATE = fromJS({
   users: Map(),
   gameStarted: false,
   activePlayer: '',
+  phase: gamePhases.GENERATE_RESOURCES,
 });
 
 const gameScreenReducer = (state = INITIAL_STATE, action) => {
+  const activePlayer = state.get('activePlayer');
+
   switch (action.type) {
     case types.PLAYER_JOINED:
       const {
@@ -30,15 +33,34 @@ const gameScreenReducer = (state = INITIAL_STATE, action) => {
         numberOfPlayers,
         playersJoined,
       });
+    case types.CHANGE_PHASE:
+      const gamePhasesArr = Object.keys(gamePhases);
+      const index = (gamePhasesArr.indexOf(state.get('phase')) + 1) % gamePhasesArr.length;
+      const nextPhase = gamePhases[gamePhasesArr[index]];
+      return state.merge({ phase: nextPhase });
     case types.UPDATE_CARGO:
-      return state.setIn(['users', `${state.get('activePlayer')}`], fromJS({ resources: action.payload }));
+      return state.setIn(['users', `${state.get('activePlayer')}`, 'resources'], fromJS(action.payload));
     case types.START_GAME:
       return state.merge({
         gameStarted: true,
         activePlayer: state.get('users').keySeq().first(),
       });
-    case planetActionTypes.COLONIZE_PLANET:
-      return state.set('colonists', state.getIn(['resources', 'colonists']) - 1);
+    case types.COLONIZE_PLANET:
+      const player = state.getIn(['users', `${activePlayer}`]);
+      return state.mergeDeep({
+        users: {
+          [`${state.get('activePlayer')}`]: {
+            resources: {
+              colonists: player.getIn(['resources', 'colonists']) - 1,
+            },
+            planets: {
+              [action.payload]: {
+                requiredColonists: player.getIn(['planets', action.payload, 'requiredColonists']) - 1,
+              },
+            },
+          },
+        },
+      });
     default:
       return state;
   }
