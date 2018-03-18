@@ -1,0 +1,50 @@
+@import '../../assets/styles/settings.scss';
+
+.resource-display {
+  @include grid-col(12, 0);
+
+  &__left {
+    @include grid-col(9, 30);
+  }
+  &__right {
+    @include grid-col(3, 30);
+  }
+
+  &__left, &__right {
+    margin-bottom: 2rem;
+  }
+  .colonist-icon {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+  }
+  .credits-icon {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .colonist-icon, .credits-icon {
+    position: relative;
+    width: 100%;
+    padding: 2.7rem;
+    margin-top: 1.5rem;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.25) inset;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+
+    &__amount {
+      width: 3rem;
+      height: 3rem;
+      border-bottom-right-radius: 4px;
+      border-top-left-radius: 4px;
+      text-align: center;
+      line-height: 3rem;
+      font-family: $font-family-nova;
+      color: $aqua;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.05);
+      border-left: 1px solid rgba(0, 0, 0, 0.3);
+      border-top: 1px solid rgba(0, 0, 0, 0.3);
+    }
+  }
+}

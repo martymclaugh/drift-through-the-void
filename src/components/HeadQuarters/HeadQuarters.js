@@ -1,104 +1,164 @@
 // @flow
 
 import React, { Component } from 'react';
-import Terminal from '../shared/Terminal';
+import { connect } from 'react-redux';
+import { setHackNumber, setTerminals } from './head-quarters-actions';
+import { sendTerminals, sendHackNumber } from '../../redux/middlewares/socket/Game/game-actions';
 import randomStringArray from '../../helpers/random-string';
+import { hackingValues } from '../../helpers/hacking-values';
+import Terminal from '../Terminal/Terminal';
+import ControlPanel from '../shared/ControlPanel/ControlPanel';
+import { Props, State } from '../../flow/components/head-quarters-types';
 
 import './head-quarters.css';
 
-class HQ extends Component {
-  constructor(props) {
+class HeadQuarters extends Component<Props, State>{
+
+  constructor(props: Props) {
     super(props)
 
     this.state = {
-      numberOfHacks: 3,
-      terminals: [],
       hackingActive: false,
-      emptyTerminals: 0,
+      emptyTerminalIds: [],
     }
 
     this.initiateHack = this.initiateHack.bind(this);
     this.handleHacking = this.handleHacking.bind(this);
+    this.acceptResources = this.acceptResources.bind(this);
     this.handleDiscardTerminal = this.handleDiscardTerminal.bind(this);
     this.populateTerminals = this.populateTerminals.bind(this);
     this.terminateHacking = this.terminateHacking.bind(this);
   }
+
   componentDidMount() {
     this.populateTerminals();
   }
+
+  initiateHack: () => void;
   initiateHack() {
+    const ms = (Math.max(...this.state.emptyTerminalIds) * 5 + 13) * 50;
+    // time it will take last terminal to finish hacking
+
     this.setState({
       hackingActive: true,
     });
 
-    const values = ['Credits', 'Soylent', 'Alien Artifacts', 'Colonists', 'Colonists/Soylent', 'Alien Artifacts/Plague'];
-
-    const currentTerminals = this.state.terminals.map(terminal => {
+    const terminals = this.props.terminals.map((terminal, id) => {
       if (terminal.value) {
         return terminal;
       }
-      const value = values[Math.floor(Math.random() * values.length)];
+      const value = hackingValues[Math.floor(Math.random() * hackingValues.length)];
       terminal.value = value;
 
       return terminal;
     });
-    this.setState({ emptyTerminals: 0 });
 
-    this.setState({
-      terminals: currentTerminals,
-      numberOfHacks: this.state.numberOfHacks - 1,
-      hacking: false,
-    })
+    const numberOfHacks = {
+      numberOfHacks: this.props.numberOfHacks - 1,
+    }
+
+    this.props.setTerminals({ terminals });
+    this.props.sendTerminals({ terminals });
+    this.props.setHackNumber(numberOfHacks);
+    this.props.sendHackNumber(numberOfHacks);
+
+    setTimeout(() => {
+      this.setState({ hackingActive: false });
+    }, ms)
   }
+  handleHacking: () => void;
   handleHacking() {
-    if (this.state.numberOfHacks > 0 && this.state.emptyTerminals > 0) {
+    if (this.props.numberOfHacks > 0 && this.state.emptyTerminalIds.length > 0) {
       this.initiateHack();
     }
   }
+  handleDiscardTerminal: (terminal: Object) => void;
   handleDiscardTerminal(terminal) {
-    if (this.state.numberOfHacks > 0) {
-      const terminals = this.state.terminals;
-      terminals[terminals.indexOf(terminal)].value = null;
+    if (this.props.numberOfHacks > 0) {
+      const id = terminal.id;
+      const terminals = this.props.terminals.update(id - 1, term => {
+          return {
+            id,
+            value: null,
+          };
+      });
 
       this.setState({
-         terminals,
-         emptyTerminals: this.state.emptyTerminals + 1,
+        emptyTerminalIds: [...this.state.emptyTerminalIds, id],
       });
+      this.props.setTerminals({ terminals });
+      this.props.sendTerminals({ terminals });
     }
   }
+  populateTerminals: () => void;
   populateTerminals() {
-    const terminals = []
+    let terminals = [];
+
     for (var i = 0; i < this.props.terminalAmount; i++) {
       terminals.push({
-        id: i,
+        id: i + 1,
         value: null,
       });
     }
-
-    this.setState({
-      terminals,
-      emptyTerminals: this.props.terminalAmount,
-    });
+    this.props.setTerminals({ terminals });
+    this.setState({ emptyTerminalIds: terminals.map(t => (t.id - 1)) });
   }
+  terminateHacking: () => void;
   terminateHacking() {
-    this.setState({ hackingActive: false });
+    this.setState({ emptyTerminalIds: [] });
+    if (this.props.numberOfHacks === 0) {
+      // on the last hack
+      this.props.updateCargo();
+    }
+  }
+  acceptResources: () => void;
+  acceptResources() {
+    if (this.state.emptyTerminalIds.length === 0) {
+      setTimeout(() => {
+        this.props.updateCargo();
+      }, 500)
+    }
   }
   render() {
-    const renderTerminals = this.state.terminals.map((terminal, i) => (
+    const {
+      terminals,
+      numberOfHacks,
+    } = this.props;
+    const {
+      emptyTerminalIds,
+      hackingActive,
+    } = this.state;
+
+    const hackButtonActive = !hackingActive &&
+                            numberOfHacks > 0 &&
+                            emptyTerminalIds.length > 0;
+
+    const acceptButtonActive = !hackingActive &&
+                              numberOfHacks < 3 &&
+                              numberOfHacks > 0 &&
+                              emptyTerminalIds.length === 0;
+                              // TODO add additional check for 'leadership'
+                              // once powerups are available
+    const renderTerminals = terminals.map((terminal, i) => (
       <Terminal
-        numberOfHacks={this.state.numberOfHacks}
-        hackingActive={this.state.hackingActive}
-        onClick={() => this.handleDiscardTerminal(terminal)}
-        algorithm={terminal.value && [...randomStringArray(12 + (i * 5)), terminal.value]}
+        numberOfHacks={numberOfHacks}
+        hackingActive={hackingActive}
+        handleDiscardTerminal={() => this.handleDiscardTerminal(terminal)}
+        isLastTerminal={Math.max(...emptyTerminalIds) === terminal.id}
+        terminateHacking={this.terminateHacking}
+        algorithm={terminal.value ? [...randomStringArray(12 + (i * 5)), terminal.value && terminal.value.name] : ''}
         {...terminal}
       />
     ));
 
     return (
-      <div>
-        <div>Head Quarters</div>
-        <div>Number of Hacks: {this.state.numberOfHacks}</div>
-        <button onClick={this.handleHacking}>Generate Resources</button>
+      <div className="head-quarters">
+        <ControlPanel
+          handleHack={this.handleHacking}
+          handleAccept={this.acceptResources}
+          hackButtonActive={hackButtonActive}
+          acceptButtonActive={acceptButtonActive}
+        />
         <div className="head-quarters__terminals">
           {renderTerminals}
         </div>
@@ -107,4 +167,14 @@ class HQ extends Component {
   }
 }
 
-export default HQ;
+const mapStateToProps = state => ({
+  numberOfHacks: state.headQuarters.get('numberOfHacks'),
+  terminals: state.headQuarters.get('terminals'),
+});
+
+export default connect(mapStateToProps, {
+  setHackNumber,
+  setTerminals,
+  sendTerminals,
+  sendHackNumber,
+})(HeadQuarters);

@@ -1,0 +1,18 @@
+@import '../../../assets/styles/settings.scss';
+
+.button {
+  &__transparent {
+    background: transparent;
+    border: 2px solid $light-yellow;
+    font-family: $font-family-nova;
+    color: $light-yellow;
+    padding: 0.5rem 0.8rem;
+    font-size: 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+
+    &:hover, &.is-active {
+      opacity: 0.7;
+    }
+  }
+}

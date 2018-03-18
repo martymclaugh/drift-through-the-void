@@ -1,0 +1,15 @@
+@import '../../assets/styles/settings.scss';
+
+.head-quarters {
+  @include grid-col(12);
+
+  display: flex;
+  justify-content: space-around;
+  clear: both;
+
+  &__terminals {
+    display: inline-flex;
+    align-items: center;
+    min-height: 8rem;
+  }
+}

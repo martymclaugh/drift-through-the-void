@@ -1,0 +1,58 @@
+// @import "bourbon";
+// @import "neat";
+
+// Grid Config
+@mixin grid-col($col-number, $gutter: 30) {
+  width: calc(#{100 * ($col-number / 12)}% - #{$gutter * 1.5}px);
+  float: left;
+  margin-left: #{$gutter}px;
+}
+
+
+// Font Families
+$font-family-oswald: 'Oswald', sans-serif;
+$font-family-merriweather: 'Merriweather', sans-serif;
+$font-family-montserrat: 'Montserrat', sans-serif;
+$font-family-sans-serif: "ff-meta-web-pro", sans-serif;
+$font-family-nova: "Nova Square", sans-serif;
+
+
+// Font Sizes
+$body-font-size: 1rem; // 16px
+
+$h1-font-size: 3.200rem; // 51px
+$h2-font-size: 2.000rem; // 32px
+$h3-font-size: 1.750rem; // 28px
+$h4-font-size: 1.500rem; // 24px
+$h5-font-size: 1.500rem; // 24px
+$h6-font-size: 1.500rem; // 24px
+
+$green: #27a081;
+$purple: #714afb;
+$aqua: #2980b9;
+$pink: #e75277;
+
+$newGreen: #48D48D;
+$videoPink: #E85479;
+$articlePurple: #7651FC;
+
+$light-gray: #f5f6f7;
+$medium-gray: #eaeaec;
+$dark-gray: #262626;
+$light-dark-gray: rgba(259, 255, 255, 0.15);
+
+
+$aqua-green: #3fabb0;
+$light-blue: #aac9cf;
+$light-yellow: #fff69f;
+$neue-green: #81c972;
+$red-orange: #ff5717;
+$orange: #ed9e43;
+$matrix-green: #02E148;
+
+$light-clay: #c8c8c6;
+$medium-clay: #969690;
+$dark-clay: #5e5c58;
+$darker-clay: #413f3d;
+$trans-white: rgba(255,255,255,0.9);
+$trans-black: rgba(0,0,0,0.8);

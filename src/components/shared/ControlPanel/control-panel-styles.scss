@@ -1,0 +1,50 @@
+.control-panel {
+  display: inline-flex;
+  float: left;
+  flex-flow: column;
+  height: 8rem;
+
+  .button {
+    &__transparent {
+      margin-top: 2.5rem;
+    }
+  }
+  .full-height {
+    height: 100%;
+  }
+  &__placeholder {
+    display: none;
+    color: white;
+    font-family: 'Rubik One', sans-serif;
+
+    button {
+      cursor: not-allowed;
+    }
+
+    &.is-active {
+      height: 100%;
+      display: block;
+    }
+  }
+  &__accept {
+    display: none;
+
+    &.is-active {
+      display: block;
+    }
+  }
+  &__hack {
+    display: none;
+
+    &.is-active {
+      display: block;
+    }
+  }
+  &__hack, &__placeholder {
+    .button {
+      &__transparent {
+        padding: 0.5rem 1.3rem;
+      }
+    }
+  }
+}

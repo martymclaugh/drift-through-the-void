@@ -1,0 +1,42 @@
+.terminal {
+  position: relative;
+  margin: 0 0.5rem;
+  width: 5.25rem;
+  display: inline-block;
+  transition: 0.5s ease;
+
+  &.is-active:hover {
+    width: 6.25rem;
+    margin: 0;
+    delay: 0.2s;
+    transition: 0.5s ease;
+  }
+  &.is-active {
+    cursor: pointer;
+  }
+  .power-light {
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 50%;
+    background-color: #02E148;
+    position: absolute;
+    bottom: 0.82rem;
+    right: 0.5rem;
+    margin: 0;
+  }
+  &__content {
+    color: #02E148;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 2.7rem;
+    font-family: "Nova Square";
+  }
+  &__asset-image {
+    width: 86%;
+    margin: 0 auto;
+    padding: 0.2rem;
+  }
+}

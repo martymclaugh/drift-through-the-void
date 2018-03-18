@@ -1,0 +1,23 @@
+.soylent-container {
+  clear: both;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  margin: 0 2rem;
+  background: rgba(0, 0, 0, 0.2);
+
+  &__title {
+    font-size: 2rem;
+    color: #FFFFFF;
+    margin-right: 1rem;
+    display: inline-block;
+  }
+  &__asset {
+    width: 1.5rem;
+    display: inline-block;
+
+    &-image {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import '../../../assets/styles/settings.scss';
+
+.checkbox {
+    border: 2px solid $light-yellow;
+    color: $light-yellow;
+    padding: 0.2rem 0.8rem;
+    margin-right: 1rem;
+    cursor: pointer;
+
+  &.is-active {
+    padding: 0.2rem 0.45rem;
+  }
+}

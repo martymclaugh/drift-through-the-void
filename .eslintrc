@@ -1,0 +1,29 @@
+{
+  "extends": "react-app",
+    "settings": {
+      "flowtype": {
+        "onlyFilesWithFlowAnnotation": true
+      }
+    },
+    "plugins": [
+      "flowtype"
+    ],
+    "rules":{
+      "import/no-unresolved": [
+        2,
+        {
+          "caseSensitive": true,
+          "ignore": [ 'public/' ]
+        }
+      ],
+      "react/sort-comp": [
+        1
+      ],
+      "class-methods-use-this": [
+        0
+      ],
+      "no-case-declarations": [
+        0
+      ],
+    }
+}
