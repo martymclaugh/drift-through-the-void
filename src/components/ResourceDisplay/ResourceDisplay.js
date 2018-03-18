@@ -49,10 +49,6 @@ class ResourceDisplay extends Component<Props, State> {
 const mapStateToProps = state => {
   const activePlayer = state.gameScreen.get('activePlayer');
   const resources = state.gameScreen.getIn(['users', `${activePlayer}`, 'resources']);
-  console.log(activePlayer);
-  console.log(state.gameScreen.getIn(['users', `${activePlayer}, 'resources'`]));
-  console.log(resources);
-  console.log('STATE', state.gameScreen.toJS());
 
   return ({
     distributedResources: resources.get('distributedResources'),
