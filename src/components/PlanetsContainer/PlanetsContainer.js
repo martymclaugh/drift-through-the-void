@@ -27,13 +27,13 @@ class PlanetContainer extends Component {
       colonists,
       colonizePlanet
     } = this.props;
+
     if (planets.getIn([name, 'requiredColonists']) > 0 && colonists > 0) {
-      colonizePlanet(name);
+      colonizePlanet({ name });
     }
   }
   finishColonizing() {
     this.setState({ finishedColonizing: true });
-    // this.props.changePhase();
   }
   renderPlanets: () => void;
   renderPlanets() {
@@ -65,7 +65,8 @@ class PlanetContainer extends Component {
     return planets;
   }
   render() {
-    const button = !this.state.finishedColonizing && (
+    const { isActivePlayer } = this.props;
+    const button = isActivePlayer && !this.state.finishedColonizing && (
       <Button onClick={() => this.finishColonizing()}>
         Finish Colonizing
       </Button>
@@ -87,6 +88,7 @@ class PlanetContainer extends Component {
 const mapStateToProps = state => ({
   planets: state.gameScreen.getIn(['users', `${state.gameScreen.get('activePlayer')}`, 'planets']),
   colonists: state.gameScreen.getIn(['users', `${state.gameScreen.get('activePlayer')}`, 'resources', 'colonists']),
+  isActivePlayer: state.homeScreen.get('username') === state.gameScreen.get('activePlayer'),
 });
 
 export default connect(mapStateToProps, { colonizePlanet })(PlanetContainer);
