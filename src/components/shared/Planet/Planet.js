@@ -19,11 +19,12 @@ export default (props) => {
     left: `${props.positioning.x}rem`,
     top: `${props.positioning.y}rem`,
   }
+  const isActiveClass = props.canColonize && props.isActivePlayer && props.requiredColonists > 0 ? 'is-active' : '';
 
   return (
     <div
       style={planetStyle}
-      className={`planet ${ props.canColonize && props.requiredColonists > 0 ? 'is-active' : ''}`}
+      className={`planet ${isActiveClass}`}
       onClick={props.onClick}
     >
       <img src={props.planetImage} alt="" className="planet__asset"/>
