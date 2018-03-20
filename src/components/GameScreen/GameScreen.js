@@ -63,9 +63,9 @@ class GameScreen extends Component {
             changePhase={this.props.changePhase}
           />
         );
-      // case gamePhases.PURCHASE_DEVELOPMENTS:
+      // case gamePhases.PURCHASE_UPGRADES:
       //   return (
-      //     <DevelopmentsContainer
+      //     <UpgradesContainer
       //       changePhase={this.props.changePhase}
       //     />
       //   );
