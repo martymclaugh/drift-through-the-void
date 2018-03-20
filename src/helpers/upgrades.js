@@ -1,0 +1,80 @@
+export default {
+  mrRobot: {
+    name: 'Mr. Robot',
+    definition: 'Hack one additional terminal after final hack',
+    points: 2,
+    cost: 10,
+  },
+  ozoneStabalizer: {
+    name: 'Ozone Stabalizer',
+    definition: 'Global Warming has no effect',
+    points: 2,
+    cost: 10,
+  },
+  soylentGenerator: {
+    name: 'Soylent Generator',
+    definition: '+1 Soylent, Soylent Hack',
+    points: 3,
+    cost: 15,
+  },
+  pandoraGateway: {
+    name: 'Pandora Gateway',
+    definition: '+1 unobtanium, if collecting unobtanium',
+    points: 3,
+    cost: 15,
+  },
+  umbrellaCorporation: {
+    name: 'Umbrella Corporation',
+    definition: 'Biological Warfare has no effect',
+    points: 3,
+    cost: 15,
+  },
+  cryptoMiner: {
+    name: 'Crypto Miner',
+    definition: 'Credits are worth 14 instead of 7',
+    points: 4,
+    cost: 20,
+  },
+  spaceVaults: {
+    name: 'Space Vaults',
+    definition: 'No need to discard resources',
+    points: 4,
+    cost: 20,
+  },
+  v: {
+    name: 'V',
+    definition: 'Fascism effects opponents',
+    points: 6,
+    cost: 20,
+  },
+  blackMarket: {
+    name: 'Black Market',
+    definition: 'Sell Soylent for 4 credits a piece',
+    points: 6,
+    cost: 30,
+  },
+  cloning: {
+    name: 'Cloning',
+    definition: '+1 Colonist, Colonist Hack',
+    points: 6,
+    cost: 30,
+  },
+  engine: {
+    name: 'Engine',
+    definition: 'Trade Unobtanium for 3 Colonists each',
+    points: 6,
+    cost: 40,
+  },
+  culturalHeritage: {
+    name: 'Cultural Heritage',
+    definition: 'Bonus points: +1 / monument',
+    points: 8,
+    cost: 50,
+  },
+  kingOfSpace: {
+    name: 'King of Space',
+    definition: 'Bonus points: +1 / planet',
+    points: 8,
+    cost: 60,
+  },
+}
