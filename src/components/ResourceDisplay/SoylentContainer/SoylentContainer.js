@@ -44,7 +44,7 @@ class SoylentContainer extends Component<Props, State> {
     for (let i = 1; i < num + 1; i ++) {
       setTimeout(() => {
         return this.setState({ amount: i });
-      }, 150 * (i))
+      }, 50 * (i))
     }
   }
   render() {
