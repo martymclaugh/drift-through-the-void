@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { colonizePlanet } from '../GameScreen/game-screen-actions';
+import { colonizePlanet, changePhase } from '../GameScreen/game-screen-actions';
 import planetImagePaths from './planet-image-paths';
 import Planet from '../shared/Planet/Planet';
 import Button from '../shared/Button/Button';
@@ -25,15 +25,20 @@ class PlanetContainer extends Component {
     const {
       planets,
       colonists,
-      colonizePlanet
+      colonizePlanet,
+      isActivePlayer,
     } = this.props;
 
-    if (planets.getIn([name, 'requiredColonists']) > 0 && colonists > 0) {
+    if (planets.getIn([name, 'requiredColonists']) > 0 && colonists > 0 && isActivePlayer) {
       colonizePlanet({ name });
     }
   }
   finishColonizing() {
     this.setState({ finishedColonizing: true });
+
+    setTimeout(() => {
+      this.props.changePhase();
+    }, 2000)
   }
   renderPlanets: () => void;
   renderPlanets() {
@@ -54,6 +59,7 @@ class PlanetContainer extends Component {
         <Planet
           positioning={{ x, y }}
           canColonize={this.props.colonists > 0}
+          isActivePlayer={this.props.isActivePlayer}
           onClick={() => this.handlePlanetClick(planetKeys[i])}
           planetImage={planetImagePaths[`planet-${i + 1}`].imagePath}
           requiredColonists={this.props.planets.getIn([`${planetKeys[i]}`, 'requiredColonists'])}
@@ -91,4 +97,7 @@ const mapStateToProps = state => ({
   isActivePlayer: state.homeScreen.get('username') === state.gameScreen.get('activePlayer'),
 });
 
-export default connect(mapStateToProps, { colonizePlanet })(PlanetContainer);
+export default connect(mapStateToProps, {
+  colonizePlanet,
+  changePhase,
+})(PlanetContainer);

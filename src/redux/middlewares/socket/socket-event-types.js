@@ -1,5 +1,4 @@
 import { setHackNumber, setTerminals } from '../../../components/HeadQuarters/head-quarters-actions';
-import { updateCargo, changePhase, colonizePlanet } from '../../../components/GameScreen/game-screen-actions';
 import { usernameTaken, usernameSuccess } from '../../../components/HomeScreen/home-screen-actions';
 import {
   addLobbyMessage,
@@ -9,6 +8,12 @@ import {
   updateGamesList,
   updateUsersTyping,
 } from '../../../components/LobbyScreen/lobby-screen-actions';
+import {
+  updateCargo,
+  changePhase,
+  colonizePlanet,
+  colonizeMonument,
+} from '../../../components/GameScreen/game-screen-actions';
 import { playerJoined } from '../../../components/GameScreen/game-screen-actions';
 
 export const socketEventTypes = {
@@ -26,4 +31,5 @@ export const socketEventTypes = {
   playerJoined,
   changePhase,
   colonizePlanet,
+  colonizeMonument,
 }

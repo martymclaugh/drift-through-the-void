@@ -2,8 +2,62 @@
 
 .monument {
   display: inline-block;
-  @include grid-col(1.714);
   position: relative;
+
+  .is-active {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  &.additionalPylon {
+    .monument__asset {
+      width: 4rem;
+    }
+  }
+  &.promethius {
+    .monument__asset {
+      width: 7rem;
+    }
+  }
+  &.tesseract {
+    .monument__asset {
+      width: 9rem;
+    }
+  }
+  &.spaceLadder {
+    .monument {
+      &__asset {
+        width: 11rem;
+      }
+      &__placeholders {
+        &-container {
+          width: 1rem;
+          margin-left: 2.1rem;
+
+          .empty {
+            margin-bottom: 0.6rem;
+          }
+        }
+      }
+    }
+  }
+  &.sphereOFear {
+    .monument__asset {
+      width: 12rem;
+    }
+  }
+  &.spacePortal {
+    .monument__asset {
+      width: 14rem;
+    }
+  }
+  &.spaceChurch {
+    .monument__asset {
+      width: 20rem;
+    }
+  }
 
   &.is-active {
     cursor: pointer;
@@ -28,14 +82,14 @@
     }
 
     .empty {
-      width: 0.9rem;
-      height: 0.9rem;
+      width: 1rem;
+      height: 1rem;
       background-color: #FFFFFF;
       border: 1px solid #000000;
       margin-bottom: 0.3rem;
+      border-radius: 50px;
 
       &__container {
-        @include grid-col(6, 5);
       }
     }
   }
