@@ -15,6 +15,7 @@ const INITIAL_STATE = fromJS({
 
 const gameScreenReducer = (state = INITIAL_STATE, action) => {
   const activePlayer = state.get('activePlayer');
+  const player = state.getIn(['users', `${activePlayer}`]);
 
   switch (action.type) {
     case types.PLAYER_JOINED:
@@ -46,7 +47,6 @@ const gameScreenReducer = (state = INITIAL_STATE, action) => {
         activePlayer: state.get('users').keySeq().first(),
       });
     case types.COLONIZE_PLANET:
-      const player = state.getIn(['users', `${activePlayer}`]);
       return state.mergeDeep({
         users: {
           [`${state.get('activePlayer')}`]: {
@@ -56,6 +56,21 @@ const gameScreenReducer = (state = INITIAL_STATE, action) => {
             planets: {
               [action.payload.name]: {
                 requiredColonists: player.getIn(['planets', action.payload.name, 'requiredColonists']) - 1,
+              },
+            },
+          },
+        },
+      });
+    case types.COLONIZE_MONUMENT:
+      return state.mergeDeep({
+        users: {
+          [`${state.get('activePlayer')}`]: {
+            resources: {
+              colonists: player.getIn(['resources', 'colonists']) - 1,
+            },
+            monuments: {
+              [action.payload.name]: {
+                requiredColonists: player.getIn(['monuments', action.payload.name, 'requiredColonists']) - 1,
               },
             },
           },

@@ -4,6 +4,7 @@ export const types = {
   START_GAME: 'START_GAME',
   CHANGE_PHASE: 'CHANGE_PHASE',
   COLONIZE_PLANET: 'COLONIZE_PLANET',
+  COLONIZE_MONUMENT: 'COLONIZE_MONUMENT',
 }
 
 export const updateCargo = payload =>
@@ -16,3 +17,5 @@ export const changePhase = () =>
   ({ type: types.CHANGE_PHASE });
 export const colonizePlanet = payload =>
   ({ type: types.COLONIZE_PLANET, payload });
+export const colonizeMonument = payload =>
+  ({ type: types.COLONIZE_MONUMENT, payload });
