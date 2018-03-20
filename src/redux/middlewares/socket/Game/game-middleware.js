@@ -26,6 +26,9 @@ export const gameMiddleware = (store) => {
         case gameScreenActions.COLONIZE_PLANET:
           socket.emit('colonizePlanet', withServer(data));
           break;
+        case gameScreenActions.COLONIZE_MONUMENT:
+          socket.emit('colonizeMonument', withServer(data));
+          break;
         case gameScreenActions.CHANGE_PHASE:
           socket.emit('changePhase', withServer(data));
           break;
