@@ -3,7 +3,7 @@
 .lobby-screen {
   @include grid-col(12, 0);
   min-width: 50rem;
-
+  height: 42rem;
   background-color: #29393A;
   padding-top: 1rem;
 
