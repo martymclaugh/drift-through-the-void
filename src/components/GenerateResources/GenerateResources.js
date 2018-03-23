@@ -9,6 +9,8 @@ import HeadQuarters from '../HeadQuarters/HeadQuarters';
 import ResourceDisplay from '../ResourceDisplay/ResourceDisplay';
 import { Props, State } from '../../flow/components/generate-resources-types';
 
+import './generate-resources-styles.css';
+
 class GenerateResources extends Component<Props, State>{
 
   constructor(props: Props) {
@@ -58,7 +60,7 @@ class GenerateResources extends Component<Props, State>{
   }
   render() {
     return (
-      <div>
+      <div className="generate-resources">
         <ResourceDisplay />
         <HeadQuarters
           terminalAmount={7}
