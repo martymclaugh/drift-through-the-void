@@ -7,15 +7,19 @@ import { gamePhases } from '../../helpers/game-phases';
 import GenerateResources from '../GenerateResources/GenerateResources';
 import PlanetsContainer from '../PlanetsContainer/PlanetsContainer';
 import MonumentsContainer from '../MonumentsContainer/MonumentsContainer';
+import MiniResourceDisplay from '../MiniResourceDisplay/MiniResourceDisplay';
 
 import './game-screen-styles.css';
 
+// TODO add props and state types
 class GameScreen extends Component {
 
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      miniResourceDisplayActive: false,
+    };
 
     this.renderPhaseScreen = this.renderPhaseScreen.bind(this);
   }
@@ -29,11 +33,14 @@ class GameScreen extends Component {
   componentWillReceiveProps(nextProps) {
     // TODO game starting conditions
     // if (nextProps.playersJoined === nextProps.numberOfPlayers && !nextProps.gameStarted) {
-
       if (nextProps.users.size > 0 && !nextProps.gameStarted){
         this.props.startGame();
       }
     // }
+    this.setState({
+      // only display mini resource display when not generating resources
+      miniResourceDisplayActive: nextProps.phase !== gamePhases.GENERATE_RESOURCES,
+    });
   }
   renderPhaseScreen: () => void;
   renderPhaseScreen() {
@@ -75,6 +82,8 @@ class GameScreen extends Component {
     if (this.props.gameStarted) {
       return (
         <div className='game-screen'>
+          <div className="black-border__left" />
+          <MiniResourceDisplay isActive={this.state.miniResourceDisplayActive}/>
           {this.renderPhaseScreen()}
         </div>
       )
