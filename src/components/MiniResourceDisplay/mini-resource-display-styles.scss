@@ -1,0 +1,56 @@
+@import '../../assets/styles/settings.scss';
+
+.mini-resource-display {
+  height: 38rem;
+  width: 7rem;
+  background: #2E2E2E;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  position: absolute;
+  left: -7rem;
+  transition: all 1s linear;
+  z-index: 1;
+
+  &.is-active {
+    left: 0;
+  }
+
+  .active-player {
+    font-family: $font-family-nova;
+    padding: 1rem 0;
+    color: $aqua;
+    font-size: 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .mini-resource {
+    display: table;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    width: 100%;
+
+    &:last-child {
+      border: none;
+    }
+
+    &__asset {
+      display: inline-block;
+      width: auto;
+      height: 2.55rem;
+      margin: 0.5rem 1rem;
+    }
+    .points  {
+      display: table-cell;
+      vertical-align: middle;
+      font-family: $font-family-nova;
+      color: $aqua;
+      height: 3rem;
+      padding-right: 1rem;
+    }
+  }
+  .credits {
+    margin: 0.5rem 0.2rem;
+  }
+  .soylent {
+    margin: 0.5rem 1.78rem;
+  }
+}
