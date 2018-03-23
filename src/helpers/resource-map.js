@@ -19,37 +19,37 @@ import soylentBlack from '../assets/images/resource-images/soylent-black-icon.pn
 
 export const resourceMap = {
   nanoTubes: {
-    firstVal: 1,
+    increment: 1,
     maxAmount: 8,
     greenImg: nanoTubesGreen,
     blackImg: nanoTubesBlack,
   },
   unobtanium: {
-    firstVal: 2,
+    increment: 2,
     maxAmount: 7,
     greenImg: unobtaniumGreen,
     blackImg: unobtaniumBlack,
   },
   energyPlankton: {
-    firstVal: 3,
+    increment: 3,
     maxAmount: 6,
     greenImg: planktonGreen,
     blackImg: planktonBlack,
   },
   giantSpiderSilk: {
-    firstVal: 4,
+    increment: 4,
     maxAmount: 5,
     greenImg: spiderSilkGreen,
     blackImg: spiderSilkBlack,
   },
   rifles: {
-    firstVal: 5,
+    increment: 5,
     maxAmount: 4,
     greenImg: riflesGreen,
     blackImg: riflesBlack,
   },
   soylent: {
-    firstVal: 1,
+    increment: 1,
     maxAmount: 15,
     greenImg: soylentGreen,
     blackImg: soylentBlack,
