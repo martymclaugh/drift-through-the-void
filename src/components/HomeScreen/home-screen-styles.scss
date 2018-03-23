@@ -1,9 +1,10 @@
 @import '../../assets/styles/settings.scss';
 
 .home-screen {
-  height: 40rem;
+  height: 42rem;
   display: table;
   width: 100%;
+  background-color: #29393A;
 
   &__title {
     text-transform: uppercase;

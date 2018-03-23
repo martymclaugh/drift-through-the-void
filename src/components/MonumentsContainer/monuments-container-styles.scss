@@ -1,5 +1,7 @@
 @import '../../assets/styles/settings.scss';
 
 .monuments-container {
-  @include grid-col(8, 0);
+  height: 38rem;
+  margin-left: 7rem;
+  padding-left: 1rem;
 }

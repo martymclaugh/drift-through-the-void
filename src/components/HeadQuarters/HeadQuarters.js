@@ -10,7 +10,7 @@ import Terminal from '../Terminal/Terminal';
 import ControlPanel from '../shared/ControlPanel/ControlPanel';
 import { Props, State } from '../../flow/components/head-quarters-types';
 
-import './head-quarters.css';
+import './head-quarters-styles.css';
 
 class HeadQuarters extends Component<Props, State>{
 
