@@ -10,7 +10,7 @@ const INITIAL_STATE = fromJS({
   users: Map(),
   gameStarted: false,
   activePlayer: '',
-  phase: gamePhases.POPULATE_PLANETS,
+  phase: gamePhases.GENERATE_RESOURCES,
 });
 
 const gameScreenReducer = (state = INITIAL_STATE, action) => {
