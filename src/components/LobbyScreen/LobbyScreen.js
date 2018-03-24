@@ -30,6 +30,7 @@ class LobbyScreen extends Component<Props, State> {
     this.joinGame = this.joinGame.bind(this);
   }
   componentDidMount(){
+    // TODO allow user to rejoin game if they accidentally left
     if (this.props.username) {
       this.props.joinLobbyRoom();
     }
