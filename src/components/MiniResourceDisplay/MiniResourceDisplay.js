@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { resourceMap } from '../../helpers/resource-map';
 import { calculateResourcePoints } from '../../helpers/resource-point-converter';
+import { gamePhases } from '../../helpers/game-phases';
+import { selectResource } from '../Upgrades/upgrades-actions';
 import colonistGreen from '../../assets/images/resource-images/colonist-green.png';
 import creditsGreen from '../../assets/images/terminal-images/credits-green.png';
 import heart from '../../assets/images/resource-images/heart.png';
@@ -14,16 +16,45 @@ class MiniResourceDisplay extends Component {
 
     this.state = {};
     this.renderDistributedResources = this.renderDistributedResources.bind(this);
+    this.handleResourceClick = this.handleResourceClick.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.credits && nextProps.canSpendResources && !nextProps.selectedResources.get('credits')) {
+      nextProps.selectResource({ credits: nextProps.credits });
+    }
   }
   renderDistributedResources() {
     const distributedResources = this.props.distributedResources.toJS();
+    const {
+      selectedUpgrade,
+      selectedResources,
+    } = this.props;
 
-    return Object.keys(distributedResources).map(key => (
-      <div className="mini-resource">
-        <img className="mini-resource__asset" src={resourceMap[key].greenImg} alt=""/>
-        <div className="points">{calculateResourcePoints(key, distributedResources[key])}</div>
-      </div>
-    ));
+    return Object.keys(distributedResources).map(key => {
+      const points = calculateResourcePoints(key, distributedResources[key])
+      return (
+        <div
+          onClick={() => this.handleResourceClick({ [key]: points })}
+          className={
+            `mini-resource ${distributedResources[key] && selectedUpgrade.size ? 'is-active' : ''} ${selectedResources.get(key) ? 'is-selected' : ''}`
+          }
+        >
+          <img className="mini-resource__asset" src={resourceMap[key].greenImg} alt=""/>
+          <div className="points">{points}</div>
+        </div>
+      )
+    });
+  }
+  handleResourceClick(resource) {
+    const {
+      canSpendResources,
+      distributedResources,
+      isActivePlayer,
+      selectResource,
+    } = this.props;
+    if (isActivePlayer && canSpendResources && distributedResources.get(`${Object.keys(resource)[0]}`))  {
+      selectResource(resource)
+    }
   }
   render() {
     const {
@@ -32,6 +63,8 @@ class MiniResourceDisplay extends Component {
       credits,
       // hitPoints,
       isActive,
+      selectedUpgrade,
+      selectedResources,
     } = this.props;
 
     return (
@@ -45,7 +78,12 @@ class MiniResourceDisplay extends Component {
           <img className="mini-resource__asset soylent" src={resourceMap['soylent'].greenImg} alt=""/>
           <div className="points">{soylent}</div>
         </div>
-        <div className="mini-resource">
+        <div
+          onClick={() => this.handleResourceClick({ credits })}
+          className={
+            `mini-resource ${credits && selectedUpgrade.size ? 'is-active' : ''} ${selectedResources.get('credits') ? 'is-selected' : ''}`
+          }
+        >
           <img className="mini-resource__asset credits" src={creditsGreen} alt=""/>
           <div className="points">{credits}</div>
         </div>
@@ -69,7 +107,11 @@ const mapStateToProps = state => {
     soylent: resources.get('soylent'),
     credits: resources.get('credits'),
     activePlayer: activePlayer,
+    selectedUpgrade: state.upgrades.get('selectedUpgrade'),
+    selectedResources: state.upgrades.get('selectedResources'),
+    canSpendResources: state.gameScreen.get('phase') === gamePhases.PURCHASE_UPGRADES,
+    isActivePlayer: state.homeScreen.get('username') === state.gameScreen.get('activePlayer'),
   });
 }
 
-export default connect(mapStateToProps, null)(MiniResourceDisplay);
+export default connect(mapStateToProps, { selectResource })(MiniResourceDisplay);
