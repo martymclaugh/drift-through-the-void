@@ -15,6 +15,11 @@ import {
   colonizeMonument,
 } from '../../../components/GameScreen/game-screen-actions';
 import { playerJoined } from '../../../components/GameScreen/game-screen-actions';
+import {
+  selectUpgrade,
+  selectResource,
+  purchaseUpgrade,
+} from '../../../components/Upgrades/upgrades-actions';
 
 export const socketEventTypes = {
   receiveTerminals: setTerminals,
@@ -32,4 +37,7 @@ export const socketEventTypes = {
   changePhase,
   colonizePlanet,
   colonizeMonument,
+  selectUpgrade,
+  selectResource,
+  purchaseUpgrade,
 }
