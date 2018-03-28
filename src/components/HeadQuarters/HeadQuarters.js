@@ -20,7 +20,8 @@ class HeadQuarters extends Component<Props, State>{
     this.state = {
       hackingActive: false,
       emptyTerminalIds: [],
-    }
+      mrRobotTerminal: null,
+    };
 
     this.initiateHack = this.initiateHack.bind(this);
     this.handleHacking = this.handleHacking.bind(this);
@@ -32,8 +33,11 @@ class HeadQuarters extends Component<Props, State>{
 
   componentDidMount() {
     this.populateTerminals();
-  }
 
+    if (this.props.mrRobot) {
+      this.props.setHackNumber({ numberOfHacks: 4 });
+    }
+  }
   initiateHack: () => void;
   initiateHack() {
     const ms = (Math.max(...this.state.emptyTerminalIds) * 5 + 13) * 50;
@@ -74,7 +78,17 @@ class HeadQuarters extends Component<Props, State>{
   }
   handleDiscardTerminal: (terminal: Object) => void;
   handleDiscardTerminal(terminal) {
-    if (this.props.numberOfHacks > 0) {
+    const {
+      mrRobot,
+      numberOfHacks,
+      setTerminals,
+      sendTerminals,
+    } = this.props;
+
+    if (mrRobot && numberOfHacks === 1) {
+      this.setState({ mrRobotTerminal: terminal });
+    }
+    if (numberOfHacks > 0) {
       const id = terminal.id;
       const terminals = this.props.terminals.update(id - 1, term => {
           return {
@@ -86,8 +100,8 @@ class HeadQuarters extends Component<Props, State>{
       this.setState({
         emptyTerminalIds: [...this.state.emptyTerminalIds, id],
       });
-      this.props.setTerminals({ terminals });
-      this.props.sendTerminals({ terminals });
+      setTerminals({ terminals });
+      sendTerminals({ terminals });
     }
   }
   populateTerminals: () => void;
@@ -137,10 +151,11 @@ class HeadQuarters extends Component<Props, State>{
                               numberOfHacks < 3 &&
                               numberOfHacks > 0 &&
                               emptyTerminalIds.length === 0;
-                              // TODO add additional check for 'leadership'
-                              // once powerups are available
+                              // TODO add additional check for 'mrRobot'
+                              // once upgrades are available
     const renderTerminals = terminals.map((terminal, i) => (
       <Terminal
+        canHack={!this.state.mrRobotTerminal}
         numberOfHacks={numberOfHacks}
         hackingActive={hackingActive}
         handleDiscardTerminal={() => this.handleDiscardTerminal(terminal)}
@@ -167,11 +182,15 @@ class HeadQuarters extends Component<Props, State>{
   }
 }
 
-const mapStateToProps = state => ({
-  numberOfHacks: state.headQuarters.get('numberOfHacks'),
-  terminals: state.headQuarters.get('terminals'),
-});
+const mapStateToProps = state =>{
+  const activePlayer = state.gameScreen.get('activePlayer');
 
+  return {
+    numberOfHacks: state.headQuarters.get('numberOfHacks'),
+    terminals: state.headQuarters.get('terminals'),
+    mrRobot: state.gameScreen.getIn(['users', `${activePlayer}`, 'upgrades', 'mrRobot']),
+  };
+}
 export default connect(mapStateToProps, {
   setHackNumber,
   setTerminals,

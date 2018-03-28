@@ -69,6 +69,7 @@ class Terminal extends Component<Props, State> {
     const {
       hackingActive,
       numberOfHacks,
+      canHack,
     } = this.props;
 
     const display = imagePaths[value] ?
@@ -78,13 +79,13 @@ class Terminal extends Component<Props, State> {
 
     return (
       <div
-        onClick={value && !hackingActive && numberOfHacks > 0 ? this.handleDiscardTerminal : null}
+        onClick={canHack && value && !hackingActive && numberOfHacks > 0 ? this.handleDiscardTerminal : null}
         // check if value has already been removed
         // and if hacking isn't active
         // and if more hacking is allowed
-        className={`terminal ${isActive ? 'is-active' : ''}`}
+        className={`terminal ${isActive && canHack ? 'is-active' : ''}`}
       >
-        <img style={{width: 'inherit'}} src={terminal} alt="" className="terminal__asset"/>
+        <img style={{ width: 'inherit' }} src={terminal} alt="terminal" className="terminal__asset"/>
         <div className="terminal__content">{display}</div>
         <div className={`${isActive ? 'power-light' : ''}`} />
       </div>
