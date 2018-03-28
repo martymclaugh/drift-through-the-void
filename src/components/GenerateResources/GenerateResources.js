@@ -59,11 +59,17 @@ class GenerateResources extends Component<Props, State>{
     }, 1500)
   }
   render() {
+    const { planets } = this.props;
+    const planetsArray = planets.keySeq().toArray();
+  
+    const numberOfTerminals = planetsArray.filter(key =>
+      ( planets.getIn([key, 'requiredColonists']) === 0 )).length;
+
     return (
       <div className="generate-resources">
         <ResourceDisplay />
         <HeadQuarters
-          terminalAmount={7}
+          terminalAmount={numberOfTerminals}
           updateCargo={this.updateCargo}
         />
       </div>
@@ -83,6 +89,7 @@ const mapStateToProps = state => {
     users: state.gameScreen.get('users'),
     cargo: state.gameScreen.getIn(['users', `${activePlayer}`, 'resources']),
     games: state.lobby.get('games'),
+    planets: state.gameScreen.getIn(['users', `${activePlayer}`, 'planets']),
   };
 }
 
