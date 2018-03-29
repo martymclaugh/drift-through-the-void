@@ -1,0 +1,158 @@
+@import '../../assets/styles/settings.scss';
+
+@keyframes flickerAnimation {
+  0%   {
+    opacity: 1;
+  }
+  50%  {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.upgrades {
+  &-container {
+    width: 71rem;
+    margin: 0 auto;
+    font-family: $font-family-nova;
+    
+    .upgrades {
+      padding: 1.5rem;
+      width: 48rem;
+      margin-left: 7rem;
+      float:left;
+      
+      &__purchase {
+        width: 12rem;
+        height: 15rem;
+        padding: 1rem;
+        text-align: center;
+        float: left;
+        transform: translateY(70%);
+        color: $lightest-aqua;
+        background-color: $smoke;
+        box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.25) inset;
+        background: $smoke;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+
+        &-content {
+          height: 100%;
+        }
+        &-name {
+          color: $matrix-green;
+          font-size: 0.9rem;
+          margin-top: 0.5rem;
+        }
+        &-cost {
+          color: $light-yellow;
+          position: absolute;
+          bottom: 8rem;
+          left: 1rem;
+          right: 1rem;
+        }
+        .can-upgrade {
+          position: absolute;
+          bottom: 1rem;
+          left: 1rem;
+          right: 1rem;
+        }
+        .spending {
+          position: absolute;
+          bottom: 5rem;
+          left: 1rem;
+          right: 1rem;
+        }
+      }
+      .title {
+        &__name, &__select, &__cost, &__effect, &__points {
+          display: inline-block;
+          height: 2rem;
+          color: #aac9cf;
+        }
+        &__name {
+          width: 12rem;
+        }
+        &__cost, &__points {
+          text-align: center;
+          width: 3rem;
+        }
+        &__effect {
+          width: 14rem;
+        }
+        &__name, &__effect {
+          margin-left: 1rem;
+        }
+      }
+      .upgrade {
+        margin: 0.5rem 0;
+        height: 2rem;
+        display: table;
+        
+        &__name, .button, &__cost, &__effect, &__points {
+          height: 2rem;
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 1rem;
+        }
+        &__effect {
+          color: $light-aqua;
+        }
+        &__name {
+          color: $light-aqua;
+          width: 12rem;
+        }
+        &__cost, &__points {
+          color: $light-yellow;
+          width: 2rem;
+        }
+      }
+    }
+    .button {
+      height: 2rem;
+      
+      &__upgrade {
+        background-color: $light-yellow;
+        padding: 0.5rem 0;
+        margin-top: -2px;        
+        color: $smoke;
+        border-radius: 1rem;
+        box-shadow: inset 0 0 10px #000000, 0 4px 2px -2px #000000;
+        border-bottom: 2px solid $light-yellow;
+        cursor: pointer;
+        transition: all 0.1s;        
+
+        &:active {
+          box-shadow: inset 1px 4px 1px rgba(0,0,0,0.8);
+          border: none;
+          margin-top: 0px;          
+        }
+      }
+      &__radio {
+        width: 1.3rem;
+        height: 1rem;
+        margin-top: -2px;
+        padding: 10px;
+        background-color: red;
+        border-radius: 1rem;
+        margin-right: 1rem;
+        box-shadow: inset 0 0 10px #000000, 0 4px 2px -2px #000000;
+        border-bottom: solid 2px red;
+        cursor: pointer;
+        transition: all 0.3s;
+        
+        &:hover {
+          animation: flickerAnimation 1s infinite;
+        }
+        
+        &.is-active {
+          margin-top: 0px;
+          animation: none;
+          box-shadow: inset 1px 4px 1px rgba(0,0,0,0.8);
+          border: none;
+          background-color: green;
+        }
+      }
+    }
+  }
+}

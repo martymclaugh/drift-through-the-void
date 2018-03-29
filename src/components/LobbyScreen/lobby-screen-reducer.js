@@ -29,7 +29,7 @@ const lobbyReducer = (state = INITIAL_STATE, action) => {
       });
     case lobbyActionTypes.CREATE_GAME:
       const { game } = action.payload;
-      const newGameState = state.get('games').set(game.server, game);
+      const newGameState = state.get('games').set(game.server, fromJS(game));
 
       return state.merge({
         games: newGameState,

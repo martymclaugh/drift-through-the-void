@@ -3,7 +3,7 @@
 .mini-resource-display {
   height: 38rem;
   width: 7rem;
-  background: #2E2E2E;
+  background: $smoke;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-right: 1px solid rgba(255, 255, 255, 0.5);
   position: absolute;
@@ -27,7 +27,26 @@
     display: table;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     width: 100%;
+    transition: 0.2s all linear;
 
+    &.is-active {
+      box-shadow: inset 0 0 10px #000000;
+      background: $dark-clay;
+
+      cursor: pointer;
+      
+      &:hover {
+        opacity: 0.7;
+      }
+      .points {
+        color: $light-yellow;
+      }
+      &.is-selected {
+        background: #767672;
+        box-shadow: inset 1px 4px 1px rgba(0,0,0,0.8);
+        
+      }
+    }
     &:last-child {
       border: none;
     }

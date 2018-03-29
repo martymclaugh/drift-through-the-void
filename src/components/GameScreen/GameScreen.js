@@ -8,6 +8,7 @@ import GenerateResources from '../GenerateResources/GenerateResources';
 import PlanetsContainer from '../PlanetsContainer/PlanetsContainer';
 import MonumentsContainer from '../MonumentsContainer/MonumentsContainer';
 import MiniResourceDisplay from '../MiniResourceDisplay/MiniResourceDisplay';
+import Upgrades from '../Upgrades/Upgrades';
 
 import './game-screen-styles.css';
 
@@ -63,12 +64,12 @@ class GameScreen extends Component {
             changePhase={this.props.changePhase}
           />
         );
-      // case gamePhases.PURCHASE_DEVELOPMENTS:
-      //   return (
-      //     <DevelopmentsContainer
-      //       changePhase={this.props.changePhase}
-      //     />
-      //   );
+      case gamePhases.PURCHASE_UPGRADES:
+        return (
+          <Upgrades
+            changePhase={this.props.changePhase}
+          />
+        );
       default:
         return (
           <GenerateResources
