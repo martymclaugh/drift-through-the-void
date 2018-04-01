@@ -15,6 +15,7 @@ import riflesBlack from '../assets/images/resource-images/rifle-black.png';
 
 import soylentGreen from '../assets/images/resource-images/soylent-green-icon.png';
 import soylentBlack from '../assets/images/resource-images/soylent-black-icon.png';
+import soylentYellow from '../assets/images/resource-images/soylent-yellow.png';
 
 
 export const resourceMap = {
@@ -53,5 +54,6 @@ export const resourceMap = {
     maxAmount: 15,
     greenImg: soylentGreen,
     blackImg: soylentBlack,
+    yellowImg: soylentYellow,
   }
 }
