@@ -34,7 +34,7 @@ export const hackingValues = [
     name: 'alien-and-death',
     amount: {
       resources: 2,
-      death: 1
+      disasters: 1
     },
   },
 ];
