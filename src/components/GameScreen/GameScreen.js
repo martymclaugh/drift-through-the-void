@@ -8,6 +8,7 @@ import GenerateResources from '../GenerateResources/GenerateResources';
 import PlanetsContainer from '../PlanetsContainer/PlanetsContainer';
 import MonumentsContainer from '../MonumentsContainer/MonumentsContainer';
 import MiniResourceDisplay from '../MiniResourceDisplay/MiniResourceDisplay';
+import DiscardResources from '../DiscardResources/DiscardResources';
 import Upgrades from '../Upgrades/Upgrades';
 
 import './game-screen-styles.css';
@@ -40,7 +41,8 @@ class GameScreen extends Component {
     // }
     this.setState({
       // only display mini resource display when not generating resources
-      miniResourceDisplayActive: nextProps.phase !== gamePhases.GENERATE_RESOURCES,
+      miniResourceDisplayActive: nextProps.phase !== gamePhases.GENERATE_RESOURCES &&
+                                 nextProps.phase !== gamePhases.TRADE_RESOURCES,
     });
   }
   renderPhaseScreen: () => void;
@@ -67,6 +69,12 @@ class GameScreen extends Component {
       case gamePhases.PURCHASE_UPGRADES:
         return (
           <Upgrades
+            changePhase={this.props.changePhase}
+          />
+        );
+      case gamePhases.DISCARD_RESOURCES:
+        return (
+          <DiscardResources
             changePhase={this.props.changePhase}
           />
         );
