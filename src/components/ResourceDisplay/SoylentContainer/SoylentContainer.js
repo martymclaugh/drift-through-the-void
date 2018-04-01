@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { resourceMap } from '../../../helpers/resource-map';
 import { Props, State } from '../../../flow/components/soylent-container-types';
+import { gamePhases } from '../../../helpers/game-phases';
 
 import './soylent-container-styles.css';
 
@@ -29,10 +30,24 @@ class SoylentContainer extends Component<Props, State> {
   renderSoylentIcons(){
     const { soylent } = resourceMap;
     let icons = [];
+
+
     for (let i = 0; i < soylent.maxAmount; i++){
-      const imgSrc = i < this.state.amount ? soylent.greenImg : soylent.blackImg;
+      const canTrade = this.props.soylentGenerator &&
+                       this.props.phase === gamePhases.TRADE_RESOURCES &&
+                       i < this.state.amount;
+
+      let imgSrc = i < this.state.amount ? soylent.greenImg : soylent.blackImg;
+      if (canTrade) { imgSrc = soylent.yellowImg; }
+
+      const isSelected = i >= this.props.selectedResources.get('soylent') - 1;
+
       icons.push(
-        <div className="soylent-container__asset">
+        <div
+          // we have to add 1 to the index since 0 is falsy for the check in upgrades reducer
+          onClick={canTrade && this.props.isActivePlayer ? () => this.props.handleSelectResource({ soylent: i + 1 }) : null}
+          className={`soylent-container__asset ${canTrade ? 'is-tradable' : ''} ${isSelected ? 'is-selected' : ''}`}
+        >
           <img className="soylent-container__asset-image" key={i} src={imgSrc} alt=""/>
         </div>
       )

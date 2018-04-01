@@ -28,15 +28,20 @@ class MiniResourceDisplay extends Component {
     const {
       selectedUpgrade,
       selectedResources,
+      phase,
     } = this.props;
 
-    return Object.keys(distributedResources).map(key => {
+    const discardingResources = phase === gamePhases.DISCARD_RESOURCES;
+
+    return Object.keys(distributedResources).reverse().map(key => {
       const points = calculateResourcePoints(key, distributedResources[key])
+      const isActive = (distributedResources[key] && selectedUpgrade.size) || discardingResources;
+
       return (
         <div
           onClick={() => this.handleResourceClick({ [key]: points })}
           className={
-            `mini-resource ${distributedResources[key] && selectedUpgrade.size ? 'is-active' : ''} ${selectedResources.get(key) ? 'is-selected' : ''}`
+            `mini-resource ${isActive ? 'is-active' : ''} ${selectedResources.get(key) ? 'is-selected' : ''}`
           }
         >
           <img className="mini-resource__asset" src={resourceMap[key].greenImg} alt=""/>
@@ -51,8 +56,13 @@ class MiniResourceDisplay extends Component {
       distributedResources,
       isActivePlayer,
       selectResource,
+      phase,
     } = this.props;
-    if (isActivePlayer && canSpendResources && distributedResources.get(`${Object.keys(resource)[0]}`))  {
+
+    const spendingResources = isActivePlayer && canSpendResources && distributedResources.get(`${Object.keys(resource)[0]}`)
+    const discardingResources = isActivePlayer && phase === gamePhases.DISCARD_RESOURCES;
+
+    if (spendingResources || discardingResources)  {
       selectResource(resource)
     }
   }
@@ -61,7 +71,7 @@ class MiniResourceDisplay extends Component {
       colonists,
       soylent,
       credits,
-      // hitPoints,
+      hitPoints,
       isActive,
       selectedUpgrade,
       selectedResources,
@@ -90,7 +100,7 @@ class MiniResourceDisplay extends Component {
         {this.renderDistributedResources()}
         <div className="mini-resource">
           <img className="mini-resource__asset" src={heart} alt=""/>
-          {/* <div className="points">{hitPoints}</div> */}
+          <div className="points">{hitPoints}</div>
         </div>
       </div>
     )
@@ -106,11 +116,13 @@ const mapStateToProps = state => {
     colonists: resources.get('colonists'),
     soylent: resources.get('soylent'),
     credits: resources.get('credits'),
-    activePlayer: activePlayer,
+    hitPoints: state.gameScreen.getIn(['users', `${activePlayer}`, 'hitPoints']),
     selectedUpgrade: state.upgrades.get('selectedUpgrade'),
     selectedResources: state.upgrades.get('selectedResources'),
     canSpendResources: state.gameScreen.get('phase') === gamePhases.PURCHASE_UPGRADES,
-    isActivePlayer: state.homeScreen.get('username') === state.gameScreen.get('activePlayer'),
+    isActivePlayer: state.homeScreen.get('username') === activePlayer,
+    phase: state.gameScreen.get('phase'),
+    activePlayer,
   });
 }
 

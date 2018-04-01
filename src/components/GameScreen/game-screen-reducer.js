@@ -10,7 +10,7 @@ const INITIAL_STATE = fromJS({
   users: Map(),
   gameStarted: false,
   activePlayer: '',
-  phase: gamePhases.PURCHASE_UPGRADES,
+  phase: gamePhases.GENERATE_RESOURCES,
 });
 
 const gameScreenReducer = (state = INITIAL_STATE, action) => {
@@ -106,8 +106,40 @@ const gameScreenReducer = (state = INITIAL_STATE, action) => {
                 ...newResourceValues,
               }
             },
-            upgrades: {
-              [action.payload.selectedUpgrade.id]: true,
+            // only if there's an upgrade
+            // otherwise we are just discarding resources
+            ...action.payload.selectedUpgrade && {
+              upgrades: {
+                [action.payload.selectedUpgrade.id]: true,
+              },
+            }
+          },
+        },
+      });
+    case types.TRADE_RESOURCES:
+      const selectedResources = action.payload.toJS();
+      const unobtanium = selectedResources.unobtanium;
+      const soylent = selectedResources.soylent;
+      const resources = state.getIn(['users', `${state.get('activePlayer')}`, 'resources']);
+      const currentSoylent = resources.get('soylent');
+      const currentUnobtanium = resources.getIn(['distributedResources', 'unobtanium']);
+      const soylentSelected = currentSoylent - soylent + 1;
+      const unobtaniumSelected = currentUnobtanium - unobtanium + 1;
+
+      return state.mergeDeep({
+        users: {
+          [`${state.get('activePlayer')}`]: {
+            resources: {
+              ...soylent && {
+                credits: (soylentSelected * 6) + resources.get('credits'),
+                soylent: currentSoylent - soylentSelected,
+              },
+              ...unobtanium && {
+                colonists: (unobtaniumSelected * 3) + resources.get('colonists'),
+                distributedResources: {
+                  unobtanium: currentUnobtanium - unobtaniumSelected,
+                },
+              },
             },
           },
         },

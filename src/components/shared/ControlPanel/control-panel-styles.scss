@@ -1,49 +1,102 @@
+@import '../../../assets/styles/settings.scss';
+
 .control-panel {
-  display: inline-flex;
-  float: left;
-  flex-flow: column;
-  height: 6.5rem;
 
-  .button {
-    &__transparent {
-      margin-top: 2.5rem;
-    }
-  }
-  .full-height {
-    height: 100%;
-  }
-  &__placeholder {
-    display: none;
-    color: white;
-    font-family: 'Rubik One', sans-serif;
+  .hack-controls {
+    display: inline-flex;
+    float: left;
+    flex-flow: column;
+    height: 6.5rem;
 
-    button {
-      cursor: not-allowed;
-    }
-
-    &.is-active {
-      height: 100%;
-      display: block;
-    }
-  }
-  &__accept {
-    display: none;
-
-    &.is-active {
-      display: block;
-    }
-  }
-  &__hack {
-    display: none;
-
-    &.is-active {
-      display: block;
-    }
-  }
-  &__hack, &__placeholder {
     .button {
       &__transparent {
-        padding: 0.5rem 1.3rem;
+        margin-top: 2.5rem;
+      }
+    }
+    .full-height {
+      height: 100%;
+    }
+    &__placeholder {
+      display: none;
+      color: white;
+      font-family: 'Rubik One', sans-serif;
+
+      button {
+        cursor: not-allowed;
+      }
+
+      &.is-active {
+        height: 100%;
+        display: block;
+      }
+    }
+    &__accept {
+      display: none;
+
+      &.is-active {
+        display: block;
+      }
+    }
+    &__hack {
+      display: none;
+
+      &.is-active {
+        display: block;
+      }
+    }
+    &__hack, &__placeholder {
+      .button {
+        &__transparent {
+          padding: 0.5rem 1.3rem;
+        }
+      }
+    }
+  }
+  .trade-controls {
+    width: 100%;
+    font-family: $font-family-nova;
+    min-width: 62.5rem;
+
+    .button__cancel {
+      float: left;
+      margin-left: 6rem;
+      margin-right: 1rem;
+    }
+    .button__trade {
+      float: left;
+      margin-left: 1rem;
+    }
+    &__content {
+      width: 60%;
+      float: left;
+    }
+    &__title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: $lightest-aqua;
+      margin: 0.5rem 0;
+    }
+    &__resources {
+      width: 80%;
+      margin: 0 auto;
+
+      .resource {
+        width: 50%;
+        display: inline-block;
+        text-align: center;
+        color: #FFFFFF;
+        text-transform: capitalize;
+
+        &:first-child {
+          text-align: left;
+        }
+        &:last-child {
+          text-align: right;
+        }
+
+        .arrow {
+          color: $light-yellow;
+        }
       }
     }
   }

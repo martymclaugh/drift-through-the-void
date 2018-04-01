@@ -42,22 +42,29 @@ class Upgrades extends Component {
     }
   }
   renderUpgrades() {
-    return Object.keys(upgrades).map(upgrade => (
-      <div className="upgrade">
-        <div className="upgrade__content">
-          <div className="upgrade__cost">{upgrades[upgrade].cost}</div>
-          <div className="button">
-            <div
-              className={`button__radio ${upgrade === this.props.selectedUpgrade.get('id') ? 'is-active' : ''}`}
-              onClick={() => this.handleSelectUpgrade(upgrades[upgrade])}
-            />
+    return Object.keys(upgrades).map(upgrade => {
+      const button = this.props.upgrades.get(upgrade) ?
+        <div className="checkmark">&#10003;</div> :
+      (
+        <div
+          className={`button__radio ${upgrade === this.props.selectedUpgrade.get('id') ? 'is-active' : ''}`}
+          onClick={() => this.handleSelectUpgrade(upgrades[upgrade])}
+        />
+      );
+      return (
+        <div className="upgrade">
+          <div className="upgrade__content">
+            <div className="upgrade__cost">{upgrades[upgrade].cost}</div>
+            <div className="button">
+              {button}
+            </div>
+            <div className="upgrade__name">{upgrades[upgrade].name}</div>
+            <div className="upgrade__points">{upgrades[upgrade].points}</div>
+            <div className="upgrade__effect">{upgrades[upgrade].effect}</div>
           </div>
-          <div className="upgrade__name">{upgrades[upgrade].name}</div>
-          <div className="upgrade__points">{upgrades[upgrade].points}</div>
-          <div className="upgrade__effect">{upgrades[upgrade].effect}</div>
         </div>
-      </div>
-    ));
+      )
+    });
   }
   render() {
     const { selectedUpgrade, selectedResources } = this.props;
@@ -65,15 +72,24 @@ class Upgrades extends Component {
       ( prev + selectedResources.get(curr) ), 0);
 
     const canPurchaseUpgrade = selectedUpgrade.size > 0 && totalAmountSpent >= selectedUpgrade.get('cost');
+
     // TODO move button to separate component
     const upgradeButton = canPurchaseUpgrade ? (
       <div
         className="button__upgrade"
         onClick={this.handlePurchaseUpgrade}
       >
-      Upgrade
+        Upgrade
       </div>
     ) : 'Not enough resources.';
+    const skipButton = (
+      <div
+        className="button__upgrade"
+        onClick={() => this.props.changePhase()}
+      >
+        I'm Good
+      </div>
+    )
 
     return (
       <div className="upgrades-container">
@@ -100,7 +116,7 @@ class Upgrades extends Component {
               Spending: {totalAmountSpent}
             </div>
             <div className="can-upgrade">
-              {selectedUpgrade.size > 0 && upgradeButton}
+              {selectedUpgrade.size > 0 ? upgradeButton : skipButton}
             </div>
           </div>
         </div>
@@ -118,6 +134,7 @@ const mapStateToProps = state => {
     credits: resources.get('credits'),
     selectedResources: state.upgrades.get('selectedResources'),
     isActivePlayer: state.homeScreen.get('username') === activePlayer,
+    upgrades: state.gameScreen.getIn(['users', `${activePlayer}`, 'upgrades']),
   });
 }
 
