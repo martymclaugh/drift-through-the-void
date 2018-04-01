@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setHackNumber, setTerminals } from './head-quarters-actions';
+import { changePhase, tradeResources } from '../GameScreen/game-screen-actions';
 import { sendTerminals, sendHackNumber } from '../../redux/middlewares/socket/Game/game-actions';
 import randomStringArray from '../../helpers/random-string';
 import { hackingValues } from '../../helpers/hacking-values';
@@ -11,6 +12,7 @@ import ControlPanel from '../shared/ControlPanel/ControlPanel';
 import { Props, State } from '../../flow/components/head-quarters-types';
 
 import './head-quarters-styles.css';
+import { gamePhases } from '../../helpers/game-phases';
 
 class HeadQuarters extends Component<Props, State>{
 
@@ -29,6 +31,7 @@ class HeadQuarters extends Component<Props, State>{
     this.handleDiscardTerminal = this.handleDiscardTerminal.bind(this);
     this.populateTerminals = this.populateTerminals.bind(this);
     this.terminateHacking = this.terminateHacking.bind(this);
+    this.handleTradeResources = this.handleTradeResources.bind(this);
   }
 
   componentDidMount() {
@@ -61,6 +64,7 @@ class HeadQuarters extends Component<Props, State>{
       numberOfHacks: this.props.numberOfHacks - 1,
     }
 
+    // TODO shouldn't need to call same actions twice, handle in sockets
     this.props.setTerminals({ terminals });
     this.props.sendTerminals({ terminals });
     this.props.setHackNumber(numberOfHacks);
@@ -133,29 +137,31 @@ class HeadQuarters extends Component<Props, State>{
       }, 500)
     }
   }
-  render() {
+  handleTradeResources: () => void;
+  handleTradeResources() {
     const {
-      terminals,
-      numberOfHacks,
+      tradeResources,
+      selectedResources,
+      changePhase,
     } = this.props;
+
+    tradeResources(selectedResources);
+    changePhase();
+  }
+  renderTerminals: () => void;
+  renderTerminals() {
+    const { terminals, numberOfHacks } = this.props;
     const {
-      emptyTerminalIds,
+      mrRobotTerminal,
       hackingActive,
+      emptyTerminalIds,
     } = this.state;
 
-    const hackButtonActive = !hackingActive &&
-                            numberOfHacks > 0 &&
-                            emptyTerminalIds.length > 0;
+    if (this.props.phase !== gamePhases.GENERATE_RESOURCES) { return null; }
 
-    const acceptButtonActive = !hackingActive &&
-                              numberOfHacks < 3 &&
-                              numberOfHacks > 0 &&
-                              emptyTerminalIds.length === 0;
-                              // TODO add additional check for 'mrRobot'
-                              // once upgrades are available
-    const renderTerminals = terminals.map((terminal, i) => (
+    return terminals.map((terminal, i) => (
       <Terminal
-        canHack={!this.state.mrRobotTerminal}
+        canHack={!mrRobotTerminal}
         numberOfHacks={numberOfHacks}
         hackingActive={hackingActive}
         handleDiscardTerminal={() => this.handleDiscardTerminal(terminal)}
@@ -165,17 +171,35 @@ class HeadQuarters extends Component<Props, State>{
         {...terminal}
       />
     ));
+  }
+  render() {
+    const { numberOfHacks } = this.props;
+    const {
+      emptyTerminalIds,
+      hackingActive,
+    } = this.state;
 
-    return (
-      <div className="head-quarters">
+    const hackButtonActive = !hackingActive &&
+                             numberOfHacks > 0 &&
+                             emptyTerminalIds.length > 0;
+
+    const acceptButtonActive = !hackingActive &&
+                               numberOfHacks < 3 &&
+                               numberOfHacks > 0 &&
+                               emptyTerminalIds.length === 0;
+
+                               return (
+                                 <div className="head-quarters">
         <ControlPanel
           handleHack={this.handleHacking}
           handleAccept={this.acceptResources}
+          handleTradeResources={this.handleTradeResources}
           hackButtonActive={hackButtonActive}
           acceptButtonActive={acceptButtonActive}
+          {...this.props}
         />
         <div className="head-quarters__terminals">
-          {renderTerminals}
+          {this.renderTerminals()}
         </div>
       </div>
     )
@@ -186,9 +210,13 @@ const mapStateToProps = state =>{
   const activePlayer = state.gameScreen.get('activePlayer');
 
   return {
+    phase: state.gameScreen.get('phase'),
     numberOfHacks: state.headQuarters.get('numberOfHacks'),
     terminals: state.headQuarters.get('terminals'),
     mrRobot: state.gameScreen.getIn(['users', `${activePlayer}`, 'upgrades', 'mrRobot']),
+    selectedResources: state.upgrades.get('selectedResources'),
+    isActivePlayer: state.homeScreen.get('username') === activePlayer,
+    resources: state.gameScreen.getIn(['users', `${activePlayer}`, 'resources']),
   };
 }
 export default connect(mapStateToProps, {
@@ -196,4 +224,6 @@ export default connect(mapStateToProps, {
   setTerminals,
   sendTerminals,
   sendHackNumber,
+  changePhase,
+  tradeResources,
 })(HeadQuarters);
