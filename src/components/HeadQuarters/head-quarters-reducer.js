@@ -1,5 +1,6 @@
 import { fromJS, List } from 'immutable';
 import { types } from './head-quarters-actions';
+import { types as gameScreenTypes } from '../GameScreen/game-screen-actions';
 
 const INITIAL_STATE = fromJS({
   numberOfHacks: 3,
@@ -15,6 +16,8 @@ const headQuartersReducer = (state = INITIAL_STATE, action) => {
       return state.merge({
         terminals: List(action.payload.terminals)
       });
+    case gameScreenTypes.CHANGE_PHASE:
+      return INITIAL_STATE;
     default:
       return state;
   }
