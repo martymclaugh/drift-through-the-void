@@ -1,6 +1,3 @@
-// @import "bourbon";
-// @import "neat";
-
 // Grid Config
 @mixin grid-col($col-number, $gutter: 30) {
   width: calc(#{100 * ($col-number / 12)}% - #{$gutter * 1.5}px);
@@ -34,9 +31,8 @@ $light-aqua: #49a1d8;
 $lightest-aqua: #92cbef;
 $pink: #e75277;
 
-$newGreen: #48D48D;
-$videoPink: #E85479;
-$articlePurple: #7651FC;
+$light-green: #48D48D;
+$purple: #7651FC;
 
 $light-gray: #f5f6f7;
 $medium-gray: #eaeaec;
