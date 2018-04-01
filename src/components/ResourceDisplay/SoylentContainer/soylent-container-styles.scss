@@ -16,6 +16,16 @@
     width: 1.5rem;
     display: inline-block;
 
+    &.is-tradable {
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+      &.is-selected {
+        opacity: 0.2;
+      }
+    }
     &-image {
       width: 100%;
     }
