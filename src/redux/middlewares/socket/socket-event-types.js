@@ -13,6 +13,7 @@ import {
   changePhase,
   colonizePlanet,
   colonizeMonument,
+  tradeResources,
 } from '../../../components/GameScreen/game-screen-actions';
 import { playerJoined } from '../../../components/GameScreen/game-screen-actions';
 import {
@@ -40,4 +41,5 @@ export const socketEventTypes = {
   selectUpgrade,
   selectResource,
   purchaseUpgrade,
+  tradeResources,
 }

@@ -40,6 +40,9 @@ export const gameMiddleware = (store) => {
         case upgradeTypes.SELECT_RESOURCE:
           socket.emit('selectResource', payload);
           break;
+        case gameScreenActions.TRADE_RESOURCES:
+          socket.emit('tradeResources', payload);
+          break;
         default:
           return next(action);
       }
