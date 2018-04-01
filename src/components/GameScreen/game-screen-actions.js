@@ -6,6 +6,7 @@ export const types = {
   COLONIZE_PLANET: 'COLONIZE_PLANET',
   COLONIZE_MONUMENT: 'COLONIZE_MONUMENT',
   PURCHASE_UPGRADE: 'PURCHASE_UPGRADE',
+  TRADE_RESOURCES: 'TRADE_RESOURCES',
 }
 
 export const updateCargo = payload =>
@@ -22,3 +23,5 @@ export const colonizeMonument = payload =>
   ({ type: types.COLONIZE_MONUMENT, payload });
 export const purchaseUpgrade = payload =>
   ({ type: types.PURCHASE_UPGRADE, payload });
+export const tradeResources = payload =>
+  ({ type: types.TRADE_RESOURCES, payload });
