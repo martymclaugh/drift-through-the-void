@@ -131,7 +131,7 @@ const gameScreenReducer = (state = INITIAL_STATE, action) => {
           [`${state.get('activePlayer')}`]: {
             resources: {
               ...soylent && {
-                credits: (soylentSelected * 4) + resources.get('credits'),
+                credits: (soylentSelected * 6) + resources.get('credits'),
                 soylent: currentSoylent - soylentSelected,
               },
               ...unobtanium && {
