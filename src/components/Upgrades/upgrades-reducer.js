@@ -12,14 +12,14 @@ const upgradesReducer = (state = INITIAL_STATE, action) => {
         case types.SELECT_UPGRADE:
             return state.merge(fromJS(action.payload));
         case types.SELECT_RESOURCE:
-            const key = Object.keys(action.payload)[0]
-            const selectedResouces = state.get('selectedResources');
+            const key = Object.keys(action.payload)[0];
+            const selectedResources = state.get('selectedResources');
 
-            if (selectedResouces.get(`${key}`)) {
+            if (selectedResources.get(key) && selectedResources.get(key) === action.payload[key]) {
                 return state.deleteIn(['selectedResources', `${key}`]);
             }
             return state.setIn(['selectedResources', `${key}`], action.payload[key] );
-        case gameScreenTypes.PURCHASE_UPGRADE:
+        case gameScreenTypes.CHANGE_PHASE:
             return INITIAL_STATE;
         default:
             return state;
