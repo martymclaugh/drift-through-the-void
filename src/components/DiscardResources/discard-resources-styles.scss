@@ -1,0 +1,63 @@
+@import '../../assets/styles/settings.scss';
+
+.discard-resources {
+  font-family: $font-family-nova;
+  margin-left: 7rem;
+  height: 100%;
+  width: calc(100% - 7rem);
+  display: table;
+
+  &__content {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+
+    .title {
+      font-size: 2rem;
+      color: $light-yellow;
+      margin-bottom: 1rem;
+    }
+    .description {
+      color: $aqua;
+      margin-bottom: 1rem;
+    }
+    .resources {
+      &::after {
+        border-bottom: 1px $medium-gray solid;
+        content: "";
+        display: block;
+        margin: 0 auto;
+        width: 10rem;
+      }
+      .resource {
+        text-transform: capitalize;
+        color: $medium-gray;
+
+        .value {
+          color: $light-aqua;
+        }
+      }
+    }
+    .total {
+      margin-top: 1rem;
+
+      &.red {
+        color: red;
+      }
+      &.green {
+        color: $matrix-green;
+      }
+    }
+    .button {
+      position: relative;
+      width: 10rem;
+      margin: 0 auto;
+
+      &__pressable {
+        width: 100%;
+        position: absolute;
+        margin-top: 2rem;
+      }
+    }
+  }
+}
