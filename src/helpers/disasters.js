@@ -1,16 +1,20 @@
 export default {
   globalWarming: {
+    cost: 2,
     name: 'Global Warming',
-    points: -2,
+    hitPoints: -2,
   },
   biologicalWarfare: {
+    cost: 3,
     name: 'Biological Warfare',
-    points: -3, // to opponents
+    hitPoints: -3, // to opponents
   },
   invasion: {
-    points: -4,
+    cost: 4,
+    hitPoints: -4,
   },
   fascism: {
-    points: 0 // lose all resources // anything greater than 5 disasters
+    cost: 5,
+    hitPoints: 0 // lose all resources // anything greater than 5 disasters
   },
 }
