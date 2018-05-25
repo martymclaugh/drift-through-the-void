@@ -58,7 +58,7 @@ export default {
   blackMarket: {
     id: 'blackMarket',
     name: 'Black Market',
-    effect: 'Sell Soylent for 6 credits a piece',
+    effect: 'Trade Soylent for 6 credits a piece',
     points: 6,
     cost: 30,
   },
