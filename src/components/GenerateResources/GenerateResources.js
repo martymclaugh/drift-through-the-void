@@ -95,7 +95,9 @@ class GenerateResources extends Component<Props, State>{
 
     return (
       <div className="generate-resources">
-        <ResourceDisplay />
+        <ResourceDisplay
+          changePhase={this.props.changePhase}
+        />
         <HeadQuarters
           terminalAmount={numberOfTerminals}
           updateCargo={this.updateCargo}
@@ -127,4 +129,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   updateCargo,
   sendCargo,
+  changePhase,
 })(GenerateResources);
