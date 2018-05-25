@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { gamePhases } from '../../helpers/game-phases';
 import CargoContainer from './CargoContainer/CargoContainer';
 import SoylentContainer from './SoylentContainer/SoylentContainer';
 import ColonistIcon from './ColonistIcon/ColonistIcon';
@@ -18,6 +19,14 @@ class ResourceDisplay extends Component<Props, State> {
 
     this.renderCargoContainers = this.renderCargoContainers.bind(this);
     this.handleSelectResource = this.handleSelectResource.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.phase !== this.props.phase && nextProps.phase === gamePhases.TRADE_RESOURCES) {
+      const canTrade = (nextProps.engine && nextProps.distributedResources.get('unobtanium')) ||
+      (nextProps.blackMarket && nextProps.credits);
+
+      nextProps.isActivePlayer && !canTrade && this.props.changePhase();
+    }
   }
   handleSelectResource: () => void;
   handleSelectResource(resource) {
@@ -79,6 +88,7 @@ const mapStateToProps = state => {
     phase: state.gameScreen.get('phase'),
     soylentGenerator: state.gameScreen.getIn(['users', `${activePlayer}`, 'upgrades', 'soylentGenerator']),
     engine: state.gameScreen.getIn(['users', `${activePlayer}`, 'upgrades', 'engine']),
+    blackMarket: state.gameScreen.getIn(['users', `${activePlayer}`, 'upgrades', 'blackMarket']),
     selectedResources: state.upgrades.get('selectedResources'),
   });
 }
