@@ -6,6 +6,7 @@ export type Props = {
   colonists: number,
   soylent: number,
   credits: number,
+  changePhase: () => void;
 };
 
 export type State = {
